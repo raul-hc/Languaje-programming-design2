@@ -11,7 +11,7 @@ import ast.*;
  * No es necesario modificar esta clase. En su lugar hay que modificar las clases
  * que son llamadas desde aqu�: "Identificacion.java" y "ComprobacionDeTipos.java"
  * 
- * @author Raul Herrador
+ * @author Ra�l Izquierdo
  *
  */
 public class AnalisisSemantico {

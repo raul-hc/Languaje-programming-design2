@@ -1,4 +1,5 @@
-/* ------- CÓDIGO A INCLUIR ------- */
+
+/* -- No es necesario modificar esta parte ----------------------------------------------- */
 package sintactico;
 
 import java.io.*;
@@ -6,20 +7,13 @@ import main.*;
 import ast.Position;
 
 %%
-
-/* ------- OPCIONES ------- */
-
 %byaccj
-//%class Lexico // If this line is commented the default name for the generated class is Yylex
 %unicode
 %line
 %column
 %public
 
 %{
-
-/* ------- ATRIBUTOS Y MÉTODOS ------- */
-
 	public Yylex(Reader in, GestorErrores gestor) {
 		this(in);
 		this.gestor = gestor;
@@ -29,7 +23,7 @@ import ast.Position;
 	public int column() { return yycolumn + 1; }
 	public String lexeme() { return yytext(); }
 
-	// Traza para probar el l�xico de manera independiente al sint�ctico
+	// Traza para probar el lexico de manera independiente al sint�ctico
 	public static void main(String[] args) throws Exception {
 		Yylex lex = new Yylex(new FileReader(Main.programa), new GestorErrores());
 		int token;
@@ -40,38 +34,45 @@ import ast.Position;
 	private GestorErrores gestor;
 %}
 
-/* ------- PATRONES (MACROS) - Opcional ------- */
-
 %%
 
-/* ------- REGLAS / ACCIONES ------- */
+/* -- Modificar aqui. Añadir reglas en esta seccion ----------------------------------------- */
+	
+[+\-\*/<>;,.:(){}=\]\[!\']			{ return yytext().charAt(0); }
 
-[+<>;\-\*/(){}=]				{ return yytext().charAt(0); }
+">=" 	{ return Parser.MAYORIGUAL; }
+"<="	{ return Parser.MENORIGUAL; }
+"=="	{ return Parser.IGUALDAD; }
+"!="	{ return Parser.DISTINTO; }
 
-DATA							{ return Tokens.DATA; 	}
-CODE							{ return Tokens.CODE; 	}
+"&&"	{ return Parser.Y; }
+"||"	{ return Parser.O; }
 
-read							{ return Tokens.READ; 	}
-print							{ return Tokens.PRINT;	}
-int								{ return Tokens.INT; 	}
-real							{ return Tokens.REAL; 	}
-if								{ return Tokens.IF; 	}
-else							{ return Tokens.ELSE; 	}
-while							{ return Tokens.WHILE; 	}
+int		{ return Parser.INT; }
+float	{ return Parser.FLOAT; }
+char	{ return Parser.CHAR; }
 
+var		{ return Parser.VAR; }
+struct	{ return Parser.STRUCT; }
 
-[a-zA-ZñÑ][a-zA-Z0-9_ñÑ]*		{ return Tokens.IDENTIFICADOR; }
-[0-9]+							{ return Tokens.LITERAL_ENTERO; }
-[0-9]+"."[0-9]*					{ return Tokens.LITERAL_REAL; }
+read 	{ return Parser.READ; }
+return 	{ return Parser.RETURN; }
+if		{ return Parser.IF; }
+while	{ return Parser.WHILE; }
+print	{ return Parser.PRINT; }
+printsp	{ return Parser.PRINTSP; }
+println	{ return Parser.PRINTLN; }
+
+[a-zA-ZñÑ][a-zA-Z0-9_ñÑ]*	{ return Parser.IDENTIFICADOR; }
+[0-9]+						{ return Parser.LITERAL_ENTERO; }
+[0-9]+"."[0-9]*				{ return Parser.LITERAL_REAL; }
 
 /* -- Se aconseja dejar estas reglas al final ----------------------------------------------- */
 
 "/*"([^*]|\*+[^*/])*\*+"/"		{ }		/* Comentario de varias lineas como este */
 "//".*							{ }		// Comentario de una linea como este
 
-[ \n\r]							{ }
+[ \n\r]		{ }
+"\t"		{ yycolumn += 3; } // Para que coincida con la info del editor de Eclipse (opcional). En eclipse: \t == 4 caracteres. En Jflex: \t == 1 carActer.
 
-// Para que coincida con la info del editor de Eclipse (opcional). En eclipse: \t == 4 caracteres. En Jflex: \t == 1 carácter.
-"\t"							{ yycolumn += 3; } 
-
-.			{ gestor.error("Léxico", "Cadena \"" + yytext() +"\" no reconocida.", new Position(line(), column())); }
+.			{ gestor.error("Lexico", "Cadena \"" + yytext() +"\" no reconocida.", new Position(line(), column())); }
