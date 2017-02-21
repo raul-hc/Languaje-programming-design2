@@ -9,19 +9,15 @@ import sintactico.*;
 import visitor.*;
 import ast.*;
 
-
 /**
  * Clase que inicia el compilador e invoca a todas sus fases.
  * 
  * No es necesario modificar este fichero. En su lugar hay que modificar:
- * - Para An�lisis Sint�ctico: 'sintactico/sintac.y' y 'sintactico/lexico.l'
- * - Para An�lisis Sem�ntico: 'semantico/Identificacion.java' y 'semantico/ComprobacionDeTipos.java'
- * - Para Generaci�n de C�digo: 'generacionDeCodigo/GestionDeMemoria.java' y 'generacionDeCodigo/SeleccionDeInstrucciones.java'
- *
- * @author Ra�l Izquierdo
- * 
- */
+ * - Para Analisis Sintactico: 'sintactico/sintac.y' y 'sintactico/lexico.l'
+ * - Para Analisis Semantico: 'semantico/Identificacion.java' y 'semantico/ComprobacionDeTipos.java'
+ * - Para Generacion de Codigo: 'generacionDeCodigo/GestionDeMemoria.java' y 'generacionDeCodigo/SeleccionDeInstrucciones.java'  */
 public class Main {
+	
 	public static final String programa = "src/ejemplo.txt";	// Entrada a usar durante el desarrollo
 
 	public static void main(String[] args) throws Exception {
@@ -34,9 +30,7 @@ public class Main {
 		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
 	}
 
-	/**
-	 * M�todo que coordina todas las fases del compilador
-	 */
+	/** Método que coordina todas las fases del compilador */
 	public static AST compile(String sourceName, GestorErrores gestor) throws Exception {
 
 		// 1. Fases de Analisis Lexico y Sint�ctico

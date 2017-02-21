@@ -53,19 +53,22 @@ float	{ return Parser.FLOAT; }
 char	{ return Parser.CHAR; }
 
 var		{ return Parser.VAR; }
+cast	{ return Parser.CAST; }
 struct	{ return Parser.STRUCT; }
 
 read 	{ return Parser.READ; }
 return 	{ return Parser.RETURN; }
 if		{ return Parser.IF; }
+else 	{ return Parser.ELSE; }
 while	{ return Parser.WHILE; }
 print	{ return Parser.PRINT; }
 printsp	{ return Parser.PRINTSP; }
 println	{ return Parser.PRINTLN; }
 
-[a-zA-ZñÑ][a-zA-Z0-9_ñÑ]*	{ return Parser.IDENTIFICADOR; }
-[0-9]+						{ return Parser.LITERAL_ENTERO; }
-[0-9]+"."[0-9]*				{ return Parser.LITERAL_REAL; }
+[a-zA-ZñÑ][a-zA-Z0-9_ñÑ]*			{ return Parser.IDENTIFICADOR; }
+[0-9]+								{ return Parser.LITERAL_ENTERO; }
+[0-9]+"."[0-9]*						{ return Parser.LITERAL_REAL; }
+'[a-zA-Z0-9_ñÑ()+\- =]' | '\\n' 	{ return Parser.LITERAL_CARACTER; }
 
 /* -- Se aconseja dejar estas reglas al final ----------------------------------------------- */
 

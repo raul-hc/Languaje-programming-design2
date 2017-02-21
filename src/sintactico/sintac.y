@@ -9,10 +9,6 @@ import main.*;
 %}
 
 // * Declaraciones Yacc
-%token LITERAL_ENTERO
-%token LITERAL_REAL
-%token LITERAL_CARACTER
-
 %token Y
 %token O
 
@@ -61,17 +57,17 @@ tipo: 'INT'
 	| tipoArray 
 	;
 
-tipoArray: '[' LITERAL_ENTERO ']' tipo
-		| '[' LITERAL_ENTERO ']' 
+tipoArray: '[' 'LITERAL_ENTERO' ']' tipo
+		| '[' 'LITERAL_ENTERO' ']' 
 ;
 
-defFuncion: 'IDENTIFICADOR' '(' parametros ')' tipoRetorno '{' defVarLocales sentencias '}'
-			| 'IDENTIFICADOR' '(' ')' tipoRetorno '{' defVarLocales sentencias '}'
+defFuncion: 'IDENTIFICADOR' '(' parametros ')' tipoRetornoOpt '{' defVarLocales sentencias '}'
+			| 'IDENTIFICADOR' '(' ')' tipoRetornoOpt '{' defVarLocales sentencias '}'
 			;
 			
-tipoRetorno: ':' tipo
-			|
-			;
+tipoRetornoOpt: ':' tipo
+				|
+				;
 
 parametros: parametros ',' 'IDENTIFICADOR' ':' tipo
 		| 'IDENTIFICADOR' ':' tipo
@@ -91,33 +87,27 @@ sentencias: sentencias sentencia
 sentencia: 	expr '=' expr ';'
 			| escritura ';'
 			| 'READ' expr ';'
-			| 'RETURN' exprOpt ';'
-			| if 
+			| 'RETURN' expr ';'
+			| 'RETURN' ';'
+			| 'IF' '(' expr ')' '{' sentencias '}'			
+			| 'IF' '(' expr ')' '{' sentencias '}' 'ELSE' '{' sentencias '}' 
 			| 'WHILE' '(' expr ')' '{' sentencias '}'		
 			/* Invocacion a funcion como SENTENCIA */
 			| invocacionFuncion ';' 
-			;
-			
-exprOpt : expr
-		| 
-		;			
+			;			
 	
-escritura: 		'PRINT' expr 
+escritura: 		'PRINT'   expr 
 			| 	'PRINTSP' expr 
 			| 	'PRINTLN' expr 
 			;
 
-if: 	'IF' '(' expr ')' '{' sentencias '}'			
-	| 	'IF' '(' expr ')' '{' sentencias '}' 'ELSE' '{' sentencias '}'
-	;
-
 invocacionFuncion: 'IDENTIFICADOR' '(' listaExprSeparador ')' 
-				| 'IDENTIFICADOR' '(' ')' 
+				|  'IDENTIFICADOR' '(' ')' 
 				;
 	
 listaExprSeparador: listaExprSeparador ',' expr 
 					| expr
-					;
+					;	
 	
 expr:  		expr '+' expr 			
 		  | expr '-' expr 			
@@ -137,14 +127,13 @@ expr:  		expr '+' expr
 	      | expr O expr				
 		  
 	      | 'IDENTIFICADOR'								
-	      | LITERAL_ENTERO							
-		  | LITERAL_REAL						
-		  | LITERAL_CARACTER						
+	      | 'LITERAL_ENTERO'							
+		  | 'LITERAL_REAL'						
+		  | 'LITERAL_CARACTER'						
 		  
-		  | '(' expr ')' 					
-		  | '{' expr '}' 					
+		  | '(' expr ')' 					 					
 		 
-		  | 'CAST' '<' tipoBasico '>' expr
+		  | 'CAST' '<' tipo '>' expr
 
 		  /* Acceso a un array */
 	      | expr '[' expr ']'
@@ -156,12 +145,6 @@ expr:  		expr '+' expr
 		  | 'IDENTIFICADOR' '(' listaExprSeparador ')'	
 		  ;
 
-tipoBasico: 'INT'
-	| 'FLOAT'
-	| 'CHAR'
-	;
-			
-	
 %%
 
 /* No es necesario modificar esta seccion ------------------ */

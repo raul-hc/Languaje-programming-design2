@@ -73,6 +73,13 @@ main() {
 
   local = 0;
   while (local < 10) {
+  	/*
+  	v[local] = dobleSuma(local);
+  	v[local] = dobleSuma((2.0), local);
+  	v[local] = dobleSuma((2.0 + h[0][3]), local);
+  	v[local] = cast<int>(2.0);
+  	v[local] = dobleSuma(cast<int>(2.0), local);
+	*/
     v[local] = dobleSuma(cast<int>(2.0 + h[0][3]), local);
     local = local + 1;
   }
