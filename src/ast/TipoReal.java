@@ -6,9 +6,9 @@ package ast;
 
 import visitor.*;
 
-//	charType:tipo -> 
+//	tipoReal:tipo -> 
 
-public class CharType extends AbstractTipo {
+public class TipoReal extends AbstractTipo {
 
 	@Override
 	public Object accept(Visitor v, Object param) { 

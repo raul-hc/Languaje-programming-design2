@@ -134,22 +134,22 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class DefStruct { String nombre;  List<Campo> campos; }
+	//	class DefStruct { String nombre;  List<Defcampo> campos; }
 	public Object visit(DefStruct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "DefStruct", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "campos", "List<Campo>",node.getCampos());
+		visit(indent + 1, "campos", "List<Defcampo>",node.getCampos());
 		return null;
 	}
 
-	//	class Campo { String nombre;  Tipo tipo; }
-	public Object visit(Campo node, Object param) {
+	//	class Defcampo { String nombre;  Tipo tipo; }
+	public Object visit(Defcampo node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Campo", node, false);
+		printName(indent, "Defcampo", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
@@ -344,38 +344,38 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class IntType {  }
-	public Object visit(IntType node, Object param) {
+	//	class TipoEntero {  }
+	public Object visit(TipoEntero node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "IntType", node, true);
+		printName(indent, "TipoEntero", node, true);
 
 		return null;
 	}
 
-	//	class RealType {  }
-	public Object visit(RealType node, Object param) {
+	//	class TipoReal {  }
+	public Object visit(TipoReal node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "RealType", node, true);
+		printName(indent, "TipoReal", node, true);
 
 		return null;
 	}
 
-	//	class CharType {  }
-	public Object visit(CharType node, Object param) {
+	//	class TipoCaracter {  }
+	public Object visit(TipoCaracter node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "CharType", node, true);
+		printName(indent, "TipoCaracter", node, true);
 
 		return null;
 	}
 
-	//	class ArrayType { int tamano;  Tipo tipo; }
-	public Object visit(ArrayType node, Object param) {
+	//	class TipoArray { int tamano;  Tipo tipo; }
+	public Object visit(TipoArray node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "ArrayType", node, false);
+		printName(indent, "TipoArray", node, false);
 
 		print(indent + 1, "tamano", "int", node.getTamano());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());

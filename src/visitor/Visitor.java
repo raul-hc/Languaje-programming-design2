@@ -11,7 +11,7 @@ public interface Visitor {
 	public Object visit(DefFuncion node, Object param);
 	public Object visit(DefVariable node, Object param);
 	public Object visit(DefStruct node, Object param);
-	public Object visit(Campo node, Object param);
+	public Object visit(Defcampo node, Object param);
 	public Object visit(Asigna node, Object param);
 	public Object visit(Escritura node, Object param);
 	public Object visit(Lectura node, Object param);
@@ -30,9 +30,9 @@ public interface Visitor {
 	public Object visit(LiteralInt node, Object param);
 	public Object visit(LiteralReal node, Object param);
 	public Object visit(LiteralCaracter node, Object param);
-	public Object visit(IntType node, Object param);
-	public Object visit(RealType node, Object param);
-	public Object visit(CharType node, Object param);
-	public Object visit(ArrayType node, Object param);
+	public Object visit(TipoEntero node, Object param);
+	public Object visit(TipoReal node, Object param);
+	public Object visit(TipoCaracter node, Object param);
+	public Object visit(TipoArray node, Object param);
 	public Object visit(TipoIdent node, Object param);
 }

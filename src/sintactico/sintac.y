@@ -30,46 +30,48 @@ import main.*;
 
 /* Añadir las reglas en esta seccion ----------------------- */
 
-programa: definiciones
-		|
+programa: definiciones		{ raiz = new Programa($1); }
+		|					{ $$ = new ArrayList<Definicion>(); }
 		;	
 
-definiciones : definiciones definicion 
-			| definicion
+definiciones : definiciones definicion 		{ $$ = $1; ((List)$1).add($2); }
+			| definicion					{ $$ = $1; }
 			;
 			
-definicion: defVar // variables globales
-			| defStruct 		/* Structs solo pueden ser globales */
-			| defFuncion
+definicion: defVar 			{ $$ = $1; }		// variables globales
+			| defStruct 	{ $$ = $1; }		/* Structs solo pueden ser globales */
+			| defFuncion	{ $$ = $1; }
 			;
 
-defStruct: 'STRUCT' 'IDENTIFICADOR' '{' defCampos '}' ';'
+defStruct: 'STRUCT' 'IDENTIFICADOR' '{' defCampos '}' ';'	{ $$ = new DefStruct($2, $4); }
 ;
 
-defCampos: defCampos 'IDENTIFICADOR' ':' tipo ';' 
-		| 
+defCampos: defCampos 'IDENTIFICADOR' ':' tipo ';' 		{ $$ = $1; ((List)$1).add(new DefCampo($2, $4)); }
+		| 												{ $$ = new ArrayList<DefCampo>(); }
 		;
 
-tipo: 'INT'
-	| 'FLOAT'
-	| 'CHAR'
-	| 'IDENTIFICADOR'
-	| tipoArray 
+tipo: 'INT'				{ $$ = new TipoEntero(); 	}
+	| 'FLOAT'			{ $$ = new TipoReal(); 		}
+	| 'CHAR'			{ $$ = new TipoCaracter(); 	}
+	| 'IDENTIFICADOR'	{ $$ = new TipoIdent($1); 	}
+	| tipoArray 		{ $$ = $1; 					}
 	;
 
-tipoArray: '[' 'LITERAL_ENTERO' ']' tipo
-		| '[' 'LITERAL_ENTERO' ']' 
+tipoArray: '[' 'LITERAL_ENTERO' ']' tipo 			{ $$ = new TipoArray($2, $4); }
 ;
 
-defFuncion: 'IDENTIFICADOR' '(' parametros ')' tipoRetornoOpt '{' defVarLocales sentencias '}'
-			| 'IDENTIFICADOR' '(' ')' tipoRetornoOpt '{' defVarLocales sentencias '}'
+defFuncion: 'IDENTIFICADOR' '(' parametrosOpt ')' tipoRetorno '{' defVarLocales sentencias '}' 		{ $$ = new DefFuncion($1, $3, $5, $7, $8); }
+			| 'IDENTIFICADOR' '(' parametrosOpt ')' '{' defVarLocales sentencias '}'				{ $$ = new DefFuncion($1, $3, null, $6, $7); }
 			;
 			
-tipoRetornoOpt: ':' tipo
-				|
-				;
+tipoRetorno: ':' tipo		{ $$ = $2; }
+;
 
-parametros: parametros ',' 'IDENTIFICADOR' ':' tipo
+parametrosOpt: parametros	{ $$ = $1; }
+			|				{ $$ = new ArrayList<Defeinicion>(); }
+			;
+
+parametros: parametros ',' 'IDENTIFICADOR' ':' tipo		{ $$ = new; }
 		| 'IDENTIFICADOR' ':' tipo
 		;
 			
@@ -80,8 +82,8 @@ defVarLocales: defVarLocales defVar
 defVar: 'VAR' 'IDENTIFICADOR' ':' tipo ';'
 	;
 
-sentencias: sentencias sentencia
-			| 
+sentencias: sentencias sentencia		{ $$ = $1; ((List)$1).add($2); }
+			| 							{ $$ = new ArrayList<Sentencia>(); }
 			;
 			
 sentencia: 	expr '=' expr ';'
@@ -109,40 +111,41 @@ listaExprSeparador: listaExprSeparador ',' expr
 					| expr
 					;	
 	
-expr:  		expr '+' expr 			
-		  | expr '-' expr 			
-	      | expr '*' expr 			
-	      | expr '/' expr 			
+expr:  		expr '+' expr 				{ $$ = new ExpresionBinaria($1, "+" ,$3); }	
+		  | expr '-' expr 				{ $$ = new ExpresionBinaria($1, "-" ,$3); }	
+	      | expr '*' expr 				{ $$ = new ExpresionBinaria($1, "*" ,$3); }	
+	      | expr '/' expr 				{ $$ = new ExpresionBinaria($1, "/" ,$3); }	
 	      
-	      | expr MAYORIGUAL expr		
-	      | expr MENORIGUAL expr		
-	      | expr '<' expr				
-	      | expr '>' expr	
+	      | expr MAYORIGUAL expr		{ $$ = new ExpresionBinaria($1, ">=" ,$3); }	
+	      | expr MENORIGUAL expr		{ $$ = new ExpresionBinaria($1, "<=" ,$3); }	
+	      | expr '<' expr				{ $$ = new ExpresionBinaria($1, "<" ,$3); }	
+	      | expr '>' expr				{ $$ = new ExpresionBinaria($1, ">" ,$3); }	
 		  
-	      | expr DISTINTO expr		
-	      | expr IGUALDAD expr
-	      | '!' expr		
+	      | expr DISTINTO expr			{ $$ = new ExpresionBinaria($1, ">" ,$3); }	
+	      | expr IGUALDAD expr			{ $$ = new ExpresionBinaria($1, ">" ,$3); }	
 	      
-	      | expr Y expr				
-	      | expr O expr				
+	      | '!' expr					{ $$ = new ExpresionUnaria($2); }	
+	      
+	      | expr Y expr					{ $$ = new ExpresionLogica($1, "&&" ,$3); }	
+	      | expr O expr					{ $$ = new ExpresionLogica($1, "||" ,$3); }	
 		  
-	      | 'IDENTIFICADOR'								
-	      | 'LITERAL_ENTERO'							
-		  | 'LITERAL_REAL'						
-		  | 'LITERAL_CARACTER'						
+	      | 'IDENTIFICADOR'				{ $$ = new Variable($1); }				
+	      | 'LITERAL_ENTERO'			{ $$ = new LiteralInt($1); }				
+		  | 'LITERAL_REAL'				{ $$ = new LiteralReal($1); }	
+		  | 'LITERAL_CARACTER'			{ $$ = new LiteralCaracter($1); }	
 		  
-		  | '(' expr ')' 					 					
+		  | '(' expr ')' 				{ $$ = new EntreParentesis($2); }					
 		 
-		  | 'CAST' '<' tipo '>' expr
+		  | 'CAST' '<' tipo '>' expr	{ $$ = new Cast($3, $5); }	
 
-		  /* Acceso a un array */
-	      | expr '[' expr ']'
+		  /* Acceso a un array */	
+	      | expr '[' expr ']'			{ $$ = new AccesoArray($1, $3); }	
 		  
 		  /* Acceso a un campo */
-		  | expr '.' 'IDENTIFICADOR'	
+		  | expr '.' 'IDENTIFICADOR'	{ $$ = new AccesoStruct($1, $3); }	
 	
 		  /* Invocacion a funcion como expr */
-		  | 'IDENTIFICADOR' '(' listaExprSeparador ')'	
+		  | 'IDENTIFICADOR' '(' listaExprSeparador ')'			{ $$ = new InvFuncExpr($1, $3); }	
 		  ;
 
 %%

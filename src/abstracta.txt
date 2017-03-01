@@ -6,8 +6,8 @@ programa 					-> 	definicion*;
 
 defFuncion:definicion		-> 	nombre:string parametros:defVariable* tipoRetorno:tipo variableLocales:defVariable* sentencias:sentencia*;
 defVariable:definicion		-> 	tipo:tipo nombre:string ambito:int;
-defStruct:definicion 		-> 	nombre:string campos:campo*;
-campo:definicion			->	nombre:string tipo:tipo;
+defStruct:definicion 		-> 	nombre:string campos:defcampo*;
+defcampo:definicion			->	nombre:string tipo:tipo;
 
 
 asigna:sentencia 			->  left:expresion right:expresion;
@@ -34,8 +34,8 @@ literalReal:expresion 		-> 	valor:string;
 literalCaracter:expresion 	-> 	valor:string;
 
 
-intType:tipo 				-> ;
-realType:tipo 				-> ;
-charType:tipo 				-> ;
-arrayType:tipo 				-> tamano:int tipo:tipo;
+tipoEntero:tipo				-> ;
+tipoReal:tipo 				-> ;
+TipoCaracter:tipo 			-> ;
+TipoArray:tipo 				-> tamano:int tipo:tipo;
 tipoIdent:tipo 				-> tipo:string;

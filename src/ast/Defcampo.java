@@ -6,18 +6,18 @@ package ast;
 
 import visitor.*;
 
-//	campo:definicion -> nombre:String  tipo:tipo
+//	defcampo:definicion -> nombre:String  tipo:tipo
 
-public class Campo extends AbstractDefinicion {
+public class Defcampo extends AbstractDefinicion {
 
-	public Campo(String nombre, Tipo tipo) {
+	public Defcampo(String nombre, Tipo tipo) {
 		this.nombre = nombre;
 		this.tipo = tipo;
 
 		searchForPositions(tipo);	// Obtener linea/columna a partir de los hijos
 	}
 
-	public Campo(Object nombre, Object tipo) {
+	public Defcampo(Object nombre, Object tipo) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getLexeme() : (String) nombre;
 		this.tipo = (Tipo) tipo;
 

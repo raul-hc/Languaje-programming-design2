@@ -6,18 +6,18 @@ package ast;
 
 import visitor.*;
 
-//	arrayType:tipo -> tamano:int  tipo:tipo
+//	TipoArray:tipo -> tamano:int  tipo:tipo
 
-public class ArrayType extends AbstractTipo {
+public class TipoArray extends AbstractTipo {
 
-	public ArrayType(int tamano, Tipo tipo) {
+	public TipoArray(int tamano, Tipo tipo) {
 		this.tamano = tamano;
 		this.tipo = tipo;
 
 		searchForPositions(tipo);	// Obtener linea/columna a partir de los hijos
 	}
 
-	public ArrayType(Object tamano, Object tipo) {
+	public TipoArray(Object tamano, Object tipo) {
 		this.tamano = (tamano instanceof Token) ? Integer.parseInt(((Token)tamano).getLexeme()) : (Integer) tamano;
 		this.tipo = (Tipo) tipo;
 

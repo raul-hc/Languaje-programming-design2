@@ -83,20 +83,20 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class DefStruct { String nombre;  List<Campo> campos; }
+	//	class DefStruct { String nombre;  List<Defcampo> campos; }
 	public Object visit(DefStruct node, Object param) {
 
 		// super.visit(node, param);
 
 		if (node.getCampos() != null)
-			for (Campo child : node.getCampos())
+			for (Defcampo child : node.getCampos())
 				child.accept(this, param);
 
 		return null;
 	}
 
-	//	class Campo { String nombre;  Tipo tipo; }
-	public Object visit(Campo node, Object param) {
+	//	class Defcampo { String nombre;  Tipo tipo; }
+	public Object visit(Defcampo node, Object param) {
 
 		// super.visit(node, param);
 
@@ -309,23 +309,23 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class IntType {  }
-	public Object visit(IntType node, Object param) {
+	//	class TipoEntero {  }
+	public Object visit(TipoEntero node, Object param) {
 		return null;
 	}
 
-	//	class RealType {  }
-	public Object visit(RealType node, Object param) {
+	//	class TipoReal {  }
+	public Object visit(TipoReal node, Object param) {
 		return null;
 	}
 
-	//	class CharType {  }
-	public Object visit(CharType node, Object param) {
+	//	class TipoCaracter {  }
+	public Object visit(TipoCaracter node, Object param) {
 		return null;
 	}
 
-	//	class ArrayType { int tamano;  Tipo tipo; }
-	public Object visit(ArrayType node, Object param) {
+	//	class TipoArray { int tamano;  Tipo tipo; }
+	public Object visit(TipoArray node, Object param) {
 
 		// super.visit(node, param);
 

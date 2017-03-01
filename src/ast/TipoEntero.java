@@ -6,9 +6,9 @@ package ast;
 
 import visitor.*;
 
-//	realType:tipo -> 
+//	tipoEntero:tipo -> 
 
-public class RealType extends AbstractTipo {
+public class TipoEntero extends AbstractTipo {
 
 	@Override
 	public Object accept(Visitor v, Object param) { 

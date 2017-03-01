@@ -23,8 +23,8 @@ table { border-collapse:collapse; }
 
 <tr><td><span class="nodo">defFuncion</span>:<span class="categoria">definicion</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">parametros</span><span class="tipoAtt">:defVariable*</span> <span class="nombreAtt">tipoRetorno</span><span class="tipoAtt">:tipo</span> <span class="nombreAtt">variableLocales</span><span class="tipoAtt">:defVariable*</span> <span class="nombreAtt">sentencias</span><span class="tipoAtt">:sentencia*</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">defVariable</span>:<span class="categoria">definicion</span>&nbsp;&rarr;  <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span> <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">ambito</span><span class="tipoAtt">:int</span></td><td></td><td></td></tr>
-<tr><td><span class="nodo">defStruct</span>:<span class="categoria">definicion</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">campos</span><span class="tipoAtt">:campo*</span></td><td></td><td></td></tr>
-<tr><td><span class="nodo">campo</span>:<span class="categoria">definicion</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">defStruct</span>:<span class="categoria">definicion</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">campos</span><span class="tipoAtt">:defcampo*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">defcampo</span>:<span class="categoria">definicion</span>&nbsp;&rarr;  <span class="nombreAtt">nombre</span><span class="tipoAtt">:String</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
 <tr><td>&nbsp;</td><td></td><td></td></tr>
 
 <tr><td><span class="nodo">asigna</span>:<span class="categoria">sentencia</span>&nbsp;&rarr;  <span class="nombreAtt">left</span><span class="tipoAtt">:expresion</span> <span class="nombreAtt">right</span><span class="tipoAtt">:expresion</span></td><td></td><td></td></tr>
@@ -49,10 +49,10 @@ table { border-collapse:collapse; }
 <tr><td><span class="nodo">literalCaracter</span>:<span class="categoria">expresion</span>&nbsp;&rarr;  <span class="nombreAtt">valor</span><span class="tipoAtt">:String</span></td><td></td><td></td></tr>
 <tr><td>&nbsp;</td><td></td><td></td></tr>
 
-<tr><td><span class="nodo">intType</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
-<tr><td><span class="nodo">realType</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
-<tr><td><span class="nodo">charType</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
-<tr><td><span class="nodo">arrayType</span>:<span class="categoria">tipo</span>&nbsp;&rarr;  <span class="nombreAtt">tamano</span><span class="tipoAtt">:int</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">tipoEntero</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
+<tr><td><span class="nodo">tipoReal</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
+<tr><td><span class="nodo">TipoCaracter</span>:<span class="categoria">tipo</span>&nbsp;&rarr; &lambda;</td><td></td><td></td></tr>
+<tr><td><span class="nodo">TipoArray</span>:<span class="categoria">tipo</span>&nbsp;&rarr;  <span class="nombreAtt">tamano</span><span class="tipoAtt">:int</span> <span class="nombreAtt">tipo</span><span class="tipoAtt">:tipo</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">tipoIdent</span>:<span class="categoria">tipo</span>&nbsp;&rarr;  <span class="nombreAtt">tipo</span><span class="tipoAtt">:String</span></td><td></td><td></td></tr>
 <tr><td>&nbsp;</td><td></td><td></td></tr>
 
