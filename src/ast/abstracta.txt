@@ -1,0 +1,41 @@
+CATEGORIES
+definicion, tipo, sentencia, expresion
+
+NODES
+programa 					-> 	definicion*;
+
+defFuncion:definicion		-> 	nombre:string parametros:defVariable* tipoRetorno:tipo variableLocales:defVariable* sentencias:sentencia*;
+defVariable:definicion		-> 	tipo:tipo nombre:string ambito:int;
+defStruct:definicion 		-> 	nombre:string campos:campo*;
+campo:definicion			->	nombre:string tipo:tipo;
+
+
+asigna:sentencia 			->  left:expresion right:expresion;
+escritura:sentencia 		->  exprEscritura:expresion tipoEscritura:string;
+lectura:sentencia 			->  exprLectura:expresion;
+return:sentencia 			->  exprRetorno:expresion;
+ifelse:sentencia 			->  condicion:expresion sentenciasIf:sentencia* sentenciasElse:sentencia*;
+while:sentencia 			->  condicion:expresion sentenciasWhile:sentencia* ;
+invFuncSent:sentencia 		->  nombreFuncion:string parametros:expresion*;
+
+
+expresionBinaria:expresion, sentencia -> left:expresion operador:string right:expresion;
+expresionLogica:expresion 	->	left:expresion operador:string right:expresion;
+entreParentesis 			-> 	contenido:expresion;
+
+cast:expresion				-> 	tipoDestino:tipo expresionAConvertir:expresion;
+accesoArray:expresion		-> 	array:expresion posicion:expresion;
+accesoStruct:expresion		-> 	struct:expresion nombreCampo:string;
+invFuncExpr:expresion		-> 	nombreFuncion:string parametros:expresion*;
+
+variable:expresion 			-> 	nombre:string;
+literalInt:expresion 		-> 	valor:int;
+literalReal:expresion 		-> 	valor:string;
+literalCaracter:expresion 	-> 	valor:string;
+
+
+intType:tipo 				-> ;
+realType:tipo 				-> ;
+charType:tipo 				-> ;
+arrayType:tipo 				-> tamano:int tipo:tipo;
+tipoIdent:tipo 				-> tipo:string;
