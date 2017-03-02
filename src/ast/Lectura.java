@@ -12,7 +12,7 @@ public class Lectura extends AbstractSentencia {
 
 	public Lectura(Expresion exprLectura) {
 		this.exprLectura = exprLectura;
-
+		System.out.println(exprLectura);
 		searchForPositions(exprLectura);	// Obtener linea/columna a partir de los hijos
 	}
 

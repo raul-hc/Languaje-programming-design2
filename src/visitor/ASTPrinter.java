@@ -122,7 +122,7 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class DefVariable { Tipo tipo;  String nombre;  int ambito; }
+	//	class DefVariable { Tipo tipo;  String nombre; }
 	public Object visit(DefVariable node, Object param) {
 		int indent = ((Integer)param).intValue();
 
@@ -130,37 +130,36 @@ public class ASTPrinter extends DefaultVisitor {
 
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		print(indent + 1, "nombre", "String", node.getNombre());
-		print(indent + 1, "ambito", "int", node.getAmbito());
 		return null;
 	}
 
-	//	class DefStruct { String nombre;  List<Defcampo> campos; }
+	//	class DefStruct { String nombre;  List<DefCampo> campos; }
 	public Object visit(DefStruct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "DefStruct", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
-		visit(indent + 1, "campos", "List<Defcampo>",node.getCampos());
+		visit(indent + 1, "campos", "List<DefCampo>",node.getCampos());
 		return null;
 	}
 
-	//	class Defcampo { String nombre;  Tipo tipo; }
-	public Object visit(Defcampo node, Object param) {
+	//	class DefCampo { String nombre;  Tipo tipo; }
+	public Object visit(DefCampo node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Defcampo", node, false);
+		printName(indent, "DefCampo", node, false);
 
 		print(indent + 1, "nombre", "String", node.getNombre());
 		visit(indent + 1, "tipo", "Tipo",node.getTipo());
 		return null;
 	}
 
-	//	class Asigna { Expresion left;  Expresion right; }
-	public Object visit(Asigna node, Object param) {
+	//	class Asignacion { Expresion left;  Expresion right; }
+	public Object visit(Asignacion node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Asigna", node, false);
+		printName(indent, "Asignacion", node, false);
 
 		visit(indent + 1, "left", "Expresion",node.getLeft());
 		visit(indent + 1, "right", "Expresion",node.getRight());
@@ -253,6 +252,16 @@ public class ASTPrinter extends DefaultVisitor {
 		visit(indent + 1, "left", "Expresion",node.getLeft());
 		print(indent + 1, "operador", "String", node.getOperador());
 		visit(indent + 1, "right", "Expresion",node.getRight());
+		return null;
+	}
+
+	//	class ExpresionUnaria { Expresion expresion; }
+	public Object visit(ExpresionUnaria node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "ExpresionUnaria", node, false);
+
+		visit(indent + 1, "expresion", "Expresion",node.getExpresion());
 		return null;
 	}
 

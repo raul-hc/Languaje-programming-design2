@@ -7,11 +7,11 @@ package ast;
 import java.util.*;
 import visitor.*;
 
-//	defStruct:definicion -> nombre:String  campos:defcampo*
+//	defStruct:definicion -> nombre:String  campos:defCampo*
 
 public class DefStruct extends AbstractDefinicion {
 
-	public DefStruct(String nombre, List<Defcampo> campos) {
+	public DefStruct(String nombre, List<DefCampo> campos) {
 		this.nombre = nombre;
 		this.campos = campos;
 
@@ -21,7 +21,7 @@ public class DefStruct extends AbstractDefinicion {
 	@SuppressWarnings("unchecked")
 	public DefStruct(Object nombre, Object campos) {
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getLexeme() : (String) nombre;
-		this.campos = (List<Defcampo>) campos;
+		this.campos = (List<DefCampo>) campos;
 
 		searchForPositions(nombre, campos);	// Obtener linea/columna a partir de los hijos
 	}
@@ -33,10 +33,10 @@ public class DefStruct extends AbstractDefinicion {
 		this.nombre = nombre;
 	}
 
-	public List<Defcampo> getCampos() {
+	public List<DefCampo> getCampos() {
 		return campos;
 	}
-	public void setCampos(List<Defcampo> campos) {
+	public void setCampos(List<DefCampo> campos) {
 		this.campos = campos;
 	}
 
@@ -46,6 +46,6 @@ public class DefStruct extends AbstractDefinicion {
 	}
 
 	private String nombre;
-	private List<Defcampo> campos;
+	private List<DefCampo> campos;
 }
 

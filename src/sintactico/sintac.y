@@ -31,11 +31,11 @@ import main.*;
 /* Añadir las reglas en esta seccion ----------------------- */
 
 programa: definiciones		{ raiz = new Programa($1); }
-		|					{ $$ = new ArrayList<Definicion>(); }
+		|					{ $$ = new ArrayList(); }
 		;	
 
-definiciones : definiciones definicion 		{ $$ = $1; ((List)$1).add($2); }
-			| definicion					{ $$ = $1; }
+definiciones : definiciones definicion 		{ $$ = $1; ((List)$$).add($2); }
+			| definicion					{ $$ = new ArrayList<Definicion>(); ((List)$$).add($1); }
 			;
 			
 definicion: defVar 			{ $$ = $1; }		// variables globales
@@ -46,15 +46,15 @@ definicion: defVar 			{ $$ = $1; }		// variables globales
 defStruct: 'STRUCT' 'IDENTIFICADOR' '{' defCampos '}' ';'	{ $$ = new DefStruct($2, $4); }
 ;
 
-defCampos: defCampos 'IDENTIFICADOR' ':' tipo ';' 		{ $$ = $1; ((List)$1).add(new DefCampo($2, $4)); }
+defCampos: defCampos 'IDENTIFICADOR' ':' tipo ';' 		{ $$ = $1; ((List)$$).add(new DefCampo($2, $4)); }
 		| 												{ $$ = new ArrayList<DefCampo>(); }
 		;
 
-tipo: 'INT'				{ $$ = new TipoEntero(); 	}
-	| 'FLOAT'			{ $$ = new TipoReal(); 		}
-	| 'CHAR'			{ $$ = new TipoCaracter(); 	}
-	| 'IDENTIFICADOR'	{ $$ = new TipoIdent($1); 	}
-	| tipoArray 		{ $$ = $1; 					}
+tipo: 'INT'				{ $$ = new TipoEntero(); }
+	| 'FLOAT'			{ $$ = new TipoReal(); }
+	| 'CHAR'			{ $$ = new TipoCaracter(); }
+	| 'IDENTIFICADOR'	{ $$ = new TipoIdent($1); }
+	| tipoArray 		{ $$ = $1; }
 	;
 
 tipoArray: '[' 'LITERAL_ENTERO' ']' tipo 			{ $$ = new TipoArray($2, $4); }
@@ -68,48 +68,49 @@ tipoRetorno: ':' tipo		{ $$ = $2; }
 ;
 
 parametrosOpt: parametros	{ $$ = $1; }
-			|				{ $$ = new ArrayList<Defeinicion>(); }
+			|				{ $$ = new ArrayList<DefVariable>(); }
 			;
 
-parametros: parametros ',' 'IDENTIFICADOR' ':' tipo		{ $$ = new; }
-		| 'IDENTIFICADOR' ':' tipo
-		;
+parametros: parametros ',' 'IDENTIFICADOR' ':' tipo		{ $$ = $1; ((List)$$).add(new DefVariable($5, $3)); }
+		| 'IDENTIFICADOR' ':' tipo						{ $$ = new ArrayList<DefVariable>(); ((List)$$).add(new DefVariable($3, $1)); }
+		;												
 			
-defVarLocales: defVarLocales defVar
-			| 
+defVarLocales: defVarLocales defVar				{ $$ = $1; ((List)$$).add($2); }
+			| 									{ $$ = new ArrayList<DefVariable>(); }
 			;
 
-defVar: 'VAR' 'IDENTIFICADOR' ':' tipo ';'
+defVar: 'VAR' 'IDENTIFICADOR' ':' tipo ';'		{ $$ = new DefVariable($4, $2); }
 	;
+	
 
-sentencias: sentencias sentencia		{ $$ = $1; ((List)$1).add($2); }
+sentencias: sentencias sentencia		{ $$ = $1; ((List)$$).add($2); }
 			| 							{ $$ = new ArrayList<Sentencia>(); }
 			;
 			
-sentencia: 	expr '=' expr ';'
-			| escritura ';'
-			| 'READ' expr ';'
-			| 'RETURN' expr ';'
-			| 'RETURN' ';'
-			| 'IF' '(' expr ')' '{' sentencias '}'			
-			| 'IF' '(' expr ')' '{' sentencias '}' 'ELSE' '{' sentencias '}' 
-			| 'WHILE' '(' expr ')' '{' sentencias '}'		
+sentencia: 	expr '=' expr ';'							{ $$ = new Asignacion($1, $3); }
+			| escritura ';'								{ $$ = $1; }
+			| 'READ' expr ';'							{ $$ = $1; }
+			| 'RETURN' expr ';'							{ $$ = new Return($2); }
+			| 'RETURN' ';'								{ $$ = new Return(null); }
+			| 'IF' '(' expr ')' '{' sentencias '}'									{ $$ = new Ifelse($3, $6, null); }	
+			| 'IF' '(' expr ')' '{' sentencias '}' 'ELSE' '{' sentencias '}' 		{ $$ = new Ifelse($3, $6, $10); }	
+			| 'WHILE' '(' expr ')' '{' sentencias '}'								{ $$ = new While($3, $6); }
 			/* Invocacion a funcion como SENTENCIA */
-			| invocacionFuncion ';' 
+			| invocacionFuncion ';' 					{ $$ = $1; }					
 			;			
 	
-escritura: 		'PRINT'   expr 
-			| 	'PRINTSP' expr 
-			| 	'PRINTLN' expr 
+escritura: 		'PRINT'   expr 		{ $$ = new Escritura($2, "print"); }
+			| 	'PRINTSP' expr 		{ $$ = new Escritura($2, "printsp"); }
+			| 	'PRINTLN' expr 		{ $$ = new Escritura($2, "println"); }
 			;
 
-invocacionFuncion: 'IDENTIFICADOR' '(' listaExprSeparador ')' 
-				|  'IDENTIFICADOR' '(' ')' 
+invocacionFuncion: 'IDENTIFICADOR' '(' listaExprSeparador ')' 	{ $$ = new InvFuncExpr($1, $3); }
+				|  'IDENTIFICADOR' '(' ')' 						{ $$ = new InvFuncExpr($1, null); }
 				;
 	
-listaExprSeparador: listaExprSeparador ',' expr 
-					| expr
-					;	
+listaExprSeparador: listaExprSeparador ',' expr 	{ $$ = $1; ((List)$$).add($3); }
+					| expr							{ $$ = new ArrayList<Expresion>(); ((List)$$).add($1); }
+					;								
 	
 expr:  		expr '+' expr 				{ $$ = new ExpresionBinaria($1, "+" ,$3); }	
 		  | expr '-' expr 				{ $$ = new ExpresionBinaria($1, "-" ,$3); }	

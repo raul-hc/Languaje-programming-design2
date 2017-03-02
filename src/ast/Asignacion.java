@@ -6,18 +6,18 @@ package ast;
 
 import visitor.*;
 
-//	asigna:sentencia -> left:expresion  right:expresion
+//	asignacion:sentencia -> left:expresion  right:expresion
 
-public class Asigna extends AbstractSentencia {
+public class Asignacion extends AbstractSentencia {
 
-	public Asigna(Expresion left, Expresion right) {
+	public Asignacion(Expresion left, Expresion right) {
 		this.left = left;
 		this.right = right;
 
 		searchForPositions(left, right);	// Obtener linea/columna a partir de los hijos
 	}
 
-	public Asigna(Object left, Object right) {
+	public Asignacion(Object left, Object right) {
 		this.left = (Expresion) left;
 		this.right = (Expresion) right;
 

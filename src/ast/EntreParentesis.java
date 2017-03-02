@@ -6,9 +6,9 @@ package ast;
 
 import visitor.*;
 
-//	entreParentesis -> contenido:expresion
+//	entreParentesis:expresion -> contenido:expresion
 
-public class EntreParentesis extends AbstractTraceable implements AST {
+public class EntreParentesis extends AbstractExpresion {
 
 	public EntreParentesis(Expresion contenido) {
 		this.contenido = contenido;

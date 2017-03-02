@@ -8,9 +8,9 @@ import ast.*;
 import java.util.*;
 
 /*
-DefaultVisitor. Implementación base del visitor para ser derivada por nuevos visitor.
+DefaultVisitor. Implementaciï¿½n base del visitor para ser derivada por nuevos visitor.
 	No modificar esta clase. Para crear nuevos visitor usar el fichero "_PlantillaParaVisitors.txt".
-	DefaultVisitor ofrece una implementación por defecto de cada nodo que se limita a visitar los nodos hijos.
+	DefaultVisitor ofrece una implementaciï¿½n por defecto de cada nodo que se limita a visitar los nodos hijos.
 */
 public class DefaultVisitor implements Visitor {
 
@@ -30,28 +30,28 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class DefVariable { Tipo tipo;  String nombre;  int ambito; }
+	//	class DefVariable { Tipo tipo;  String nombre; }
 	public Object visit(DefVariable node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
 	}
 
-	//	class DefStruct { String nombre;  List<Defcampo> campos; }
+	//	class DefStruct { String nombre;  List<DefCampo> campos; }
 	public Object visit(DefStruct node, Object param) {
 		visitChildren(node.getCampos(), param);
 		return null;
 	}
 
-	//	class Defcampo { String nombre;  Tipo tipo; }
-	public Object visit(Defcampo node, Object param) {
+	//	class DefCampo { String nombre;  Tipo tipo; }
+	public Object visit(DefCampo node, Object param) {
 		if (node.getTipo() != null)
 			node.getTipo().accept(this, param);
 		return null;
 	}
 
-	//	class Asigna { Expresion left;  Expresion right; }
-	public Object visit(Asigna node, Object param) {
+	//	class Asignacion { Expresion left;  Expresion right; }
+	public Object visit(Asignacion node, Object param) {
 		if (node.getLeft() != null)
 			node.getLeft().accept(this, param);
 		if (node.getRight() != null)
@@ -118,6 +118,13 @@ public class DefaultVisitor implements Visitor {
 			node.getLeft().accept(this, param);
 		if (node.getRight() != null)
 			node.getRight().accept(this, param);
+		return null;
+	}
+
+	//	class ExpresionUnaria { Expresion expresion; }
+	public Object visit(ExpresionUnaria node, Object param) {
+		if (node.getExpresion() != null)
+			node.getExpresion().accept(this, param);
 		return null;
 	}
 
@@ -206,10 +213,20 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 	
-	// Método auxiliar -----------------------------
+	// Mï¿½todo auxiliar -----------------------------
 	protected void visitChildren(List<? extends AST> children, Object param) {
 		if (children != null)
+			for (Object child : children)
+				if (child instanceof ast.Token){
+					System.out.println(child);
+				}
+			
+			
+		try{
 			for (AST child : children)
 				child.accept(this, param);
+		} catch (java.lang.ClassCastException e){
+			System.out.println(children.toString() + "  #  " + e.getMessage());
+		}
 	}
 }

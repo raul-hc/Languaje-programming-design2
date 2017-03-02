@@ -5,12 +5,12 @@ NODES
 programa 					-> 	definicion*;
 
 defFuncion:definicion		-> 	nombre:string parametros:defVariable* tipoRetorno:tipo variableLocales:defVariable* sentencias:sentencia*;
-defVariable:definicion		-> 	tipo:tipo nombre:string ambito:int;
-defStruct:definicion 		-> 	nombre:string campos:defcampo*;
-defcampo:definicion			->	nombre:string tipo:tipo;
+defVariable:definicion		-> 	tipo:tipo nombre:string;
+defStruct:definicion 		-> 	nombre:string campos:defCampo*;
+defCampo:definicion			->	nombre:string tipo:tipo;
 
 
-asigna:sentencia 			->  left:expresion right:expresion;
+asignacion:sentencia 		->  left:expresion right:expresion;
 escritura:sentencia 		->  exprEscritura:expresion tipoEscritura:string;
 lectura:sentencia 			->  exprLectura:expresion;
 return:sentencia 			->  exprRetorno:expresion;
@@ -21,7 +21,8 @@ invFuncSent:sentencia 		->  nombreFuncion:string parametros:expresion*;
 
 expresionBinaria:expresion, sentencia -> left:expresion operador:string right:expresion;
 expresionLogica:expresion 	->	left:expresion operador:string right:expresion;
-entreParentesis 			-> 	contenido:expresion;
+expresionUnaria:expresion   ->  expresion:expresion;
+entreParentesis:expresion	-> 	contenido:expresion;
 
 cast:expresion				-> 	tipoDestino:tipo expresionAConvertir:expresion;
 accesoArray:expresion		-> 	array:expresion posicion:expresion;

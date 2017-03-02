@@ -6,24 +6,22 @@ package ast;
 
 import visitor.*;
 
-//	defVariable:definicion -> tipo:tipo  nombre:String  ambito:int
+//	defVariable:definicion -> tipo:tipo  nombre:String
 
 public class DefVariable extends AbstractDefinicion {
 
-	public DefVariable(Tipo tipo, String nombre, int ambito) {
+	public DefVariable(Tipo tipo, String nombre) {
 		this.tipo = tipo;
 		this.nombre = nombre;
-		this.ambito = ambito;
 
 		searchForPositions(tipo);	// Obtener linea/columna a partir de los hijos
 	}
 
-	public DefVariable(Object tipo, Object nombre, Object ambito) {
+	public DefVariable(Object tipo, Object nombre) {
 		this.tipo = (Tipo) tipo;
 		this.nombre = (nombre instanceof Token) ? ((Token)nombre).getLexeme() : (String) nombre;
-		this.ambito = (ambito instanceof Token) ? Integer.parseInt(((Token)ambito).getLexeme()) : (Integer) ambito;
 
-		searchForPositions(tipo, nombre, ambito);	// Obtener linea/columna a partir de los hijos
+		searchForPositions(tipo, nombre);	// Obtener linea/columna a partir de los hijos
 	}
 
 	public Tipo getTipo() {
@@ -40,13 +38,6 @@ public class DefVariable extends AbstractDefinicion {
 		this.nombre = nombre;
 	}
 
-	public int getAmbito() {
-		return ambito;
-	}
-	public void setAmbito(int ambito) {
-		this.ambito = ambito;
-	}
-
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -54,6 +45,5 @@ public class DefVariable extends AbstractDefinicion {
 
 	private Tipo tipo;
 	private String nombre;
-	private int ambito;
 }
 

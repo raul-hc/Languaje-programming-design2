@@ -72,7 +72,7 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class DefVariable { Tipo tipo;  String nombre;  int ambito; }
+	//	class DefVariable { Tipo tipo;  String nombre; }
 	public Object visit(DefVariable node, Object param) {
 
 		// super.visit(node, param);
@@ -83,20 +83,20 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class DefStruct { String nombre;  List<Defcampo> campos; }
+	//	class DefStruct { String nombre;  List<DefCampo> campos; }
 	public Object visit(DefStruct node, Object param) {
 
 		// super.visit(node, param);
 
 		if (node.getCampos() != null)
-			for (Defcampo child : node.getCampos())
+			for (DefCampo child : node.getCampos())
 				child.accept(this, param);
 
 		return null;
 	}
 
-	//	class Defcampo { String nombre;  Tipo tipo; }
-	public Object visit(Defcampo node, Object param) {
+	//	class DefCampo { String nombre;  Tipo tipo; }
+	public Object visit(DefCampo node, Object param) {
 
 		// super.visit(node, param);
 
@@ -106,8 +106,8 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Asigna { Expresion left;  Expresion right; }
-	public Object visit(Asigna node, Object param) {
+	//	class Asignacion { Expresion left;  Expresion right; }
+	public Object visit(Asignacion node, Object param) {
 
 		// super.visit(node, param);
 
@@ -223,6 +223,17 @@ public class <nombre clase> extends DefaultVisitor {
 
 		if (node.getRight() != null)
 			node.getRight().accept(this, param);
+
+		return null;
+	}
+
+	//	class ExpresionUnaria { Expresion expresion; }
+	public Object visit(ExpresionUnaria node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getExpresion() != null)
+			node.getExpresion().accept(this, param);
 
 		return null;
 	}
