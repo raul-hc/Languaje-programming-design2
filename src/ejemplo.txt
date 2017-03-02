@@ -69,8 +69,7 @@ main() {
   var v:[10] int;
 
   pepe.edad = 20;
-  //read pepe.direccion.codigoPostal;
-  print pepe.direccion; 
+  read pepe.direccion.codigoPostal;
 
   local = 0;
   while (local < 10) {

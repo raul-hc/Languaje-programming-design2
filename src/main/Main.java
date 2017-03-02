@@ -18,8 +18,10 @@ import ast.*;
  * - Para Generacion de Codigo: 'generacionDeCodigo/GestionDeMemoria.java' y 'generacionDeCodigo/SeleccionDeInstrucciones.java'  */
 public class Main {
 	
-	public static final String programa = "src/ejemplo.txt";	// Entrada a usar durante el desarrollo
-
+	// Entrada a usar durante el desarrollo
+	public static final String programa = "src/ejemplo.txt";	
+//	public static final String programa = "src/Hipoteca.txt";	
+	
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();
 

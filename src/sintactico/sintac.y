@@ -89,7 +89,7 @@ sentencias: sentencias sentencia		{ $$ = $1; ((List)$$).add($2); }
 			
 sentencia: 	expr '=' expr ';'							{ $$ = new Asignacion($1, $3); }
 			| escritura ';'								{ $$ = $1; }
-			| 'READ' expr ';'							{ $$ = $1; }
+			| 'READ' expr ';'							{ $$ = new Lectura($2); }
 			| 'RETURN' expr ';'							{ $$ = new Return($2); }
 			| 'RETURN' ';'								{ $$ = new Return(null); }
 			| 'IF' '(' expr ')' '{' sentencias '}'									{ $$ = new Ifelse($3, $6, null); }	

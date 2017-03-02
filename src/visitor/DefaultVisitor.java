@@ -216,17 +216,7 @@ public class DefaultVisitor implements Visitor {
 	// M�todo auxiliar -----------------------------
 	protected void visitChildren(List<? extends AST> children, Object param) {
 		if (children != null)
-			for (Object child : children)
-				if (child instanceof ast.Token){
-					System.out.println(child);
-				}
-			
-			
-		try{
 			for (AST child : children)
 				child.accept(this, param);
-		} catch (java.lang.ClassCastException e){
-			System.out.println(children.toString() + "  #  " + e.getMessage());
-		}
 	}
 }

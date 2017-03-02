@@ -65,7 +65,7 @@ print	{ return Parser.PRINT; }
 printsp	{ return Parser.PRINTSP; }
 println	{ return Parser.PRINTLN; }
 
-[a-zA-Z√±√ë][a-zA-Z0-9_√±√ë]*			{ return Parser.IDENTIFICADOR; }
+[a-zA-ZÒ—][a-zA-Z0-9_Ò—]*			{ return Parser.IDENTIFICADOR; }
 [0-9]+								{ return Parser.LITERAL_ENTERO; }
 [0-9]+"."[0-9]*						{ return Parser.LITERAL_REAL; }
 '[a-zA-Z0-9_√±√ë()+\- =]' | '\\n' 	{ return Parser.LITERAL_CARACTER; }

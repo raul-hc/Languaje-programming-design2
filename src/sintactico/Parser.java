@@ -867,7 +867,7 @@ case 30:
 break;
 case 31:
 //#line 92 "sintac.y"
-{ yyval = val_peek(2); }
+{ yyval = new Lectura(val_peek(1)); }
 break;
 case 32:
 //#line 93 "sintac.y"
