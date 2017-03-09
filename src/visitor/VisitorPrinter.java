@@ -1,19 +1,10 @@
-/**
- * @generated VGen 1.3.3
- */
-
-// package <nombre paquete>;
+package visitor;
 
 import ast.*;
 
-/*
-Plantilla para Visitors.
-Para crear un nuevo Visitor cortar y pegar este código y ya se tendrá un visitor que compila y 
-que al ejecutarlo recorrerá todo el árbol (sin hacer nada aún en él).
-Solo quedará añadir a cada método visit aquello adicional que tenga que realizar sobre su nodo del AST.
-*/
+/* Añadir a cada método visit aquello adicional que tenga que realizar sobre su nodo del AST */
 
-public class <nombre clase> extends DefaultVisitor {
+public class VisitorPrinter extends DefaultVisitor {
 
 	// ---------------------------------------------------------
 	// Tareas a realizar en cada método visit:
@@ -36,15 +27,17 @@ public class <nombre clase> extends DefaultVisitor {
 	//		la llamada a 'super.visit' deberá ser borrada.
 	// ---------------------------------------------------------
 
-
 	//	class Programa { List<Definicion> definicion; }
 	public Object visit(Programa node, Object param) {
 
 		// super.visit(node, param);
 
-		if (node.getDefinicion() != null)
-			for (Definicion child : node.getDefinicion())
+		if (node.getDefinicion() != null) {
+			for (Definicion child : node.getDefinicion()) {
 				child.accept(this, param);
+			}
+		}
+					
 
 		return null;
 	}
@@ -54,20 +47,42 @@ public class <nombre clase> extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getParametros() != null)
-			for (DefVariable child : node.getParametros())
-				child.accept(this, param);
-
-		if (node.getTipoRetorno() != null)
+		System.out.print(node.getNombre() + "(");
+		
+		if (node.getParametros() != null){
+			for (DefVariable child : node.getParametros()){
+				System.out.print(child.getNombre() + ":" + child.getTipo() + ", ");
+//				child.accept(this, param);
+			}
+		}
+		
+		System.out.print(")");
+		
+		if (node.getTipoRetorno() != null) {
+			System.out.print(":");
 			node.getTipoRetorno().accept(this, param);
-
-		if (node.getVariableLocales() != null)
-			for (DefVariable child : node.getVariableLocales())
+		}
+		
+		System.out.println(" {");
+		
+		if (node.getVariableLocales() != null) {
+			for (DefVariable child : node.getVariableLocales()){
+				System.out.print("\t");
 				child.accept(this, param);
-
-		if (node.getSentencias() != null)
-			for (Sentencia child : node.getSentencias())
+			}
+		}
+		
+		System.out.println();
+		
+		if (node.getSentencias() != null) {
+			for (Sentencia child : node.getSentencias()) {
+				System.out.print("\t");
 				child.accept(this, param);
+				System.out.println();				
+			}
+		}
+		
+		System.out.println("}");
 
 		return null;
 	}
@@ -77,8 +92,13 @@ public class <nombre clase> extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getTipo() != null)
+		System.out.print("var " + node.getNombre() + ":");
+		
+		if (node.getTipo() != null) {
 			node.getTipo().accept(this, param);
+		}
+		
+		System.out.println(";");
 
 		return null;
 	}
@@ -88,9 +108,15 @@ public class <nombre clase> extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getCampos() != null)
-			for (DefCampo child : node.getCampos())
+		System.out.print("struct " + node.getNombre() + " {" + "\n");
+		
+		if (node.getCampos() != null){
+			for (DefCampo child : node.getCampos()){
 				child.accept(this, param);
+			}
+		}
+		
+		System.out.println("};");
 
 		return null;
 	}
@@ -100,8 +126,13 @@ public class <nombre clase> extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getTipo() != null)
+		System.out.print("\t" + node.getNombre() + ":");
+		
+		if (node.getTipo() != null) {
 			node.getTipo().accept(this, param);
+		}
+		
+		System.out.println(";");
 
 		return null;
 	}
@@ -111,11 +142,17 @@ public class <nombre clase> extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getLeft() != null)
+		if (node.getLeft() != null){
 			node.getLeft().accept(this, param);
+		}
+		
+		System.out.print(" = ");
 
-		if (node.getRight() != null)
+		if (node.getRight() != null){
 			node.getRight().accept(this, param);
+		}
+
+		System.out.print(";" );
 
 		return null;
 	}
@@ -123,21 +160,27 @@ public class <nombre clase> extends DefaultVisitor {
 	//	class Escritura { Expresion exprEscritura;  String tipoEscritura; }
 	public Object visit(Escritura node, Object param) {
 
-		// super.visit(node, param);
+		System.out.print(node.getTipoEscritura() + " ");
 
-		if (node.getExprEscritura() != null)
+		if (node.getExprEscritura() != null){
 			node.getExprEscritura().accept(this, param);
+		}
 
+		System.out.println(";");
+		
 		return null;
 	}
 
 	//	class Lectura { Expresion exprLectura; }
 	public Object visit(Lectura node, Object param) {
 
-		// super.visit(node, param);
+		System.out.print("read ");
 
-		if (node.getExprLectura() != null)
+		if (node.getExprLectura() != null){
 			node.getExprLectura().accept(this, param);
+		}
+		
+		System.out.println(";");
 
 		return null;
 	}
@@ -145,10 +188,13 @@ public class <nombre clase> extends DefaultVisitor {
 	//	class Return { Expresion exprRetorno; }
 	public Object visit(Return node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getExprRetorno() != null)
+		System.out.print("return ");
+		
+		if (node.getExprRetorno() != null){
 			node.getExprRetorno().accept(this, param);
+		}
+		
+		System.out.println(";");
 
 		return null;
 	}
@@ -158,16 +204,31 @@ public class <nombre clase> extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getCondicion() != null)
+		System.out.print("if (");
+		
+		if (node.getCondicion() != null){
 			node.getCondicion().accept(this, param);
+		}
 
-		if (node.getSentenciasIf() != null)
-			for (Sentencia child : node.getSentenciasIf())
+		System.out.println(") {");
+		
+		if (node.getSentenciasIf() != null){
+			for (Sentencia child : node.getSentenciasIf()) {
+				System.out.println("\t");
 				child.accept(this, param);
+			}
+		}
 
-		if (node.getSentenciasElse() != null)
-			for (Sentencia child : node.getSentenciasElse())
+		System.out.print("}");
+		
+		if (node.getSentenciasElse() != null){
+			System.out.println("else {");
+			for (Sentencia child : node.getSentenciasElse()){
+				System.out.println("\t");
 				child.accept(this, param);
+			}
+			System.out.println("}");
+		}
 
 		return null;
 	}
@@ -175,14 +236,22 @@ public class <nombre clase> extends DefaultVisitor {
 	//	class While { Expresion condicion;  List<Sentencia> sentenciasWhile; }
 	public Object visit(While node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getCondicion() != null)
+		System.out.print("while (");
+		
+		if (node.getCondicion() != null){
 			node.getCondicion().accept(this, param);
+		}
+		
+		System.out.print(") {");
 
-		if (node.getSentenciasWhile() != null)
-			for (Sentencia child : node.getSentenciasWhile())
+		if (node.getSentenciasWhile() != null){
+			for (Sentencia child : node.getSentenciasWhile()){
+				System.out.println("\t");
 				child.accept(this, param);
+			}
+		}
+		
+		System.out.print("\n" + "}");
 
 		return null;
 	}
@@ -190,11 +259,18 @@ public class <nombre clase> extends DefaultVisitor {
 	//	class InvFuncSent { String nombreFuncion;  List<Expresion> parametros; }
 	public Object visit(InvFuncSent node, Object param) {
 
-		// super.visit(node, param);
+		System.out.print("\t");
 
-		if (node.getParametros() != null)
-			for (Expresion child : node.getParametros())
+		System.out.print(node.getNombreFuncion() + "(");
+		
+		if (node.getParametros() != null){
+			for (Expresion child : node.getParametros()){
 				child.accept(this, param);
+				System.out.print(", ");
+			}
+		}
+		
+		System.out.print(")");
 
 		return null;
 	}
@@ -202,13 +278,17 @@ public class <nombre clase> extends DefaultVisitor {
 	//	class ExpresionBinaria { Expresion left;  String operador;  Expresion right; }
 	public Object visit(ExpresionBinaria node, Object param) {
 
-		// super.visit(node, param);
+		System.out.print("\t");
 
-		if (node.getLeft() != null)
+		if (node.getLeft() != null){
 			node.getLeft().accept(this, param);
+		}
+		
+		System.out.print(node.getOperador());
 
-		if (node.getRight() != null)
+		if (node.getRight() != null) {
 			node.getRight().accept(this, param);
+		}
 
 		return null;
 	}
@@ -216,24 +296,30 @@ public class <nombre clase> extends DefaultVisitor {
 	//	class ExpresionLogica { Expresion left;  String operador;  Expresion right; }
 	public Object visit(ExpresionLogica node, Object param) {
 
-		// super.visit(node, param);
+		System.out.print("\t");
 
-		if (node.getLeft() != null)
+		if (node.getLeft() != null){
 			node.getLeft().accept(this, param);
+		}
+		
+		System.out.print(node.getOperador());
 
-		if (node.getRight() != null)
+		if (node.getRight() != null){
 			node.getRight().accept(this, param);
+		}
 
 		return null;
 	}
 
-	//	class ExpresionUnariaNegacion { Expresion expresion; }
+	//	class ExpresionUnaria { Expresion expresion; }
 	public Object visit(ExpresionUnariaNegacion node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getExpresion() != null)
+		
+		if (node.getExpresion() != null){
+			System.out.print("\t");
+			System.out.print("!");
 			node.getExpresion().accept(this, param);
+		}
 
 		return null;
 	}
@@ -241,13 +327,20 @@ public class <nombre clase> extends DefaultVisitor {
 	//	class Cast { Tipo tipoDestino;  Expresion expresionAConvertir; }
 	public Object visit(Cast node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getTipoDestino() != null)
+		System.out.print("cast<");
+		
+		if (node.getTipoDestino() != null){
 			node.getTipoDestino().accept(this, param);
+			// System.out.println(node);
+		}
+		
+		System.out.print(">(");
 
-		if (node.getExpresionAConvertir() != null)
+		if (node.getExpresionAConvertir() != null){
 			node.getExpresionAConvertir().accept(this, param);
+		}
+		
+		System.out.println(")");
 
 		return null;
 	}
@@ -255,24 +348,29 @@ public class <nombre clase> extends DefaultVisitor {
 	//	class AccesoArray { Expresion array;  Expresion posicion; }
 	public Object visit(AccesoArray node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getArray() != null)
+		if (node.getArray() != null){
 			node.getArray().accept(this, param);
+		}
+		
+		System.out.print("[");
 
-		if (node.getPosicion() != null)
+		if (node.getPosicion() != null){
 			node.getPosicion().accept(this, param);
+		}
+
+		System.out.print("]");
 
 		return null;
 	}
 
 	//	class AccesoStruct { Expresion struct;  String nombreCampo; }
 	public Object visit(AccesoStruct node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getStruct() != null)
+		
+		if (node.getStruct() != null){
 			node.getStruct().accept(this, param);
+		}
+		
+		System.out.print("." + node.getNombreCampo());
 
 		return null;
 	}
@@ -282,45 +380,59 @@ public class <nombre clase> extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getParametros() != null)
-			for (Expresion child : node.getParametros())
+		System.out.print(node.getNombreFuncion() + "(" );
+		
+		if (node.getParametros() != null){
+			for (Expresion child : node.getParametros()){
 				child.accept(this, param);
-
+				System.out.print(",");
+			}
+		}
+		
+		System.out.print(")");
+		
 		return null;
 	}
 
 	//	class Variable { String nombre; }
 	public Object visit(Variable node, Object param) {
+		System.out.print(node.getNombre());
 		return null;
 	}
 
 	//	class LiteralInt { int valor; }
 	public Object visit(LiteralInt node, Object param) {
+		System.out.print(node.getValor());
 		return null;
 	}
 
 	//	class LiteralReal { String valor; }
 	public Object visit(LiteralReal node, Object param) {
+		System.out.print(node.getValor());
 		return null;
 	}
 
 	//	class LiteralCaracter { String valor; }
 	public Object visit(LiteralCaracter node, Object param) {
+		System.out.print(node.getValor());
 		return null;
 	}
 
 	//	class TipoEntero {  }
 	public Object visit(TipoEntero node, Object param) {
+		System.out.print(" int");
 		return null;
 	}
 
 	//	class TipoReal {  }
 	public Object visit(TipoReal node, Object param) {
+		System.out.print(" float");
 		return null;
 	}
 
 	//	class TipoCaracter {  }
 	public Object visit(TipoCaracter node, Object param) {
+		System.out.print(" char");
 		return null;
 	}
 
@@ -329,14 +441,21 @@ public class <nombre clase> extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getTipo() != null)
+		System.out.print("[" + node.getTamano() + "]");
+
+		if (node.getTipo() != null){
 			node.getTipo().accept(this, param);
+		}
+		
 
 		return null;
 	}
 
 	//	class TipoIdent { String tipo; }
 	public Object visit(TipoIdent node, Object param) {
+		
+		System.out.print(node.getTipo());
+		
 		return null;
 	}
 }

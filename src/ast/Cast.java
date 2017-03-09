@@ -43,6 +43,12 @@ public class Cast extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "Cast [tipoDestino=" + tipoDestino + ", expresionAConvertir="
+				+ expresionAConvertir + "]";
+	}
+
 	private Tipo tipoDestino;
 	private Expresion expresionAConvertir;
 }

@@ -34,6 +34,11 @@ public class Return extends AbstractSentencia {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "Return [exprRetorno=" + exprRetorno + "]";
+	}
+
 	private Expresion exprRetorno;
 }
 

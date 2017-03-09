@@ -43,6 +43,11 @@ public class TipoArray extends AbstractTipo {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "TipoArray [tamano=" + tamano + ", tipo=" + tipo + "]";
+	}
+
 	private int tamano;
 	private Tipo tipo;
 }

@@ -6,17 +6,17 @@ package ast;
 
 import visitor.*;
 
-//	expresionUnaria:expresion -> expresion:expresion
+//	expresionUnariaNegacion:expresion -> expresion:expresion
 
-public class ExpresionUnaria extends AbstractExpresion {
+public class ExpresionUnariaNegacion extends AbstractExpresion {
 
-	public ExpresionUnaria(Expresion expresion) {
+	public ExpresionUnariaNegacion(Expresion expresion) {
 		this.expresion = expresion;
 
 		searchForPositions(expresion);	// Obtener linea/columna a partir de los hijos
 	}
 
-	public ExpresionUnaria(Object expresion) {
+	public ExpresionUnariaNegacion(Object expresion) {
 		this.expresion = (Expresion) expresion;
 
 		searchForPositions(expresion);	// Obtener linea/columna a partir de los hijos

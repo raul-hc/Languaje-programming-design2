@@ -52,6 +52,12 @@ public class ExpresionBinaria extends AbstractTraceable implements Expresion, Se
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "ExpresionBinaria [left=" + left + ", operador=" + operador
+				+ ", right=" + right + "]";
+	}
+
 	private Expresion left;
 	private String operador;
 	private Expresion right;

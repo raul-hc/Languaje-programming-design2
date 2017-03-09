@@ -45,6 +45,12 @@ public class InvFuncExpr extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "InvFuncExpr [nombreFuncion=" + nombreFuncion + ", parametros="
+				+ parametros + "]";
+	}
+
 	private String nombreFuncion;
 	private List<Expresion> parametros;
 }

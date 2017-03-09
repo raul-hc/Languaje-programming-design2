@@ -8,9 +8,9 @@ import ast.*;
 import java.util.*;
 
 /*
-DefaultVisitor. Implementaciï¿½n base del visitor para ser derivada por nuevos visitor.
+DefaultVisitor. Implementación base del visitor para ser derivada por nuevos visitor.
 	No modificar esta clase. Para crear nuevos visitor usar el fichero "_PlantillaParaVisitors.txt".
-	DefaultVisitor ofrece una implementaciï¿½n por defecto de cada nodo que se limita a visitar los nodos hijos.
+	DefaultVisitor ofrece una implementación por defecto de cada nodo que se limita a visitar los nodos hijos.
 */
 public class DefaultVisitor implements Visitor {
 
@@ -121,17 +121,10 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class ExpresionUnaria { Expresion expresion; }
-	public Object visit(ExpresionUnaria node, Object param) {
+	//	class ExpresionUnariaNegacion { Expresion expresion; }
+	public Object visit(ExpresionUnariaNegacion node, Object param) {
 		if (node.getExpresion() != null)
 			node.getExpresion().accept(this, param);
-		return null;
-	}
-
-	//	class EntreParentesis { Expresion contenido; }
-	public Object visit(EntreParentesis node, Object param) {
-		if (node.getContenido() != null)
-			node.getContenido().accept(this, param);
 		return null;
 	}
 
@@ -213,7 +206,7 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 	
-	// Mï¿½todo auxiliar -----------------------------
+	// Método auxiliar -----------------------------
 	protected void visitChildren(List<? extends AST> children, Object param) {
 		if (children != null)
 			for (AST child : children)

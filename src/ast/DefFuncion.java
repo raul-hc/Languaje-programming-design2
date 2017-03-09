@@ -72,6 +72,13 @@ public class DefFuncion extends AbstractDefinicion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "DefFuncion [nombre=" + nombre + ", parametros=" + parametros
+				+ ", tipoRetorno=" + tipoRetorno + ", variableLocales="
+				+ variableLocales + ", sentencias=" + sentencias + "]";
+	}
+
 	private String nombre;
 	private List<DefVariable> parametros;
 	private Tipo tipoRetorno;

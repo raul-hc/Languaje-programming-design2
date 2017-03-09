@@ -45,6 +45,11 @@ public class DefStruct extends AbstractDefinicion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "DefStruct [nombre=" + nombre + ", campos=" + campos + "]";
+	}
+
 	private String nombre;
 	private List<DefCampo> campos;
 }

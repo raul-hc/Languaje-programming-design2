@@ -32,6 +32,11 @@ public class TipoIdent extends AbstractTipo {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "TipoIdent (" + tipo + ")";
+	}
+
 	private String tipo;
 }
 

@@ -43,6 +43,12 @@ public class Escritura extends AbstractSentencia {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "Escritura [exprEscritura=" + exprEscritura + ", tipoEscritura="
+				+ tipoEscritura + "]";
+	}
+
 	private Expresion exprEscritura;
 	private String tipoEscritura;
 }

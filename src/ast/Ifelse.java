@@ -54,6 +54,12 @@ public class Ifelse extends AbstractSentencia {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "Ifelse [condicion=" + condicion + ", sentenciasIf="
+				+ sentenciasIf + ", sentenciasElse=" + sentenciasElse + "]";
+	}
+
 	private Expresion condicion;
 	private List<Sentencia> sentenciasIf;
 	private List<Sentencia> sentenciasElse;

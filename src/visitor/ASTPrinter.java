@@ -52,7 +52,7 @@ public class ASTPrinter extends DefaultVisitor {
 			writer.println(ls + ls + "[ASTPrinter] --------------------------------");
 			generateFooter(writer);
 			writer.close();
-			System.out.println(ls + "ASTPrinter: Fichero '" + filename + ".html' generado con éxito. Abra el fichero para validar el árbol AST generado.");
+			System.out.println(ls + "\t -ASTPrinter: Fichero '" + filename + ".html' generado con éxito. Abra el fichero para validar el árbol AST generado.");
 		} catch (IOException e) {
 			System.out.println(ls + "ASTPrinter: No se ha podido crear el fichero " + filename);
 			e.printStackTrace();
@@ -255,23 +255,13 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class ExpresionUnaria { Expresion expresion; }
-	public Object visit(ExpresionUnaria node, Object param) {
+	//	class ExpresionUnariaNegacion { Expresion expresion; }
+	public Object visit(ExpresionUnariaNegacion node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "ExpresionUnaria", node, false);
+		printName(indent, "ExpresionUnariaNegacion", node, false);
 
 		visit(indent + 1, "expresion", "Expresion",node.getExpresion());
-		return null;
-	}
-
-	//	class EntreParentesis { Expresion contenido; }
-	public Object visit(EntreParentesis node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "EntreParentesis", node, false);
-
-		visit(indent + 1, "contenido", "Expresion",node.getContenido());
 		return null;
 	}
 

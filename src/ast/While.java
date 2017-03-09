@@ -45,6 +45,12 @@ public class While extends AbstractSentencia {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "While [condicion=" + condicion + ", sentenciasWhile="
+				+ sentenciasWhile + "]";
+	}
+
 	private Expresion condicion;
 	private List<Sentencia> sentenciasWhile;
 }

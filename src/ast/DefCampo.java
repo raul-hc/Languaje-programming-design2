@@ -43,6 +43,11 @@ public class DefCampo extends AbstractDefinicion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "DefCampo [nombre=" + nombre + ", tipo=" + tipo + "]";
+	}
+
 	private String nombre;
 	private Tipo tipo;
 }

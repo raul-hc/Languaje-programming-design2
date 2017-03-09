@@ -34,6 +34,11 @@ public class Lectura extends AbstractSentencia {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "Lectura [exprLectura=" + exprLectura + "]";
+	}
+
 	private Expresion exprLectura;
 }
 

@@ -15,5 +15,10 @@ public class TipoCaracter extends AbstractTipo {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "TipoCaracter";
+	}
+
 }
 

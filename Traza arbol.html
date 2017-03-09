@@ -104,11 +104,10 @@
 <span class="dots">·  ·  |  ·  </span>Asignacion &rarr;                                    <span class="pos">56:5  56:23  </span><span class="sourceText"></span><span class="posText">local = (a + b) * 2</span><span class="sourceText">;</span>
 <span class="dots">·  ·  |  ·  |  </span>"local"  <span class="type">Variable.nombre</span>                     <span class="pos">56:5  56:9   </span><span class="sourceText"></span><span class="posText">local</span><span class="sourceText"> = (a + b) * 2;</span>
 <span class="dots">·  ·  |  ·  |  </span>ExpresionBinaria &rarr;                           <span class="pos">56:14  56:23 </span><span class="sourceText">local = (</span><span class="posText">a + b) * 2</span><span class="sourceText">;</span>
-<span class="dots">·  ·  |  ·  |  ·  </span>EntreParentesis &rarr;                         <span class="pos">56:14  56:18 </span><span class="sourceText">local = (</span><span class="posText">a + b</span><span class="sourceText">) * 2;</span>
-<span class="dots">·  ·  |  ·  |  ·  |  </span>ExpresionBinaria &rarr;                     <span class="pos">56:14  56:18 </span><span class="sourceText">local = (</span><span class="posText">a + b</span><span class="sourceText">) * 2;</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  </span>"a"  <span class="type">Variable.nombre</span>                <span class="pos">56:14  56:14 </span><span class="sourceText">local = (</span><span class="posText">a</span><span class="sourceText"> + b) * 2;</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  </span>"<span class="value">+</span>"  
-<span class="dots">·  ·  |  ·  |  ·  |  ·  </span>"b"  <span class="type">Variable.nombre</span>                <span class="pos">56:18  56:18 </span><span class="sourceText">local = (a + </span><span class="posText">b</span><span class="sourceText">) * 2;</span>
+<span class="dots">·  ·  |  ·  |  ·  </span>ExpresionBinaria &rarr;                        <span class="pos">56:14  56:18 </span><span class="sourceText">local = (</span><span class="posText">a + b</span><span class="sourceText">) * 2;</span>
+<span class="dots">·  ·  |  ·  |  ·  |  </span>"a"  <span class="type">Variable.nombre</span>                   <span class="pos">56:14  56:14 </span><span class="sourceText">local = (</span><span class="posText">a</span><span class="sourceText"> + b) * 2;</span>
+<span class="dots">·  ·  |  ·  |  ·  |  </span>"<span class="value">+</span>"  
+<span class="dots">·  ·  |  ·  |  ·  |  </span>"b"  <span class="type">Variable.nombre</span>                   <span class="pos">56:18  56:18 </span><span class="sourceText">local = (a + </span><span class="posText">b</span><span class="sourceText">) * 2;</span>
 <span class="dots">·  ·  |  ·  |  ·  </span>"<span class="value">*</span>"  
 <span class="dots">·  ·  |  ·  |  ·  </span>LiteralInt &rarr;                              <span class="pos">56:23  56:23 </span><span class="sourceText">local = (a + b) * </span><span class="posText">2</span><span class="sourceText">;</span>
 <span class="dots">·  ·  |  ·  |  ·  |  </span><span class="value">2</span>  <span class="type">int</span>
@@ -188,17 +187,16 @@
 <span class="dots">·  ·  |  ·  |  ·  |  ·  </span>parametros  <span class="type">List&lt;Expresion&gt;</span> = 
 <span class="dots">·  ·  |  ·  |  ·  |  ·  |  </span>Cast &rarr;                           <span class="pos">83:36  83:47 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(</span><span class="posText">2.0 + h[0][3</span><span class="sourceText">]), local);</span>
 <span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  </span><span class="value">TipoEntero</span> &rarr;                  <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  </span>EntreParentesis &rarr;             <span class="pos">83:36  83:47 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(</span><span class="posText">2.0 + h[0][3</span><span class="sourceText">]), local);</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  </span>ExpresionBinaria &rarr;         <span class="pos">83:36  83:47 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(</span><span class="posText">2.0 + h[0][3</span><span class="sourceText">]), local);</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span>"2.0"  <span class="type">LiteralReal.valor</span><span class="pos">83:36  83:38 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(</span><span class="posText">2.0</span><span class="sourceText"> + h[0][3]), local);</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span>"<span class="value">+</span>"  
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span>AccesoArray &rarr;           <span class="pos">83:42  83:47 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + </span><span class="posText">h[0][3</span><span class="sourceText">]), local);</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  </span>AccesoArray &rarr;        <span class="pos">83:42  83:44 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + </span><span class="posText">h[0</span><span class="sourceText">][3]), local);</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span>"h"  <span class="type">Variable.nombre</span><span class="pos">83:42  83:42 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + </span><span class="posText">h</span><span class="sourceText">[0][3]), local);</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span>LiteralInt &rarr;      <span class="pos">83:44  83:44 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + h[</span><span class="posText">0</span><span class="sourceText">][3]), local);</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  </span><span class="value">0</span>  <span class="type">int</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  </span>LiteralInt &rarr;         <span class="pos">83:47  83:47 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + h[0][</span><span class="posText">3</span><span class="sourceText">]), local);</span>
-<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span><span class="value">3</span>  <span class="type">int</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  </span>ExpresionBinaria &rarr;            <span class="pos">83:36  83:47 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(</span><span class="posText">2.0 + h[0][3</span><span class="sourceText">]), local);</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  </span>"2.0"  <span class="type">LiteralReal.valor</span>   <span class="pos">83:36  83:38 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(</span><span class="posText">2.0</span><span class="sourceText"> + h[0][3]), local);</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  </span>"<span class="value">+</span>"  
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  </span>AccesoArray &rarr;              <span class="pos">83:42  83:47 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + </span><span class="posText">h[0][3</span><span class="sourceText">]), local);</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span>AccesoArray &rarr;           <span class="pos">83:42  83:44 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + </span><span class="posText">h[0</span><span class="sourceText">][3]), local);</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  </span>"h"  <span class="type">Variable.nombre</span> <span class="pos">83:42  83:42 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + </span><span class="posText">h</span><span class="sourceText">[0][3]), local);</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  </span>LiteralInt &rarr;         <span class="pos">83:44  83:44 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + h[</span><span class="posText">0</span><span class="sourceText">][3]), local);</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span><span class="value">0</span>  <span class="type">int</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  </span>LiteralInt &rarr;            <span class="pos">83:47  83:47 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + h[0][</span><span class="posText">3</span><span class="sourceText">]), local);</span>
+<span class="dots">·  ·  |  ·  |  ·  |  ·  |  ·  |  ·  |  </span><span class="value">3</span>  <span class="type">int</span>
 <span class="dots">·  ·  |  ·  |  ·  |  ·  |  </span>"local"  <span class="type">Variable.nombre</span>         <span class="pos">83:52  83:56 </span><span class="sourceText">v[local] = dobleSuma(cast<int>(2.0 + h[0][3]), </span><span class="posText">local</span><span class="sourceText">);</span>
 <span class="dots">·  ·  |  ·  |  ·  </span>Asignacion &rarr;                              <span class="pos">84:5  84:21  </span><span class="sourceText"></span><span class="posText">local = local + 1</span><span class="sourceText">;</span>
 <span class="dots">·  ·  |  ·  |  ·  |  </span>"local"  <span class="type">Variable.nombre</span>               <span class="pos">84:5  84:9   </span><span class="sourceText"></span><span class="posText">local</span><span class="sourceText"> = local + 1;</span>
@@ -221,7 +219,7 @@
 <span class="dots">·  ·  |  ·  |  ·  </span>LiteralInt &rarr;                              <span class="pos">87:25  87:25 </span><span class="sourceText">if (a >= 2 && local < </span><span class="posText">5</span><span class="sourceText">) {</span>
 <span class="dots">·  ·  |  ·  |  ·  |  </span><span class="value">5</span>  <span class="type">int</span>
 <span class="dots">·  ·  |  ·  |  </span>sentenciasIf  <span class="type">List&lt;Sentencia&gt;</span> = 
-<span class="dots">·  ·  |  ·  |  ·  </span>InvFuncExpr &rarr;                             <span class="pos">88:5  88:25  </span><span class="sourceText"></span><span class="posText">escribeEdad(a + local</span><span class="sourceText">); </span>
+<span class="dots">·  ·  |  ·  |  ·  </span>InvFuncSent &rarr;                             <span class="pos">88:5  88:25  </span><span class="sourceText"></span><span class="posText">escribeEdad(a + local</span><span class="sourceText">); </span>
 <span class="dots">·  ·  |  ·  |  ·  |  </span>"<span class="value">escribeEdad</span>"  
 <span class="dots">·  ·  |  ·  |  ·  |  </span>parametros  <span class="type">List&lt;Expresion&gt;</span> = 
 <span class="dots">·  ·  |  ·  |  ·  |  ·  </span>ExpresionBinaria &rarr;                  <span class="pos">88:17  88:25 </span><span class="sourceText">escribeEdad(</span><span class="posText">a + local</span><span class="sourceText">); </span>
@@ -241,7 +239,7 @@
 <span class="dots">·  ·  |  ·  |  ·  </span>LiteralInt &rarr;                              <span class="pos">94:12  94:12 </span><span class="sourceText">if (z != </span><span class="posText">2</span><span class="sourceText">) {</span>
 <span class="dots">·  ·  |  ·  |  ·  |  </span><span class="value">2</span>  <span class="type">int</span>
 <span class="dots">·  ·  |  ·  |  </span>sentenciasIf  <span class="type">List&lt;Sentencia&gt;</span> = 
-<span class="dots">·  ·  |  ·  |  ·  </span>InvFuncExpr &rarr;                             <span class="pos">95:5  95:23  </span><span class="sourceText"></span><span class="posText">escribeEdad(v[local</span><span class="sourceText">]);</span>
+<span class="dots">·  ·  |  ·  |  ·  </span>InvFuncSent &rarr;                             <span class="pos">95:5  95:23  </span><span class="sourceText"></span><span class="posText">escribeEdad(v[local</span><span class="sourceText">]);</span>
 <span class="dots">·  ·  |  ·  |  ·  |  </span>"<span class="value">escribeEdad</span>"  
 <span class="dots">·  ·  |  ·  |  ·  |  </span>parametros  <span class="type">List&lt;Expresion&gt;</span> = 
 <span class="dots">·  ·  |  ·  |  ·  |  ·  </span>AccesoArray &rarr;                       <span class="pos">95:17  95:23 </span><span class="sourceText">escribeEdad(</span><span class="posText">v[local</span><span class="sourceText">]);</span>

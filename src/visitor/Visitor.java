@@ -21,8 +21,7 @@ public interface Visitor {
 	public Object visit(InvFuncSent node, Object param);
 	public Object visit(ExpresionBinaria node, Object param);
 	public Object visit(ExpresionLogica node, Object param);
-	public Object visit(ExpresionUnaria node, Object param);
-	public Object visit(EntreParentesis node, Object param);
+	public Object visit(ExpresionUnariaNegacion node, Object param);
 	public Object visit(Cast node, Object param);
 	public Object visit(AccesoArray node, Object param);
 	public Object visit(AccesoStruct node, Object param);

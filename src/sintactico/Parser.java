@@ -558,7 +558,7 @@ final static String yyrule[] = {
 "expr : \"IDENTIFICADOR\" '(' listaExprSeparador ')'",
 };
 
-//#line 153 "sintac.y"
+//#line 152 "sintac.y"
 
 /* No es necesario modificar esta seccion ------------------ */
 
@@ -907,11 +907,11 @@ case 40:
 break;
 case 41:
 //#line 107 "sintac.y"
-{ yyval = new InvFuncExpr(val_peek(3), val_peek(1)); }
+{ yyval = new InvFuncSent(val_peek(3), val_peek(1)); }
 break;
 case 42:
 //#line 108 "sintac.y"
-{ yyval = new InvFuncExpr(val_peek(2), null); }
+{ yyval = new InvFuncSent(val_peek(2), null); }
 break;
 case 43:
 //#line 111 "sintac.y"
@@ -963,50 +963,50 @@ case 54:
 break;
 case 55:
 //#line 128 "sintac.y"
-{ yyval = new ExpresionUnaria(val_peek(0)); }
+{ yyval = new ExpresionUnariaNegacion(val_peek(0)); }
 break;
 case 56:
-//#line 130 "sintac.y"
+//#line 129 "sintac.y"
 { yyval = new ExpresionLogica(val_peek(2), "&&" ,val_peek(0)); }
 break;
 case 57:
-//#line 131 "sintac.y"
+//#line 130 "sintac.y"
 { yyval = new ExpresionLogica(val_peek(2), "||" ,val_peek(0)); }
 break;
 case 58:
-//#line 133 "sintac.y"
+//#line 132 "sintac.y"
 { yyval = new Variable(val_peek(0)); }
 break;
 case 59:
-//#line 134 "sintac.y"
+//#line 133 "sintac.y"
 { yyval = new LiteralInt(val_peek(0)); }
 break;
 case 60:
-//#line 135 "sintac.y"
+//#line 134 "sintac.y"
 { yyval = new LiteralReal(val_peek(0)); }
 break;
 case 61:
-//#line 136 "sintac.y"
+//#line 135 "sintac.y"
 { yyval = new LiteralCaracter(val_peek(0)); }
 break;
 case 62:
-//#line 138 "sintac.y"
-{ yyval = new EntreParentesis(val_peek(1)); }
+//#line 137 "sintac.y"
+{ yyval = val_peek(1); }
 break;
 case 63:
-//#line 140 "sintac.y"
+//#line 139 "sintac.y"
 { yyval = new Cast(val_peek(2), val_peek(0)); }
 break;
 case 64:
-//#line 143 "sintac.y"
+//#line 142 "sintac.y"
 { yyval = new AccesoArray(val_peek(3), val_peek(1)); }
 break;
 case 65:
-//#line 146 "sintac.y"
+//#line 145 "sintac.y"
 { yyval = new AccesoStruct(val_peek(2), val_peek(0)); }
 break;
 case 66:
-//#line 149 "sintac.y"
+//#line 148 "sintac.y"
 { yyval = new InvFuncExpr(val_peek(3), val_peek(1)); }
 break;
 //#line 949 "Parser.java"

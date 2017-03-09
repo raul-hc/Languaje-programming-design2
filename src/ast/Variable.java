@@ -32,6 +32,11 @@ public class Variable extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "Variable [nombre=" + nombre + "]";
+	}
+
 	private String nombre;
 }
 

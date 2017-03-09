@@ -43,6 +43,12 @@ public class AccesoStruct extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "AccesoStruct [struct=" + struct + ", nombreCampo="
+				+ nombreCampo + "]";
+	}
+
 	private Expresion struct;
 	private String nombreCampo;
 }

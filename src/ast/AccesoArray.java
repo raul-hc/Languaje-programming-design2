@@ -43,6 +43,12 @@ public class AccesoArray extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "AccesoArray [array=" + array + ", posicion=" + posicion + "]";
+	}
+
+
 	private Expresion array;
 	private Expresion posicion;
 }

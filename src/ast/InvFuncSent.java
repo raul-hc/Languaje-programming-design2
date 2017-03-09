@@ -45,6 +45,12 @@ public class InvFuncSent extends AbstractSentencia {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "InvFuncSent [nombreFuncion=" + nombreFuncion + ", parametros="
+				+ parametros + "]";
+	}
+
 	private String nombreFuncion;
 	private List<Expresion> parametros;
 }

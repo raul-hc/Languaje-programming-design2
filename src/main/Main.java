@@ -27,12 +27,17 @@ public class Main {
 
 		AST raiz = compile(programa, gestor); // Poner args[0] en vez de "programa" en la version final
 		if (!gestor.hayErrores())
-			System.out.println("El programa se ha compilado correctamente.");
+			System.out.print("El programa se ha compilado correctamente.");
 
 		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
+		
+		System.out.println();
+		
+		VisitorPrinter vprinter = new VisitorPrinter();
+		raiz.accept(vprinter, null);		
 	}
 
-	/** MÃ©todo que coordina todas las fases del compilador */
+	/** Método que coordina todas las fases del compilador */
 	public static AST compile(String sourceName, GestorErrores gestor) throws Exception {
 
 		// 1. Fases de Analisis Lexico y Sintï¿½ctico

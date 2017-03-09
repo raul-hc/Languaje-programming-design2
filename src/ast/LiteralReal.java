@@ -32,6 +32,11 @@ public class LiteralReal extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "LiteralReal [valor=" + valor + "]";
+	}
+
 	private String valor;
 }
 

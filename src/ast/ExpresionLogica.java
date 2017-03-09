@@ -52,6 +52,12 @@ public class ExpresionLogica extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "ExpresionLogica [left=" + left + ", operador=" + operador
+				+ ", right=" + right + "]";
+	}
+
 	private Expresion left;
 	private String operador;
 	private Expresion right;

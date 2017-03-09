@@ -32,6 +32,11 @@ public class LiteralInt extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "LiteralInt [valor=" + valor + "]";
+	}
+
 	private int valor;
 }
 

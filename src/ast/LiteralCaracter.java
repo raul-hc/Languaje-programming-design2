@@ -32,6 +32,11 @@ public class LiteralCaracter extends AbstractExpresion {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "LiteralCaracter [valor=" + valor + "]";
+	}
+
 	private String valor;
 }
 

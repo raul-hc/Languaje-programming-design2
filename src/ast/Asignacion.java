@@ -43,6 +43,11 @@ public class Asignacion extends AbstractSentencia {
 		return v.visit(this, param);
 	}
 
+	@Override
+	public String toString() {
+		return "Asignacion [left=" + left + ", right=" + right + "]";
+	}
+
 	private Expresion left;
 	private Expresion right;
 }

@@ -17,6 +17,8 @@ import main.*;
 %token MAYORIGUAL
 %token MENORIGUAL
 
+																	/* El enlace dinamico solo funciona a la izda del punto. 
+																	Visitor que reconstruya el txt de entrada original. */
 
 /* Precedencias aqui --------------------------------------- */
 %left '+' '-'
@@ -104,8 +106,8 @@ escritura: 		'PRINT'   expr 		{ $$ = new Escritura($2, "print"); }
 			| 	'PRINTLN' expr 		{ $$ = new Escritura($2, "println"); }
 			;
 
-invocacionFuncion: 'IDENTIFICADOR' '(' listaExprSeparador ')' 	{ $$ = new InvFuncExpr($1, $3); }
-				|  'IDENTIFICADOR' '(' ')' 						{ $$ = new InvFuncExpr($1, null); }
+invocacionFuncion: 'IDENTIFICADOR' '(' listaExprSeparador ')' 	{ $$ = new InvFuncSent($1, $3); }
+				|  'IDENTIFICADOR' '(' ')' 						{ $$ = new InvFuncSent($1, null); }
 				;
 	
 listaExprSeparador: listaExprSeparador ',' expr 	{ $$ = $1; ((List)$$).add($3); }
@@ -125,8 +127,7 @@ expr:  		expr '+' expr 				{ $$ = new ExpresionBinaria($1, "+" ,$3); }
 	      | expr DISTINTO expr			{ $$ = new ExpresionBinaria($1, ">" ,$3); }	
 	      | expr IGUALDAD expr			{ $$ = new ExpresionBinaria($1, ">" ,$3); }	
 	      
-	      | '!' expr					{ $$ = new ExpresionUnaria($2); }	
-	      
+	      | '!' expr					{ $$ = new ExpresionUnariaNegacion($2); }	
 	      | expr Y expr					{ $$ = new ExpresionLogica($1, "&&" ,$3); }	
 	      | expr O expr					{ $$ = new ExpresionLogica($1, "||" ,$3); }	
 		  
@@ -135,7 +136,7 @@ expr:  		expr '+' expr 				{ $$ = new ExpresionBinaria($1, "+" ,$3); }
 		  | 'LITERAL_REAL'				{ $$ = new LiteralReal($1); }	
 		  | 'LITERAL_CARACTER'			{ $$ = new LiteralCaracter($1); }	
 		  
-		  | '(' expr ')' 				{ $$ = new EntreParentesis($2); }					
+		  | '(' expr ')' 				{ $$ = $2; }					
 		 
 		  | 'CAST' '<' tipo '>' expr	{ $$ = new Cast($3, $5); }	
 
