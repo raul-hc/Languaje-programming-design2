@@ -140,8 +140,8 @@ public class VisitorPrinter extends DefaultVisitor {
 	//	class Asignacion { Expresion left;  Expresion right; }
 	public Object visit(Asignacion node, Object param) {
 
-		// super.visit(node, param);
-
+		System.out.print("\t");
+		
 		if (node.getLeft() != null){
 			node.getLeft().accept(this, param);
 		}
@@ -160,6 +160,7 @@ public class VisitorPrinter extends DefaultVisitor {
 	//	class Escritura { Expresion exprEscritura;  String tipoEscritura; }
 	public Object visit(Escritura node, Object param) {
 
+		System.out.print("\t");
 		System.out.print(node.getTipoEscritura() + " ");
 
 		if (node.getExprEscritura() != null){
@@ -174,6 +175,7 @@ public class VisitorPrinter extends DefaultVisitor {
 	//	class Lectura { Expresion exprLectura; }
 	public Object visit(Lectura node, Object param) {
 
+		System.out.print("\t");
 		System.out.print("read ");
 
 		if (node.getExprLectura() != null){
@@ -188,6 +190,7 @@ public class VisitorPrinter extends DefaultVisitor {
 	//	class Return { Expresion exprRetorno; }
 	public Object visit(Return node, Object param) {
 
+		System.out.print("\t");
 		System.out.print("return ");
 		
 		if (node.getExprRetorno() != null){
@@ -219,10 +222,10 @@ public class VisitorPrinter extends DefaultVisitor {
 			}
 		}
 
-		System.out.print("}");
+		System.out.print("\t}");
 		
 		if (node.getSentenciasElse() != null){
-			System.out.println("else {");
+			System.out.println("\nelse {");
 			for (Sentencia child : node.getSentenciasElse()){
 				System.out.println("\t");
 				child.accept(this, param);
@@ -270,15 +273,13 @@ public class VisitorPrinter extends DefaultVisitor {
 			}
 		}
 		
-		System.out.print(")");
+		System.out.println(")");
 
 		return null;
 	}
 
 	//	class ExpresionBinaria { Expresion left;  String operador;  Expresion right; }
 	public Object visit(ExpresionBinaria node, Object param) {
-
-		System.out.print("\t");
 
 		if (node.getLeft() != null){
 			node.getLeft().accept(this, param);
@@ -296,8 +297,6 @@ public class VisitorPrinter extends DefaultVisitor {
 	//	class ExpresionLogica { Expresion left;  String operador;  Expresion right; }
 	public Object visit(ExpresionLogica node, Object param) {
 
-		System.out.print("\t");
-
 		if (node.getLeft() != null){
 			node.getLeft().accept(this, param);
 		}
@@ -314,9 +313,7 @@ public class VisitorPrinter extends DefaultVisitor {
 	//	class ExpresionUnaria { Expresion expresion; }
 	public Object visit(ExpresionUnariaNegacion node, Object param) {
 
-		
 		if (node.getExpresion() != null){
-			System.out.print("\t");
 			System.out.print("!");
 			node.getExpresion().accept(this, param);
 		}
@@ -340,7 +337,7 @@ public class VisitorPrinter extends DefaultVisitor {
 			node.getExpresionAConvertir().accept(this, param);
 		}
 		
-		System.out.println(")");
+		System.out.print(")");
 
 		return null;
 	}
@@ -454,7 +451,7 @@ public class VisitorPrinter extends DefaultVisitor {
 	//	class TipoIdent { String tipo; }
 	public Object visit(TipoIdent node, Object param) {
 		
-		System.out.print(node.getTipo());
+		System.out.print(" " + node.getTipo());
 		
 		return null;
 	}

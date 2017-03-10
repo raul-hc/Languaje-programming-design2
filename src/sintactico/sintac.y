@@ -124,8 +124,8 @@ expr:  		expr '+' expr 				{ $$ = new ExpresionBinaria($1, "+" ,$3); }
 	      | expr '<' expr				{ $$ = new ExpresionBinaria($1, "<" ,$3); }	
 	      | expr '>' expr				{ $$ = new ExpresionBinaria($1, ">" ,$3); }	
 		  
-	      | expr DISTINTO expr			{ $$ = new ExpresionBinaria($1, ">" ,$3); }	
-	      | expr IGUALDAD expr			{ $$ = new ExpresionBinaria($1, ">" ,$3); }	
+	      | expr DISTINTO expr			{ $$ = new ExpresionBinaria($1, "!=" ,$3); }	
+	      | expr IGUALDAD expr			{ $$ = new ExpresionBinaria($1, "==" ,$3); }	
 	      
 	      | '!' expr					{ $$ = new ExpresionUnariaNegacion($2); }	
 	      | expr Y expr					{ $$ = new ExpresionLogica($1, "&&" ,$3); }	
