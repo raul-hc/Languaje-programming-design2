@@ -8,13 +8,13 @@ import visitor.*;
 
 //	tipoIdent:tipo -> tipo:String
 
-public class TipoIdent extends AbstractTipo {
+public class TipoStruct extends AbstractTipo {
 
-	public TipoIdent(String tipo) {
+	public TipoStruct(String tipo) {
 		this.tipo = tipo;
 	}
 
-	public TipoIdent(Object tipo) {
+	public TipoStruct(Object tipo) {
 		this.tipo = (tipo instanceof Token) ? ((Token)tipo).getLexeme() : (String) tipo;
 
 		searchForPositions(tipo);	// Obtener linea/columna a partir de los hijos
@@ -42,7 +42,7 @@ public class TipoIdent extends AbstractTipo {
 
 	@Override
 	public String toString() {
-		return "TipoIdent (" + tipo + ")";
+		return "TipoStruct (" + tipo + ")";
 	}
 
 	private DefStruct definicionEstructura;

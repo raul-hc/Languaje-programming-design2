@@ -52,18 +52,15 @@ defCampos: defCampos 'IDENTIFICADOR' ':' tipo ';' 		{ $$ = $1; ((List)$$).add(ne
 		| 												{ $$ = new ArrayList<DefCampo>(); }
 		;
 
-tipo: 'INT'				{ $$ = new TipoEntero(); }
-	| 'FLOAT'			{ $$ = new TipoReal(); }
-	| 'CHAR'			{ $$ = new TipoCaracter(); }
-	| 'IDENTIFICADOR'	{ $$ = new TipoIdent($1); }
-	| tipoArray 		{ $$ = $1; }
+tipo: 'INT'								{ $$ = new TipoEntero(); 	}
+	| 'FLOAT'							{ $$ = new TipoReal(); 		}
+	| 'CHAR'							{ $$ = new TipoCaracter(); 	}
+	| 'IDENTIFICADOR'					{ $$ = new TipoStruct($1); 	}
+	|'[' 'LITERAL_ENTERO' ']' tipo 		{ $$ = new TipoArray($2, $4); }
 	;
 
-tipoArray: '[' 'LITERAL_ENTERO' ']' tipo 			{ $$ = new TipoArray($2, $4); }
-;
-
 defFuncion: 'IDENTIFICADOR' '(' parametrosOpt ')' tipoRetorno '{' defVarLocales sentencias '}' 		{ $$ = new DefFuncion($1, $3, $5, $7, $8); }
-			| 'IDENTIFICADOR' '(' parametrosOpt ')' '{' defVarLocales sentencias '}'				{ $$ = new DefFuncion($1, $3, null, $6, $7); }
+			| 'IDENTIFICADOR' '(' parametrosOpt ')' '{' defVarLocales sentencias '}'				{ $$ = new DefFuncion($1, $3, new TipoVoid(), $6, $7); }
 			;
 			
 tipoRetorno: ':' tipo		{ $$ = $2; }

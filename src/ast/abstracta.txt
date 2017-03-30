@@ -19,9 +19,9 @@ while:sentencia 			->  condicion:expresion sentenciasWhile:sentencia* ;
 invFuncSent:sentencia 		->  nombreFuncion:string parametros:expresion*;
 
 
-expresionBinaria:expresion, sentencia 	-> left:expresion operador:string right:expresion;
-expresionLogica:expresion 				->	left:expresion operador:string right:expresion;
-expresionUnariaNegacion:expresion   	->  expresion:expresion;
+expresionBinaria:expresion		 	-> 	left:expresion operador:string right:expresion;
+expresionLogica:expresion 			->	left:expresion operador:string right:expresion;
+expresionUnariaNegacion:expresion   ->  expresion:expresion;
 
 cast:expresion				-> 	tipoDestino:tipo expresionAConvertir:expresion;
 accesoArray:expresion		-> 	array:expresion posicion:expresion;
@@ -34,8 +34,9 @@ literalReal:expresion 		-> 	valor:string;
 literalCaracter:expresion 	-> 	valor:string;
 
 
+tipoVoid:tipo				-> ;
 tipoEntero:tipo				-> ;
 tipoReal:tipo 				-> ;
 TipoCaracter:tipo 			-> ;
 TipoArray:tipo 				-> tamano:int tipo:tipo;
-tipoIdent:tipo 				-> tipo:string;
+tipoStruct:tipo 			-> tipo:string;

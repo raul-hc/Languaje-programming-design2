@@ -58,17 +58,22 @@ public class Identificacion extends DefaultVisitor {
 		predicado(defStruct == null, "Estructura repetida: " + node.getNombre(), node.getStart());
 		structs.put(node.getNombre(), node);
 		
+		campos = new HashMap<String, DefCampo>();
+		
 		visitChildren(node.getCampos(), param);
 		
 		return null;
 	}
 	
 	//	class TipoIdent { String tipo; }
-	public Object visit(TipoIdent node, Object param) {
+	public Object visit(TipoStruct node, Object param) {
 		
 		DefStruct defStruct = structs.get(node.getTipo());
-		predicado(defStruct != null, "Estructura no definida: " + node.getTipo(), node.getStart());
-		node.setDefinicionEstructura(defStruct);// Enlazar referencia con estructura
+		 
+		if (defStruct == null)
+			predicado(true, "Estructura no definida: " + node.getTipo(), node.getStart());
+		else
+			node.setDefinicionEstructura(defStruct);// Enlazar referencia con estructura
 		
 		return null;
 	}
@@ -103,6 +108,9 @@ public class Identificacion extends DefaultVisitor {
 		predicado(definicion == null, "Variable repetida: " + node.getNombre(), node.getStart());
 		variables.put(node.getNombre(), node);
 
+		if (node.getTipo() != null) // Hay que visitar el tipo de la variable (Si TipoStruct se tiene que enlazar la defStruct con el acceso al Struct)
+			node.getTipo().accept(this, param);
+		
 		return null;
 	}
 

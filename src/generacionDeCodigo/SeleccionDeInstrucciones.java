@@ -1,10 +1,9 @@
 package generacionDeCodigo;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.io.Writer;
 
-import ast.*;
-import visitor.*;
+import visitor.DefaultVisitor;
 
 public class SeleccionDeInstrucciones extends DefaultVisitor {
 

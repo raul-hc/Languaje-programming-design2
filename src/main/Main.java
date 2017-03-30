@@ -1,13 +1,16 @@
 package main;
 
-import generacionDeCodigo.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.Writer;
 
-import java.io.*;
-
-import semantico.*;
-import sintactico.*;
-import visitor.*;
-import ast.*;
+import ast.AST;
+import generacionDeCodigo.GeneracionDeCodigo;
+import semantico.AnalisisSemantico;
+import sintactico.Parser;
+import sintactico.Yylex;
+import visitor.ASTPrinter;
 
 /**
  * Clase que inicia el compilador e invoca a todas sus fases.
@@ -24,23 +27,29 @@ public class Main {
 //	public static final String programa = "src/test/semantico-identificacion/prog1.txt";
 //	public static final String programa = "src/test/semantico-identificacion/1. Funciones.txt";
 //	public static final String programa = "src/test/semantico-identificacion/2. Estructuras.txt";
-	public static final String programa = "src/test/semantico-identificacion/3. Variables.txt";
+//	public static final String programa = "src/test/semantico-identificacion/3. Variables.txt";
+//	public static final String programa = "src/test/semantico-identificacion/prog1.txt";
+//	public static final String programa = "src/test/semantico-identificacion/prog2.txt";
+	public static final String programa = "src/test/semantico-tipos/Test-tipos.txt";
+//	public static final String programa = "src/test/semantico-tipos/Test-tipos-short.txt";	
 	
 	
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();
 
 		AST raiz = compile(programa, gestor); // Poner args[0] en vez de "programa" en la version final
+//		compile(programa, gestor);
+		
 		if (!gestor.hayErrores())
 			System.out.print("El programa se ha compilado correctamente.");
 
-//		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
+		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
 //		
 //		VisitorPrinter vprinter = new VisitorPrinter();
 //		raiz.accept(vprinter, null);		
 	}
 
-	/** Método que coordina todas las fases del compilador */
+	/** Mï¿½todo que coordina todas las fases del compilador */
 	public static AST compile(String sourceName, GestorErrores gestor) throws Exception {
 
 		// 1. Fases de Analisis Lexico y Sintï¿½ctico

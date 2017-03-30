@@ -449,7 +449,7 @@ public class VisitorPrinter extends DefaultVisitor {
 	}
 
 	//	class TipoIdent { String tipo; }
-	public Object visit(TipoIdent node, Object param) {
+	public Object visit(TipoStruct node, Object param) {
 		
 		System.out.print(" " + node.getTipo());
 		

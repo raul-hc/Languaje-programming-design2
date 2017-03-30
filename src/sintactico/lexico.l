@@ -67,7 +67,7 @@ println	{ return Parser.PRINTLN; }
 
 [a-zA-ZÒ—][a-zA-Z0-9_Ò—]*			{ return Parser.IDENTIFICADOR; }
 [0-9]+								{ return Parser.LITERAL_ENTERO; }
-[0-9]+"."[0-9]*						{ return Parser.LITERAL_REAL; }
+[0-9]+"."[0-9]+						{ return Parser.LITERAL_REAL; }
 '[a-zA-Z0-9_√±√ë()+\- =]' | '\\n' 	{ return Parser.LITERAL_CARACTER; }
 
 /* -- Se aconseja dejar estas reglas al final ----------------------------------------------- */

@@ -6,9 +6,9 @@ package ast;
 
 import visitor.*;
 
-//	expresionBinaria:expresion, sentencia -> left:expresion  operador:String  right:expresion
+//	expresionBinaria:expresion -> left:expresion  operador:String  right:expresion
 
-public class ExpresionBinaria extends AbstractTraceable implements Expresion, Sentencia {
+public class ExpresionBinaria extends AbstractExpresion {
 
 	public ExpresionBinaria(Expresion left, String operador, Expresion right) {
 		this.left = left;

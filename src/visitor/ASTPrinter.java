@@ -382,7 +382,7 @@ public class ASTPrinter extends DefaultVisitor {
 	}
 
 	//	class TipoIdent { String tipo; }
-	public Object visit(TipoIdent node, Object param) {
+	public Object visit(TipoStruct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printCompact(indent, "TipoIdent", node, "tipo", node.getTipo());
@@ -404,6 +404,7 @@ public class ASTPrinter extends DefaultVisitor {
 		write(indent, formatValue(value) + "  " + typeTag(type));
 	}
 
+	@SuppressWarnings("unused")
 	private void print(int indent, String attName, String type, List<? extends Object> children) {
 		write(indent, attName + "  " + typeTag(type) + " = ");
 		if (children != null)

@@ -1,7 +1,6 @@
 package generacionDeCodigo;
 
-import ast.*;
-import visitor.*;
+import visitor.DefaultVisitor;
 
 /** 
  * Clase encargada de asignar direcciones a las variables 

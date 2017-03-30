@@ -5,28 +5,28 @@ struct Punto {
 var b:int;
 
 main() {
-	d = b;
-	f(8);
+	d = b;		// Variable no definida
+	f(8);		// Función (PROCEDIMIENTO) no definida
 }
 
 var p:int;
 
 f(p:int) {
-	var p:int;
+	var p:int;	// Variable repetida
 }
 
-struct Punto {
-	x:float;
-	y:float;
+struct Punto {	// Estructura repetida: Punto
+	x:float;	
+	y:float;	
 };
 
-struct Persona {
-	a: [20]Empresa;
+struct Persona {	
+	a: [20]Empresa;	// Estructura no definida: Empresa
 };
 
 
-f():float {
+f():float {			// Función repetida: f
 
 }
 
-var b:char;
+var b:char;			// Variable repetida: b

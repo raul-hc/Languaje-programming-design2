@@ -8,9 +8,9 @@ import ast.*;
 import java.util.*;
 
 /*
-DefaultVisitor. Implementación base del visitor para ser derivada por nuevos visitor.
+DefaultVisitor. Implementaciï¿½n base del visitor para ser derivada por nuevos visitor.
 	No modificar esta clase. Para crear nuevos visitor usar el fichero "_PlantillaParaVisitors.txt".
-	DefaultVisitor ofrece una implementación por defecto de cada nodo que se limita a visitar los nodos hijos.
+	DefaultVisitor ofrece una implementaciï¿½n por defecto de cada nodo que se limita a visitar los nodos hijos.
 */
 public class DefaultVisitor implements Visitor {
 
@@ -202,11 +202,16 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	//	class TipoIdent { String tipo; }
-	public Object visit(TipoIdent node, Object param) {
+	public Object visit(TipoStruct node, Object param) {
 		return null;
 	}
 	
-	// Método auxiliar -----------------------------
+//	class TipoVoid {  }
+	public Object visit(TipoVoid node, Object param) {
+		return null;
+	}
+	
+	// Mï¿½todo auxiliar -----------------------------
 	protected void visitChildren(List<? extends AST> children, Object param) {
 		if (children != null)
 			for (AST child : children)
