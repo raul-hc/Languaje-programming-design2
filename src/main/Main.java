@@ -37,13 +37,13 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();
 
-		AST raiz = compile(programa, gestor); // Poner args[0] en vez de "programa" en la version final
-//		compile(programa, gestor);
+//		AST raiz = compile(programa, gestor); // Poner args[0] en vez de "programa" en la version final
+		compile(programa, gestor);
 		
 		if (!gestor.hayErrores())
 			System.out.print("El programa se ha compilado correctamente.");
 
-		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
+//		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
 //		
 //		VisitorPrinter vprinter = new VisitorPrinter();
 //		raiz.accept(vprinter, null);		
