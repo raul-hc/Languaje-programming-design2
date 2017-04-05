@@ -8,9 +8,11 @@ import ast.*;
  */
 public class GestionDeMemoria extends DefaultVisitor {
 
+	final static int TAM_STACKFRAME = 4;
+	
 	int offsetGlobal;
 	int offsetLocal;
-	int offsetParametros;
+	int offsetParametros = TAM_STACKFRAME;
 	
 	int offsetCampos;
 		
@@ -30,8 +32,8 @@ public class GestionDeMemoria extends DefaultVisitor {
 			node.setDireccion(offsetLocal); // R(p) - Reglas semanticas
 			break;
 		case PARAMETRO:
-			offsetParametros += node.getTipo().getSize();
 			node.setDireccion(offsetParametros); // R(p) - Reglas semanticas
+			offsetParametros += node.getTipo().getSize();
 			break;
 		default:
 			break;
@@ -52,7 +54,7 @@ public class GestionDeMemoria extends DefaultVisitor {
 			}
 		}
 		
-		offsetParametros = 0;
+		offsetParametros = TAM_STACKFRAME;
 
 		if (node.getTipoRetorno() != null)
 			node.getTipoRetorno().accept(this, param);
