@@ -1,5 +1,5 @@
 package ast;
 
-public enum TipoVariable {
+public enum ContextoVariable {
 	GLOBAL, LOCAL, PARAMETRO
 }

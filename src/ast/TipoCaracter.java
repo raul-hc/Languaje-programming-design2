@@ -20,5 +20,10 @@ public class TipoCaracter extends AbstractTipo {
 		return "TipoCaracter";
 	}
 
+	@Override
+	public int getSize() {
+		return 1;
+	}
+
 }
 

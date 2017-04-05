@@ -20,5 +20,10 @@ public class TipoReal extends AbstractTipo {
 		return "TipoReal";
 	}
 
+	@Override
+	public int getSize() {
+		return 4;
+	}
+
 }
 

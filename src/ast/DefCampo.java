@@ -38,6 +38,15 @@ public class DefCampo extends AbstractDefinicion {
 		this.tipo = tipo;
 	}
 
+	
+	
+	public int getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(int direccion) {
+		this.direccion = direccion;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object param) { 
 		return v.visit(this, param);
@@ -45,10 +54,13 @@ public class DefCampo extends AbstractDefinicion {
 
 	@Override
 	public String toString() {
-		return "DefCampo [nombre=" + nombre + ", tipo=" + tipo + "]";
+		return "DefCampo [nombre=" + nombre + ", tipo=" + tipo + ", direccion="
+				+ direccion + "]";
 	}
 
 	private String nombre;
 	private Tipo tipo;
+	private int direccion;
+
 }
 

@@ -20,5 +20,10 @@ public class TipoVoid extends AbstractTipo {
 		return "TipoVoid";
 	}
 
+	@Override
+	public int getSize() {
+		return 0;
+	}
+
 }
 

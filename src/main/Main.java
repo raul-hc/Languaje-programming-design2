@@ -30,20 +30,21 @@ public class Main {
 //	public static final String programa = "src/test/semantico-identificacion/3. Variables.txt";
 //	public static final String programa = "src/test/semantico-identificacion/prog1.txt";
 //	public static final String programa = "src/test/semantico-identificacion/prog2.txt";
-	public static final String programa = "src/test/semantico-tipos/Test-tipos.txt";
+//	public static final String programa = "src/test/semantico-tipos/Test-tipos.txt";
 //	public static final String programa = "src/test/semantico-tipos/Test-tipos-short.txt";	
+	public static final String programa = "src/test/generacion-codigo/Test-gestion-memoria.txt";
 	
 	
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();
 
-//		AST raiz = compile(programa, gestor); // Poner args[0] en vez de "programa" en la version final
-		compile(programa, gestor);
+		AST raiz = compile(programa, gestor); // Poner args[0] en vez de "programa" en la version final
+//		compile(programa, gestor);
 		
 		if (!gestor.hayErrores())
-			System.out.print("El programa se ha compilado correctamente.");
+			System.out.print("El programa se ha compilado correctamente.\n\n");
 
-//		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
+		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
 //		
 //		VisitorPrinter vprinter = new VisitorPrinter();
 //		raiz.accept(vprinter, null);		

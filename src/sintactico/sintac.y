@@ -70,15 +70,18 @@ parametrosOpt: parametros	{ $$ = $1; }
 			|				{ $$ = new ArrayList<DefVariable>(); }
 			;
 
-parametros: parametros ',' 'IDENTIFICADOR' ':' tipo		{ $$ = $1; ((List)$$).add(new DefVariable($5, $3)); }
-		| 'IDENTIFICADOR' ':' tipo						{ $$ = new ArrayList<DefVariable>(); ((List)$$).add(new DefVariable($3, $1)); }
+parametros: parametros ',' 'IDENTIFICADOR' ':' tipo		{ $$ = $1; ((List)$$).add(new DefVariable($5, $3, ContextoVariable.PARAMETRO)); }
+		| 'IDENTIFICADOR' ':' tipo						{ $$ = new ArrayList<DefVariable>(); ((List)$$).add(new DefVariable($3, $1, ContextoVariable.PARAMETRO)); }
 		;												
 			
-defVarLocales: defVarLocales defVar				{ $$ = $1; ((List)$$).add($2); }
+defVarLocales: defVarLocales defVarLocal		{ $$ = $1; ((List)$$).add($2); }
 			| 									{ $$ = new ArrayList<DefVariable>(); }
 			;
 
-defVar: 'VAR' 'IDENTIFICADOR' ':' tipo ';'		{ $$ = new DefVariable($4, $2); }
+defVarLocal: 'VAR' 'IDENTIFICADOR' ':' tipo ';'		{ $$ = new DefVariable( $4, $2, ContextoVariable.LOCAL); }
+		;
+
+defVar: 'VAR' 'IDENTIFICADOR' ':' tipo ';'		{ $$ = new DefVariable($4, $2, ContextoVariable.GLOBAL); }
 	;
 	
 

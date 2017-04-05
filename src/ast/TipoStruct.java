@@ -45,7 +45,18 @@ public class TipoStruct extends AbstractTipo {
 		return "TipoStruct (" + tipo + ")";
 	}
 
-	private DefStruct definicionEstructura;
+	@Override
+	public int getSize() {
+		int total = 0;
+		
+		for (DefCampo dc : definicionEstructura.getCampos()){
+			total += dc.getTipo().getSize();
+		}
+		
+		return total;
+	}
+
 	private String tipo;
+	private DefStruct definicionEstructura;
 }
 
