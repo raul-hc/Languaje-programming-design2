@@ -6,5 +6,9 @@ package ast;
 
 public abstract class AbstractTipo extends AbstractTraceable implements Tipo {
 
+	public String getSufijo(){
+		return "";
+	}
+	
 }
 

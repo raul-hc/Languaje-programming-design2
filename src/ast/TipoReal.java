@@ -25,5 +25,10 @@ public class TipoReal extends AbstractTipo {
 		return 4;
 	}
 
+	@Override
+	public String getSufijo() {
+		return "f";
+	}
+
 }
 

@@ -33,7 +33,7 @@ public class Main {
 //	public static final String programa = "src/test/semantico-tipos/Test-tipos.txt";
 //	public static final String programa = "src/test/semantico-tipos/Test-tipos-short.txt";	
 	public static final String programa = "src/test/generacion-codigo/Test-gestion-memoria.txt";
-	
+//	public static final String programa = "src/test/generacion-codigo/Test-generacion-codigo-basico-lab10.txt";
 	
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();
@@ -50,10 +50,10 @@ public class Main {
 //		raiz.accept(vprinter, null);		
 	}
 
-	/** M�todo que coordina todas las fases del compilador */
+	/** Metodo que coordina todas las fases del compilador */
 	public static AST compile(String sourceName, GestorErrores gestor) throws Exception {
 
-		// 1. Fases de Analisis Lexico y Sint�ctico
+		// 1. Fases de Analisis Lexico y Sintactico
 		Yylex lexico = new Yylex(new FileReader(sourceName), gestor);
 		Parser sintactico = new Parser(lexico, gestor, false);
 		sintactico.parse();

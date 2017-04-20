@@ -1,0 +1,3 @@
+#source "Test-gestion-memoria.txt"
+call main
+halt

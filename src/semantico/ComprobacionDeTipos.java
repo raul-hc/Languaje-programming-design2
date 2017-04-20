@@ -160,6 +160,15 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 				node.getStart());
 		
 		// reglas semanticas R(p)
+		String[] operadoresRelacionales = { ">=", "<=", "<" , ">", "!=", "==" }; 	
+	    for (String operator : operadoresRelacionales){
+	    	if (node.getOperador().equals(operator)){
+	    		// El tipo resultado de una de las operaciones anteriores siempre es entero ( 3.14 >= 2.5 -> TipoEntero )
+	    		node.setTipo(new TipoEntero()); 
+	    		return null;
+	    	}
+	    }
+		
 		node.setTipo(node.getLeft().getTipo());
 		
 		return null;
@@ -341,7 +350,7 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	 */
 	private void predicado(boolean condicion, String mensajeError, Position posicionError) {
 		if (!condicion)
-			gestorErrores.error("Comprobación de tipos", mensajeError, posicionError);
+			gestorErrores.error("Comprobaciï¿½n de tipos", mensajeError, posicionError);
 	}
 	
 	private boolean esTipoSimple(Tipo tipo){
