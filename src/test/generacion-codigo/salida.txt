@@ -1,3 +1,23 @@
-#source "Test-gestion-memoria.txt"
+#source "Test-generacion-codigo-basico-lab10-short.txt"
 call main
 halt
+#VAR a
+#VAR b
+#LINE 16:5
+pusha 0
+pushi 1111
+storei
+#LINE 17:5
+pusha 2
+pushf 2222.2
+storef
+#LINE 19:32
+pusha 0
+pushi 0
+gti
+pusha 2
+pushf 3333.3
+ltf
+and
+OUTi
+RET 0,0,0

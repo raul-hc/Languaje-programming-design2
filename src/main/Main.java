@@ -32,8 +32,9 @@ public class Main {
 //	public static final String programa = "src/test/semantico-identificacion/prog2.txt";
 //	public static final String programa = "src/test/semantico-tipos/Test-tipos.txt";
 //	public static final String programa = "src/test/semantico-tipos/Test-tipos-short.txt";	
-	public static final String programa = "src/test/generacion-codigo/Test-gestion-memoria.txt";
+//	public static final String programa = "src/test/generacion-codigo/Test-gestion-memoria.txt";
 //	public static final String programa = "src/test/generacion-codigo/Test-generacion-codigo-basico-lab10.txt";
+	public static final String programa = "src/test/generacion-codigo/Test-generacion-codigo-basico-lab10-short.txt";
 	
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();

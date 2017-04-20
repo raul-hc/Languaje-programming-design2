@@ -209,7 +209,8 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 		super.visit(node, param);
 
 		// predicados B(p)
-		predicado(node.getExpresionAConvertir().getTipo() == node.getTipoDestino(), "El tipo de destino debe ser distinto al tipo actual de la expresion", node.getStart());
+							// Importante: Necesitamos usar .getClass() para la comparacion 
+		predicado(node.getExpresionAConvertir().getTipo().getClass() != node.getTipoDestino().getClass(), "El tipo de destino debe ser distinto al tipo actual de la expresion", node.getStart());
 		predicado(esTipoSimple(node.getExpresionAConvertir().getTipo()), "El tipo de la expresion a convertir tiene que ser simple: " + node.getExpresionAConvertir().getTipo(), node.getStart());
 		predicado(esTipoSimple(node.getTipoDestino()), "El tipo destino al que convertir una expresion tiene que ser simple", node.getStart());
 		
@@ -344,13 +345,13 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	 * NOTA: El m�todo getStart() indica la linea/columna del fichero fuente de donde se ley� el nodo.
 	 * Si se usa VGen dicho m�todo ser� generado en todos los nodos AST. Si no se quiere usar getStart() se puede pasar null.
 	 * 
-	 * @param condicion Debe cumplirse para que no se produzca un error
+	 * @param condicion Debe cumplirse para que NO se produzca un error
 	 * @param mensajeError Se imprime si no se cumple la condici�n
 	 * @param posicionError Fila y columna del fichero donde se ha producido el error. Es opcional (acepta null)
 	 */
 	private void predicado(boolean condicion, String mensajeError, Position posicionError) {
 		if (!condicion)
-			gestorErrores.error("Comprobaci�n de tipos", mensajeError, posicionError);
+			gestorErrores.error("Comprobacion de tipos", mensajeError, posicionError);
 	}
 	
 	private boolean esTipoSimple(Tipo tipo){

@@ -1,0 +1,11 @@
+#source "Test-tipos-short.txt"
+call main
+halt
+#VAR juan
+#LINE 11:23
+f2i
+OUTi
+#LINE 12:25
+f2f
+OUTf
+RET 0,0,0
