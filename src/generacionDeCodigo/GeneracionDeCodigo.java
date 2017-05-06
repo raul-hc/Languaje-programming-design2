@@ -1,8 +1,8 @@
 package generacionDeCodigo;
 
-import java.io.*;
+import java.io.Writer;
 
-import ast.*;
+import ast.AST;
 
 /**
  * Esta clase coordina las dos fases principales de la Generación de Código:
@@ -18,11 +18,16 @@ import ast.*;
 public class GeneracionDeCodigo {
 
 	public void genera(String sourceFile, AST raiz, Writer out) {
-		GestionDeMemoria gestion = new GestionDeMemoria();
-		raiz.accept(gestion, null);
-
-		SeleccionDeInstrucciones selecciona = new SeleccionDeInstrucciones(out, sourceFile);
-		raiz.accept(selecciona, null);
+		
+		System.out.println("- Gestión de memoria... ");
+			GestionDeMemoria gestion = new GestionDeMemoria();
+			raiz.accept(gestion, null);
+		System.out.println("            ...OKK gestión de memoria");
+		
+		System.out.println("- Selección de instrucciones... ");
+			SeleccionDeInstrucciones selecciona = new SeleccionDeInstrucciones(out, sourceFile);
+			raiz.accept(selecciona, null);
+		System.out.println("            ...OKK selección instrucciones");
 	}
 
 }

@@ -11,21 +11,35 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 		this.gestorErrores = gestor;
 	}
 
-
 	//	class DefFuncion { String nombre;  List<DefVariable> parametros;  Tipo tipoRetorno;  List<DefVariable> variableLocales;  List<Sentencia> sentencias; }
 	public Object visit(DefFuncion node, Object param) {
 
-	// predicados B(p)
+		if (node.getParametros() != null){
+			for (DefVariable defVar : node.getParametros()){
+				predicado(esTipoSimple(defVar.getTipo()), "El parametro : " + defVar.getNombre() + " no es de tipo simple", defVar.getStart());
+				defVar.accept(this, param);
+			}
+		}
+
+		if (node.getTipoRetorno() != null) {
+			node.getTipoRetorno().accept(this, param);
+		}
+
+		if (node.getVariableLocales() != null){
+			for (DefVariable defVarLocal : node.getVariableLocales()){
+				defVarLocal.accept(this, param);
+			}
+		}
+			
+		if (node.getSentencias() != null){
+			for (Sentencia s : node.getSentencias()){
+				s.setDefFuncion(node); // reglas semanticas R(p)
+				s.accept(this, param);
+			}
+		}
+		
+		// predicados B(p)
 		predicado(esTipoSimple(node.getTipoRetorno()), "El tipo de retorno de la funcion :" + node.getNombre() + " no es de tipo simple", node.getStart());
-		
-		for (DefVariable defVar : node.getParametros()) 
-			predicado(esTipoSimple(defVar.getTipo()), "El parametro : " + defVar.getNombre() + " no es de tipo simple", defVar.getStart());
-		
-	// reglas semanticas R(p)
-		for (Sentencia s : node.getSentencias())
-			s.setDefFuncion(node);
-		
-		super.visit(node, param);
 
 		return null;
 	}
@@ -33,9 +47,9 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class Asignacion { Expresion left;  Expresion right; }
 	public Object visit(Asignacion node, Object param) {
 
-		 super.visit(node, param);
+		super.visit(node, param);
 
-	// predicados B(p)
+		// predicados B(p)
 		predicado(esTipoSimple(node.getLeft().getTipo()), "La expresion de la izda debe ser un tipo simple", node.getLeft().getStart());
 		predicado(node.getLeft().getTipo().getClass() == node.getRight().getTipo().getClass(), "El tipo de la expresion izda debe ser el mismo tipo que el de la expresion dcha", node.getStart());
 		predicado(node.getLeft().isModificable(), "La expresion izda tiene que ser un LValue", node.getLeft().getStart());
@@ -46,12 +60,16 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class Escritura { Expresion exprEscritura;  String tipoEscritura; }
 	public Object visit(Escritura node, Object param) {
 
-		super.visit(node, param);
+		if (node.getExprEscritura() != null){
+			node.getExprEscritura().accept(this, param);
+		}
 			
 		// predicados B(p)
-		predicado(esTipoSimple(node.getExprEscritura().getTipo()), 
-				"La expresion a escribir tiene que ser de tipo simple: " + node.getExprEscritura().getTipo() , 
-				node.getExprEscritura().getStart());
+		if (node.getExprEscritura().getTipo() == null){
+			predicado(node.getExprEscritura().getTipo() != null, "La expresion no tiene tipo de retorno: ", node.getExprEscritura().getStart());
+		} else {
+			predicado(esTipoSimple(node.getExprEscritura().getTipo()), "La expresion a escribir tiene que ser de tipo simple: " + node.getExprEscritura().getTipo(), node.getExprEscritura().getStart());
+		}
 
 		return null;
 	}
@@ -59,12 +77,12 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class Lectura { Expresion exprLectura; }
 	public Object visit(Lectura node, Object param) {
 
-		super.visit(node, param);
+		if (node.getExprLectura() != null){
+			node.getExprLectura().accept(this, param);
+		}
 
 		// predicados B(p)
-		predicado(esTipoSimple(node.getExprLectura().getTipo()), 
-				"La expresion a leer tiene que ser de tipo simple: " + node.getExprLectura().getTipo() , 
-				node.getExprLectura().getStart());
+		predicado(esTipoSimple(node.getExprLectura().getTipo()), "La expresion a leer tiene que ser de tipo simple: " + node.getExprLectura().getTipo(), node.getExprLectura().getStart());
 		predicado(node.getExprLectura().isModificable(), "La expresion a leer tiene que ser un LValue: " + node.getExprLectura().toString(), node.getExprLectura().getStart());
 		
 		return null;
@@ -73,14 +91,17 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class Return { Expresion exprRetorno; }
 	public Object visit(Return node, Object param) {
 
-		super.visit(node, param);
-
+		if (node.getExprRetorno() != null){
+			node.getExprRetorno().accept(this, param);
+		}
+		
 		// predicados B(p)
 		if (node.getExprRetorno() == null){
-			predicado(node.getDefFuncion().getTipoRetorno() instanceof TipoVoid, 
-					"El tipo de la funcion deberia de ser TipoVoid para que la expresion del return fuese nula", 
-					node.getDefFuncion().getEnd());
-		} else {
+			/*  Un return puede ser de una funcion o bien de un ifelse o un while Return de una expresion: return ; --> node.getDefFuncion() == null  */
+			if (node.getDefFuncion() != null){ // Return de una funcion: return x;
+				predicado(node.getDefFuncion().getTipoRetorno() instanceof TipoVoid, "El tipo de la funcion deberia de ser TipoVoid para que la expresion del return fuese nula", node.getDefFuncion().getEnd());
+			}
+		} else { // node.getExprRetorno() is null
 			predicado(node.getExprRetorno().getTipo().getClass() == node.getDefFuncion().getTipoRetorno().getClass(), 
 					"El tipo de la expresion a retornar tiene que coincidir con el tipo de retorno de la funcion", 
 					node.getExprRetorno().getStart());			
@@ -92,18 +113,27 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class Ifelse { Expresion condicion;  List<Sentencia> sentenciasIf;  List<Sentencia> sentenciasElse; }
 	public Object visit(Ifelse node, Object param) {
 
-		super.visit(node, param);
-
+		if (node.getCondicion() != null){
+			node.getCondicion().accept(this, param);
+		}
+		
+		// reglas semanticas R(p)
+		if (node.getSentenciasElse() != null){
+			for (Sentencia sIf : node.getSentenciasIf()){
+				sIf.setDefFuncion(node.getDefFuncion());
+				sIf.accept(this, param);
+			}
+		}
+		
+		if (node.getSentenciasElse() != null){
+			for (Sentencia sElse : node.getSentenciasElse()){
+				sElse.setDefFuncion(node.getDefFuncion());	
+				sElse.accept(this, param);
+			}
+		}
+		
 		// predicados B(p)
 		predicado(node.getCondicion().getTipo() instanceof TipoEntero, "El tipo de la condicion debe ser tipoEntero", node.getCondicion().getStart());
-				
-		// reglas semanticas R(p)
-		for (Sentencia s : node.getSentenciasIf())
-			s.setDefFuncion(node.getDefFuncion());
-		
-		if (node.getSentenciasElse() != null)
-			for (Sentencia s : node.getSentenciasElse())
-				s.setDefFuncion(node.getDefFuncion());
 
 		return null;
 	}
@@ -111,14 +141,20 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class While { Expresion condicion;  List<Sentencia> sentenciasWhile; }
 	public Object visit(While node, Object param) {
 
-		super.visit(node, param);
+		if (node.getCondicion() != null){
+			node.getCondicion().accept(this, param);
+		}
+				
+		// reglas semanticas R(p)
+		if (node.getSentenciasWhile() != null){
+			for (Sentencia s : node.getSentenciasWhile()){
+				s.setDefFuncion(node.getDefFuncion());
+				s.accept(this, param);
+			}
+		}
 
 		// predicados B(p)
 		predicado(node.getCondicion().getTipo() instanceof TipoEntero, "El tipo de la condicion debe ser tipoEntero", node.getCondicion().getStart());
-		
-		// reglas semanticas R(p)
-		for (Sentencia s : node.getSentenciasWhile())
-			s.setDefFuncion(node.getDefFuncion());
 
 		return null;
 	}
@@ -126,20 +162,17 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class InvFuncSent { String nombreFuncion;  List<Expresion> parametros; }
 	public Object visit(InvFuncSent node, Object param) {
 
-		super.visit(node, param);
-
 		// predicados B(p)
-		predicado( node.getParametros().size() == node.getDefinicion().getParametros().size() , 
-				"El numero de argumentos no concuerda con los de la definicion de la funcion " + node.getNombreFuncion(), 
-				node.getStart());
+		predicado( node.getParametros().size() == node.getDefinicion().getParametros().size() , "El numero de argumentos no concuerda con los de la definicion de la funcion " + node.getNombreFuncion(), node.getStart());
 		
-		for (int i = 0 ; i < node.getParametros().size() ; i++){
-			try {
-			predicado(node.getParametros().get(i).getTipo().getClass() == node.getDefinicion().getParametros().get(i).getTipo().getClass(), 
-				"El tipo de los argumentos no concuerda: "+ node.getDefinicion().getParametros().get(i).getNombre() + " " + node.getDefinicion().getParametros().get(i).getTipo(), 
-				node.getParametros().get(i).getStart());
-			} catch (java.lang.IndexOutOfBoundsException iob) {
-				// TODO - add desired behaviour
+		if (node.getParametros() != null){
+			for (int i = 0 ; i < node.getParametros().size() ; i++){
+				try {
+					node.getParametros().get(i).accept(this, param);
+					predicado(node.getParametros().get(i).getTipo().getClass() == node.getDefinicion().getParametros().get(i).getTipo().getClass(), "El tipo de los argumentos no concuerda: "+ node.getDefinicion().getParametros().get(i).getNombre() + " " + node.getDefinicion().getParametros().get(i).getTipo(), node.getParametros().get(i).getStart());
+				} catch (java.lang.IndexOutOfBoundsException iob) {
+					// TODO - add desired behaviour
+				}
 			}
 		}
 
@@ -149,27 +182,30 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class ExpresionBinaria { Expresion left;  String operador;  Expresion right; }
 	public Object visit(ExpresionBinaria node, Object param) {
 
-		super.visit(node, param);
+		if (node.getLeft() != null){
+			node.getLeft().accept(this, param);
+		}
+		
+		if (node.getRight() != null){
+			node.getRight().accept(this, param);
+		}
 
 		// predicados B(p)
-		predicado(node.getLeft().getTipo() instanceof TipoEntero || node.getLeft().getTipo() instanceof TipoReal, 
-				"La operacion "+ node.getOperador() + " solo esta definida para el tipoEntero y el tipoReal",
-				node.getLeft().getStart());
-		predicado(node.getLeft().getTipo().getClass() == node.getRight().getTipo().getClass(), 
-				"Los tipos de las expresiones de la izda y de la dcha tienen que coincidir para la operacion: " + node.getOperador(),
-				node.getStart());
+		predicado(node.getLeft().getTipo().getClass() == node.getRight().getTipo().getClass(), "Los tipos de las expresiones de la izda y de la dcha tienen que coincidir para la operacion: " + node.getOperador(), node.getStart());
+		predicado(node.getLeft().getTipo() instanceof TipoEntero || node.getLeft().getTipo() instanceof TipoReal, "La operacion "+ node.getOperador() + " solo esta definida para el tipoEntero y el tipoReal", node.getLeft().getStart());
+		
 		
 		// reglas semanticas R(p)
-		String[] operadoresRelacionales = { ">=", "<=", "<" , ">", "!=", "==" }; 	
-	    for (String operator : operadoresRelacionales){
-	    	if (node.getOperador().equals(operator)){
-	    		// El tipo resultado de una de las operaciones anteriores siempre es entero ( 3.14 >= 2.5 -> TipoEntero )
-	    		node.setTipo(new TipoEntero()); 
-	    		return null;
-	    	}
-	    }
-		
 		node.setTipo(node.getLeft().getTipo());
+		node.setModificable(false);
+		
+    	if (node.getOperador().equals(">=") || node.getOperador().equals("<=") 
+			|| node.getOperador().equals("<") || node.getOperador().equals(">") 
+			|| node.getOperador().equals("!=") || node.getOperador().equals("==")) {
+    		// El tipo resultado de una de las operaciones anteriores siempre es entero ( 3.14 >= 2.5 -> TipoEntero )
+    		node.setTipo(new TipoEntero()); 
+    	}
+		
 		
 		return null;
 	}
@@ -198,8 +234,9 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 		predicado(node.getExpresion().getTipo() instanceof TipoEntero, "La negacion unaria solo esta permitida sobre el tipoEntero", node.getExpresion().getStart());
 
 		// reglas semanticas R(p)
-		node.setTipo(new TipoEntero());
-				
+		node.setTipo(new TipoEntero()); //node.setTipo(node.getExpresion().getTipo());
+		node.setModificable(false);
+		
 		return null;
 	}
 
@@ -208,14 +245,14 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 
 		super.visit(node, param);
 
-		// predicados B(p)
-							// Importante: Necesitamos usar .getClass() para la comparacion 
+		// predicados B(p)    -    Importante: Necesitamos usar .getClass() para la comparacion 
 		predicado(node.getExpresionAConvertir().getTipo().getClass() != node.getTipoDestino().getClass(), "El tipo de destino debe ser distinto al tipo actual de la expresion", node.getStart());
 		predicado(esTipoSimple(node.getExpresionAConvertir().getTipo()), "El tipo de la expresion a convertir tiene que ser simple: " + node.getExpresionAConvertir().getTipo(), node.getStart());
 		predicado(esTipoSimple(node.getTipoDestino()), "El tipo destino al que convertir una expresion tiene que ser simple", node.getStart());
 		
 		// reglas semanticas R(p)
 		node.setTipo(node.getTipoDestino());
+		node.setModificable(false);
 		
 		return null;
 	}
@@ -230,12 +267,13 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 		predicado(node.getArray().getTipo() instanceof TipoArray, "El tipo del array tiene que ser obligatoriamente tipoArray: "+node.getArray().getTipo(), node.getArray().getStart());
 		
 		// reglas semanticas R(p)
-		node.setModificable(true); // v[3] = 4;
-		
-		if (node.getArray().getTipo() instanceof TipoArray)
+		if (node.getArray().getTipo() instanceof TipoArray){
 			node.setTipo(((TipoArray) node.getArray().getTipo()).getTipo());
-		else
+		} else {
 			node.setTipo(node.getArray().getTipo());
+		}
+
+		node.setModificable(true); // v[3] = 4;
 		
 		return null;
 	}
@@ -258,22 +296,22 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 		for (DefCampo dc : campos) {
 			if (dc.getNombre().equals(node.getNombreCampo())){
 				campoExiste = true;
+				node.setDefinicion(dc);
 				node.setTipo(dc.getTipo());
 			}
 		}
 		
-		predicado(campoExiste, "El campo al que intentas acceder no existe: "+ node.getNombreCampo(), node.getStart());
-				
 		// reglas semanticas R(p)
 		node.setModificable(true); // microsoft.numEmpleados = 43;
+
+		// predicados B(p)
+		predicado(campoExiste, "El campo al que intentas acceder no existe: "+ node.getNombreCampo(), node.getStart());
 		
 		return null;
 	}
 
 	//	class InvFuncExpr { String nombreFuncion;  List<Expresion> parametros; }
 	public Object visit(InvFuncExpr node, Object param) {
-
-		super.visit(node, param);
 
 		// predicados B(p)
 		predicado( node.getParametros().size() == node.getDefinicion().getParametros().size() , 
@@ -282,9 +320,8 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 		
 		for (int i = 0 ; i < node.getParametros().size() ; i++){
 			try {
-			predicado(node.getParametros().get(i).getTipo().getClass() == node.getDefinicion().getParametros().get(i).getTipo().getClass(), 
-				"El tipo de los argumentos no concuerda: "+ node.getDefinicion().getParametros().get(i).getNombre(), 
-				node.getParametros().get(i).getStart());
+				node.getParametros().get(i).accept(this, param);
+				predicado(node.getParametros().get(i).getTipo().getClass() == node.getDefinicion().getParametros().get(i).getTipo().getClass(),	"El tipo de los argumentos no concuerda: "+ node.getDefinicion().getParametros().get(i).getNombre(), node.getParametros().get(i).getStart());
 			} catch (java.lang.IndexOutOfBoundsException iob) {
 				// TODO - add desired behaviour
 			}
@@ -294,16 +331,18 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 			
 		// reglas semanticas R(p)
 		node.setTipo(node.getDefinicion().getTipoRetorno()); // El tipo de una inv. como expresion es el tipo de retorno de la funcion a la que llamamos
-
+		node.setModificable(false);
+		
 		return null;
 	}
 
 	//	class Variable { String nombre; }
 	public Object visit(Variable node, Object param) {
 		
+//		System.out.println(node.getNombre());
 		// reglas semanticas R(p)
-		node.setModificable(true); // z = 7
 		node.setTipo(node.getDefinicion().getTipo()); // El tipo de una variable es el tipo de su definición
+		node.setModificable(true); // z = 7
 		
 		return null;
 	}

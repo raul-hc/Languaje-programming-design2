@@ -19,6 +19,9 @@ public class AnalisisSemantico {
 	}
 	
 	public void analiza(AST raiz) {
+		
+		System.out.println("- Identificacion y Comprobacion de tipos... ");
+		
 		Identificacion identificacion = new Identificacion(gestorErrores);
 		raiz.accept(identificacion, null);
 
@@ -27,6 +30,8 @@ public class AnalisisSemantico {
 
 		ComprobacionDeTipos comprobacion = new ComprobacionDeTipos(gestorErrores);
 		raiz.accept(comprobacion, null);
+		
+		System.out.println("            ...OKK identificacion y comprobacion tipos");
 	}
 
 	private GestorErrores gestorErrores;

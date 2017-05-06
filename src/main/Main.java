@@ -21,20 +21,38 @@ import visitor.ASTPrinter;
  * - Para Generacion de Codigo: 'generacionDeCodigo/GestionDeMemoria.java' y 'generacionDeCodigo/SeleccionDeInstrucciones.java'  */
 public class Main {
 	
-	// Entrada a usar durante el desarrollo
+/*# Test para el lexico y el sintactico */
 //	public static final String programa = "src/ejemplo.txt";	
 //	public static final String programa = "src/Hipoteca.txt"
+
+/*# Test para el semantico parte 1 */
 //	public static final String programa = "src/test/semantico-identificacion/prog1.txt";
 //	public static final String programa = "src/test/semantico-identificacion/1. Funciones.txt";
 //	public static final String programa = "src/test/semantico-identificacion/2. Estructuras.txt";
 //	public static final String programa = "src/test/semantico-identificacion/3. Variables.txt";
+
+/*# Test para el semantico parte 2 */
 //	public static final String programa = "src/test/semantico-identificacion/prog1.txt";
 //	public static final String programa = "src/test/semantico-identificacion/prog2.txt";
+
+/*# Test para el semantico parte 3 */
 //	public static final String programa = "src/test/semantico-tipos/Test-tipos.txt";
 //	public static final String programa = "src/test/semantico-tipos/Test-tipos-short.txt";	
+
+/*# Test para generacion de codigo parte1 (gestion de memoria) */
 //	public static final String programa = "src/test/generacion-codigo/Test-gestion-memoria.txt";
+
+/*# Test para generacion de codigo parte2 */
 //	public static final String programa = "src/test/generacion-codigo/Test-generacion-codigo-basico-lab10.txt";
-	public static final String programa = "src/test/generacion-codigo/Test-generacion-codigo-basico-lab10-short.txt";
+//	public static final String programa = "src/test/generacion-codigo/Test-generacion-codigo-basico-lab10-short.txt";
+
+/*# Test para generacion de codigo parte3 */
+	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-1.txt";
+//	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-2.txt";
+//	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-3.txt";
+//	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-4.txt";
+
+//	public static final String programa = "src/test/test-final/prueba.txt";
 	
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();
@@ -43,10 +61,10 @@ public class Main {
 //		compile(programa, gestor);
 		
 		if (!gestor.hayErrores())
-			System.out.print("El programa se ha compilado correctamente.\n\n");
+			System.out.print("\nEL PROGRAMA SE HA COMPILADO CORRECTAMENTE.");
 
 		ASTPrinter.toHtml(programa, raiz, "Traza arbol"); // Utilidad generada por VGen (opcional)
-//		
+		
 //		VisitorPrinter vprinter = new VisitorPrinter();
 //		raiz.accept(vprinter, null);		
 	}
@@ -71,7 +89,7 @@ public class Main {
 
 		// 3. Fase de Generacion de Codigo
 		File sourceFile = new File(sourceName);
-		Writer out = new FileWriter(new File(sourceFile.getParent(), "salida.txt"));
+		Writer out = new FileWriter(new File(sourceFile.getParent(), "salida11.txt"));
 
 		GeneracionDeCodigo generador = new GeneracionDeCodigo();
 		generador.genera(sourceFile.getName(), raiz, out);

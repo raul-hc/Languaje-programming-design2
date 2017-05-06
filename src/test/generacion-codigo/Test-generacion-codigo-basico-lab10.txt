@@ -27,9 +27,9 @@ main() {
 	p.y = 4444.4;
 		
 	print a;		// 1111
-	print b + p.y;	// 6666.6
-	print v[3];		// 3333
+	printsp b + p.y;	// 6666.6
+	println v[3];		// 3333
 
-	print a > 0 && b < 3333.3;	// 1
-	print cast<int>(b);			// 2222
+	printsp a > 0 && b < 3333.3;	// 1
+	println cast<int>(b);			// 2222
 }

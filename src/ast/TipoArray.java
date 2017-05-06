@@ -40,7 +40,7 @@ public class TipoArray extends AbstractTipo {
 
 	@Override
 	public int getSize() {
-		return tamano * tipo.getSize();
+		return getTamano() * getTipo().getSize();
 	}
 
 	@Override
@@ -55,5 +55,9 @@ public class TipoArray extends AbstractTipo {
 
 	private int tamano;
 	private Tipo tipo;
+	@Override
+	public String getTipoMAPL() {
+		return getTamano() + "*" + getTipo().getTipoMAPL();
+	}
 }
 

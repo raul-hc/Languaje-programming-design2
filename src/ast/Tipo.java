@@ -9,5 +9,7 @@ public interface Tipo extends AST {
 	public int getSize();
 
 	public String getSufijo();
+
+	public String getTipoMAPL();
 }
 

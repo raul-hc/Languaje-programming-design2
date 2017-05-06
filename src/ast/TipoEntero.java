@@ -30,5 +30,10 @@ public class TipoEntero extends AbstractTipo {
 		return "i";
 	}
 
+	@Override
+	public String getTipoMAPL() {
+		return "int";
+	}
+
 }
 

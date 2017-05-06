@@ -615,12 +615,12 @@ state 56
 	IGUALDAD  reduce 57
 	MAYORIGUAL  reduce 57
 	MENORIGUAL  reduce 57
+	'>'  reduce 57
+	'<'  reduce 57
 	'+'  reduce 57
 	'-'  reduce 57
 	'*'  reduce 57
 	'/'  reduce 57
-	'>'  reduce 57
-	'<'  reduce 57
 	'['  reduce 57
 	'.'  reduce 57
 	'='  reduce 57
@@ -778,12 +778,12 @@ state 70
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	'='  shift 100
@@ -839,12 +839,12 @@ state 73
 	IGUALDAD  reduce 57
 	MAYORIGUAL  reduce 57
 	MENORIGUAL  reduce 57
+	'>'  reduce 57
+	'<'  reduce 57
 	'+'  reduce 57
 	'-'  reduce 57
 	'*'  reduce 57
 	'/'  reduce 57
-	'>'  reduce 57
-	'<'  reduce 57
 	'['  reduce 57
 	']'  reduce 57
 	'.'  reduce 57
@@ -871,20 +871,20 @@ state 74
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
+	DISTINTO  shift 88
+	IGUALDAD  shift 89
+	MAYORIGUAL  shift 90
+	MENORIGUAL  shift 91
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	Y  reduce 54
 	O  reduce 54
-	DISTINTO  reduce 54
-	IGUALDAD  reduce 54
-	MAYORIGUAL  reduce 54
-	MENORIGUAL  reduce 54
-	'+'  reduce 54
-	'-'  reduce 54
-	'*'  reduce 54
-	'/'  reduce 54
-	'>'  reduce 54
-	'<'  reduce 54
 	']'  reduce 54
 	')'  reduce 54
 	';'  reduce 54
@@ -915,12 +915,12 @@ state 75
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	')'  shift 104
@@ -969,12 +969,12 @@ state 77
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	';'  shift 108
@@ -1004,12 +1004,12 @@ state 78
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	';'  shift 109
@@ -1039,12 +1039,12 @@ state 79
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	';'  shift 110
@@ -1074,12 +1074,12 @@ state 80
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	';'  shift 111
@@ -1115,12 +1115,12 @@ state 82
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	';'  shift 112
@@ -1262,7 +1262,7 @@ state 91
 
 
 state 92
-	expr : expr '+' . expr  (44)
+	expr : expr '>' . expr  (51)
 
 	'!'  shift 54
 	'('  shift 55
@@ -1277,7 +1277,7 @@ state 92
 
 
 state 93
-	expr : expr '-' . expr  (45)
+	expr : expr '<' . expr  (50)
 
 	'!'  shift 54
 	'('  shift 55
@@ -1292,7 +1292,7 @@ state 93
 
 
 state 94
-	expr : expr '*' . expr  (46)
+	expr : expr '+' . expr  (44)
 
 	'!'  shift 54
 	'('  shift 55
@@ -1307,7 +1307,7 @@ state 94
 
 
 state 95
-	expr : expr '/' . expr  (47)
+	expr : expr '-' . expr  (45)
 
 	'!'  shift 54
 	'('  shift 55
@@ -1322,7 +1322,7 @@ state 95
 
 
 state 96
-	expr : expr '>' . expr  (51)
+	expr : expr '*' . expr  (46)
 
 	'!'  shift 54
 	'('  shift 55
@@ -1337,7 +1337,7 @@ state 96
 
 
 state 97
-	expr : expr '<' . expr  (50)
+	expr : expr '/' . expr  (47)
 
 	'!'  shift 54
 	'('  shift 55
@@ -1448,12 +1448,12 @@ state 105
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	')'  reduce 43
@@ -1530,12 +1530,12 @@ state 113
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	')'  shift 135
@@ -1565,12 +1565,12 @@ state 114
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	')'  shift 136
@@ -1601,20 +1601,20 @@ state 116
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
+	DISTINTO  shift 88
+	IGUALDAD  shift 89
+	MAYORIGUAL  shift 90
+	MENORIGUAL  shift 91
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	Y  reduce 55
 	O  reduce 55
-	DISTINTO  reduce 55
-	IGUALDAD  reduce 55
-	MAYORIGUAL  reduce 55
-	MENORIGUAL  reduce 55
-	'+'  reduce 55
-	'-'  reduce 55
-	'*'  reduce 55
-	'/'  reduce 55
-	'>'  reduce 55
-	'<'  reduce 55
 	']'  reduce 55
 	')'  reduce 55
 	';'  reduce 55
@@ -1639,20 +1639,20 @@ state 117
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
+	DISTINTO  shift 88
+	IGUALDAD  shift 89
+	MAYORIGUAL  shift 90
+	MENORIGUAL  shift 91
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	Y  reduce 56
 	O  reduce 56
-	DISTINTO  reduce 56
-	IGUALDAD  reduce 56
-	MAYORIGUAL  reduce 56
-	MENORIGUAL  reduce 56
-	'+'  reduce 56
-	'-'  reduce 56
-	'*'  reduce 56
-	'/'  reduce 56
-	'>'  reduce 56
-	'<'  reduce 56
 	']'  reduce 56
 	')'  reduce 56
 	';'  reduce 56
@@ -1677,20 +1677,20 @@ state 118
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
-	Y  shift 86
-	O  shift 87
+	MAYORIGUAL  shift 90
+	MENORIGUAL  shift 91
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
+	Y  reduce 52
+	O  reduce 52
 	DISTINTO  reduce 52
 	IGUALDAD  reduce 52
-	MAYORIGUAL  reduce 52
-	MENORIGUAL  reduce 52
-	'+'  reduce 52
-	'-'  reduce 52
-	'*'  reduce 52
-	'/'  reduce 52
-	'>'  reduce 52
-	'<'  reduce 52
 	']'  reduce 52
 	')'  reduce 52
 	';'  reduce 52
@@ -1715,20 +1715,20 @@ state 119
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
-	Y  shift 86
-	O  shift 87
+	MAYORIGUAL  shift 90
+	MENORIGUAL  shift 91
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
+	Y  reduce 53
+	O  reduce 53
 	DISTINTO  reduce 53
 	IGUALDAD  reduce 53
-	MAYORIGUAL  reduce 53
-	MENORIGUAL  reduce 53
-	'+'  reduce 53
-	'-'  reduce 53
-	'*'  reduce 53
-	'/'  reduce 53
-	'>'  reduce 53
-	'<'  reduce 53
 	']'  reduce 53
 	')'  reduce 53
 	';'  reduce 53
@@ -1753,18 +1753,18 @@ state 120
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
-	Y  shift 86
-	O  shift 87
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
+	Y  reduce 48
+	O  reduce 48
 	DISTINTO  reduce 48
 	IGUALDAD  reduce 48
 	MAYORIGUAL  reduce 48
 	MENORIGUAL  reduce 48
-	'+'  reduce 48
-	'-'  reduce 48
-	'*'  reduce 48
-	'/'  reduce 48
 	'>'  reduce 48
 	'<'  reduce 48
 	']'  reduce 48
@@ -1791,18 +1791,18 @@ state 121
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
-	Y  shift 86
-	O  shift 87
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
+	Y  reduce 49
+	O  reduce 49
 	DISTINTO  reduce 49
 	IGUALDAD  reduce 49
 	MAYORIGUAL  reduce 49
 	MENORIGUAL  reduce 49
-	'+'  reduce 49
-	'-'  reduce 49
-	'*'  reduce 49
-	'/'  reduce 49
 	'>'  reduce 49
 	'<'  reduce 49
 	']'  reduce 49
@@ -1813,158 +1813,6 @@ state 121
 
 
 state 122
-	expr : expr . '+' expr  (44)
-	expr : expr '+' expr .  (44)
-	expr : expr . '-' expr  (45)
-	expr : expr . '*' expr  (46)
-	expr : expr . '/' expr  (47)
-	expr : expr . MAYORIGUAL expr  (48)
-	expr : expr . MENORIGUAL expr  (49)
-	expr : expr . '<' expr  (50)
-	expr : expr . '>' expr  (51)
-	expr : expr . DISTINTO expr  (52)
-	expr : expr . IGUALDAD expr  (53)
-	expr : expr . Y expr  (55)
-	expr : expr . O expr  (56)
-	expr : expr . '[' expr ']'  (63)
-	expr : expr . '.' "IDENTIFICADOR"  (64)
-
-	Y  shift 86
-	O  shift 87
-	DISTINTO  shift 88
-	IGUALDAD  shift 89
-	MAYORIGUAL  shift 90
-	MENORIGUAL  shift 91
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
-	'['  shift 98
-	'.'  shift 99
-	'+'  reduce 44
-	'-'  reduce 44
-	']'  reduce 44
-	')'  reduce 44
-	';'  reduce 44
-	','  reduce 44
-	'='  reduce 44
-
-
-state 123
-	expr : expr . '+' expr  (44)
-	expr : expr . '-' expr  (45)
-	expr : expr '-' expr .  (45)
-	expr : expr . '*' expr  (46)
-	expr : expr . '/' expr  (47)
-	expr : expr . MAYORIGUAL expr  (48)
-	expr : expr . MENORIGUAL expr  (49)
-	expr : expr . '<' expr  (50)
-	expr : expr . '>' expr  (51)
-	expr : expr . DISTINTO expr  (52)
-	expr : expr . IGUALDAD expr  (53)
-	expr : expr . Y expr  (55)
-	expr : expr . O expr  (56)
-	expr : expr . '[' expr ']'  (63)
-	expr : expr . '.' "IDENTIFICADOR"  (64)
-
-	Y  shift 86
-	O  shift 87
-	DISTINTO  shift 88
-	IGUALDAD  shift 89
-	MAYORIGUAL  shift 90
-	MENORIGUAL  shift 91
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
-	'['  shift 98
-	'.'  shift 99
-	'+'  reduce 45
-	'-'  reduce 45
-	']'  reduce 45
-	')'  reduce 45
-	';'  reduce 45
-	','  reduce 45
-	'='  reduce 45
-
-
-state 124
-	expr : expr . '+' expr  (44)
-	expr : expr . '-' expr  (45)
-	expr : expr . '*' expr  (46)
-	expr : expr '*' expr .  (46)
-	expr : expr . '/' expr  (47)
-	expr : expr . MAYORIGUAL expr  (48)
-	expr : expr . MENORIGUAL expr  (49)
-	expr : expr . '<' expr  (50)
-	expr : expr . '>' expr  (51)
-	expr : expr . DISTINTO expr  (52)
-	expr : expr . IGUALDAD expr  (53)
-	expr : expr . Y expr  (55)
-	expr : expr . O expr  (56)
-	expr : expr . '[' expr ']'  (63)
-	expr : expr . '.' "IDENTIFICADOR"  (64)
-
-	Y  shift 86
-	O  shift 87
-	DISTINTO  shift 88
-	IGUALDAD  shift 89
-	MAYORIGUAL  shift 90
-	MENORIGUAL  shift 91
-	'>'  shift 96
-	'<'  shift 97
-	'['  shift 98
-	'.'  shift 99
-	'+'  reduce 46
-	'-'  reduce 46
-	'*'  reduce 46
-	'/'  reduce 46
-	']'  reduce 46
-	')'  reduce 46
-	';'  reduce 46
-	','  reduce 46
-	'='  reduce 46
-
-
-state 125
-	expr : expr . '+' expr  (44)
-	expr : expr . '-' expr  (45)
-	expr : expr . '*' expr  (46)
-	expr : expr . '/' expr  (47)
-	expr : expr '/' expr .  (47)
-	expr : expr . MAYORIGUAL expr  (48)
-	expr : expr . MENORIGUAL expr  (49)
-	expr : expr . '<' expr  (50)
-	expr : expr . '>' expr  (51)
-	expr : expr . DISTINTO expr  (52)
-	expr : expr . IGUALDAD expr  (53)
-	expr : expr . Y expr  (55)
-	expr : expr . O expr  (56)
-	expr : expr . '[' expr ']'  (63)
-	expr : expr . '.' "IDENTIFICADOR"  (64)
-
-	Y  shift 86
-	O  shift 87
-	DISTINTO  shift 88
-	IGUALDAD  shift 89
-	MAYORIGUAL  shift 90
-	MENORIGUAL  shift 91
-	'>'  shift 96
-	'<'  shift 97
-	'['  shift 98
-	'.'  shift 99
-	'+'  reduce 47
-	'-'  reduce 47
-	'*'  reduce 47
-	'/'  reduce 47
-	']'  reduce 47
-	')'  reduce 47
-	';'  reduce 47
-	','  reduce 47
-	'='  reduce 47
-
-
-state 126
 	expr : expr . '+' expr  (44)
 	expr : expr . '-' expr  (45)
 	expr : expr . '*' expr  (46)
@@ -1981,18 +1829,18 @@ state 126
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
-	Y  shift 86
-	O  shift 87
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
+	Y  reduce 51
+	O  reduce 51
 	DISTINTO  reduce 51
 	IGUALDAD  reduce 51
 	MAYORIGUAL  reduce 51
 	MENORIGUAL  reduce 51
-	'+'  reduce 51
-	'-'  reduce 51
-	'*'  reduce 51
-	'/'  reduce 51
 	'>'  reduce 51
 	'<'  reduce 51
 	']'  reduce 51
@@ -2002,7 +1850,7 @@ state 126
 	'='  reduce 51
 
 
-state 127
+state 123
 	expr : expr . '+' expr  (44)
 	expr : expr . '-' expr  (45)
 	expr : expr . '*' expr  (46)
@@ -2019,18 +1867,18 @@ state 127
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
-	Y  shift 86
-	O  shift 87
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
+	Y  reduce 50
+	O  reduce 50
 	DISTINTO  reduce 50
 	IGUALDAD  reduce 50
 	MAYORIGUAL  reduce 50
 	MENORIGUAL  reduce 50
-	'+'  reduce 50
-	'-'  reduce 50
-	'*'  reduce 50
-	'/'  reduce 50
 	'>'  reduce 50
 	'<'  reduce 50
 	']'  reduce 50
@@ -2038,6 +1886,158 @@ state 127
 	';'  reduce 50
 	','  reduce 50
 	'='  reduce 50
+
+
+state 124
+	expr : expr . '+' expr  (44)
+	expr : expr '+' expr .  (44)
+	expr : expr . '-' expr  (45)
+	expr : expr . '*' expr  (46)
+	expr : expr . '/' expr  (47)
+	expr : expr . MAYORIGUAL expr  (48)
+	expr : expr . MENORIGUAL expr  (49)
+	expr : expr . '<' expr  (50)
+	expr : expr . '>' expr  (51)
+	expr : expr . DISTINTO expr  (52)
+	expr : expr . IGUALDAD expr  (53)
+	expr : expr . Y expr  (55)
+	expr : expr . O expr  (56)
+	expr : expr . '[' expr ']'  (63)
+	expr : expr . '.' "IDENTIFICADOR"  (64)
+
+	'*'  shift 96
+	'/'  shift 97
+	'['  shift 98
+	'.'  shift 99
+	Y  reduce 44
+	O  reduce 44
+	DISTINTO  reduce 44
+	IGUALDAD  reduce 44
+	MAYORIGUAL  reduce 44
+	MENORIGUAL  reduce 44
+	'>'  reduce 44
+	'<'  reduce 44
+	'+'  reduce 44
+	'-'  reduce 44
+	']'  reduce 44
+	')'  reduce 44
+	';'  reduce 44
+	','  reduce 44
+	'='  reduce 44
+
+
+state 125
+	expr : expr . '+' expr  (44)
+	expr : expr . '-' expr  (45)
+	expr : expr '-' expr .  (45)
+	expr : expr . '*' expr  (46)
+	expr : expr . '/' expr  (47)
+	expr : expr . MAYORIGUAL expr  (48)
+	expr : expr . MENORIGUAL expr  (49)
+	expr : expr . '<' expr  (50)
+	expr : expr . '>' expr  (51)
+	expr : expr . DISTINTO expr  (52)
+	expr : expr . IGUALDAD expr  (53)
+	expr : expr . Y expr  (55)
+	expr : expr . O expr  (56)
+	expr : expr . '[' expr ']'  (63)
+	expr : expr . '.' "IDENTIFICADOR"  (64)
+
+	'*'  shift 96
+	'/'  shift 97
+	'['  shift 98
+	'.'  shift 99
+	Y  reduce 45
+	O  reduce 45
+	DISTINTO  reduce 45
+	IGUALDAD  reduce 45
+	MAYORIGUAL  reduce 45
+	MENORIGUAL  reduce 45
+	'>'  reduce 45
+	'<'  reduce 45
+	'+'  reduce 45
+	'-'  reduce 45
+	']'  reduce 45
+	')'  reduce 45
+	';'  reduce 45
+	','  reduce 45
+	'='  reduce 45
+
+
+state 126
+	expr : expr . '+' expr  (44)
+	expr : expr . '-' expr  (45)
+	expr : expr . '*' expr  (46)
+	expr : expr '*' expr .  (46)
+	expr : expr . '/' expr  (47)
+	expr : expr . MAYORIGUAL expr  (48)
+	expr : expr . MENORIGUAL expr  (49)
+	expr : expr . '<' expr  (50)
+	expr : expr . '>' expr  (51)
+	expr : expr . DISTINTO expr  (52)
+	expr : expr . IGUALDAD expr  (53)
+	expr : expr . Y expr  (55)
+	expr : expr . O expr  (56)
+	expr : expr . '[' expr ']'  (63)
+	expr : expr . '.' "IDENTIFICADOR"  (64)
+
+	'['  shift 98
+	'.'  shift 99
+	Y  reduce 46
+	O  reduce 46
+	DISTINTO  reduce 46
+	IGUALDAD  reduce 46
+	MAYORIGUAL  reduce 46
+	MENORIGUAL  reduce 46
+	'>'  reduce 46
+	'<'  reduce 46
+	'+'  reduce 46
+	'-'  reduce 46
+	'*'  reduce 46
+	'/'  reduce 46
+	']'  reduce 46
+	')'  reduce 46
+	';'  reduce 46
+	','  reduce 46
+	'='  reduce 46
+
+
+state 127
+	expr : expr . '+' expr  (44)
+	expr : expr . '-' expr  (45)
+	expr : expr . '*' expr  (46)
+	expr : expr . '/' expr  (47)
+	expr : expr '/' expr .  (47)
+	expr : expr . MAYORIGUAL expr  (48)
+	expr : expr . MENORIGUAL expr  (49)
+	expr : expr . '<' expr  (50)
+	expr : expr . '>' expr  (51)
+	expr : expr . DISTINTO expr  (52)
+	expr : expr . IGUALDAD expr  (53)
+	expr : expr . Y expr  (55)
+	expr : expr . O expr  (56)
+	expr : expr . '[' expr ']'  (63)
+	expr : expr . '.' "IDENTIFICADOR"  (64)
+
+	'['  shift 98
+	'.'  shift 99
+	Y  reduce 47
+	O  reduce 47
+	DISTINTO  reduce 47
+	IGUALDAD  reduce 47
+	MAYORIGUAL  reduce 47
+	MENORIGUAL  reduce 47
+	'>'  reduce 47
+	'<'  reduce 47
+	'+'  reduce 47
+	'-'  reduce 47
+	'*'  reduce 47
+	'/'  reduce 47
+	']'  reduce 47
+	')'  reduce 47
+	';'  reduce 47
+	','  reduce 47
+	'='  reduce 47
 
 
 state 128
@@ -2063,12 +2063,12 @@ state 128
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	']'  shift 138
 	'.'  shift 99
@@ -2104,12 +2104,12 @@ state 130
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	';'  shift 139
@@ -2140,12 +2140,12 @@ state 133
 	IGUALDAD  reduce 65
 	MAYORIGUAL  reduce 65
 	MENORIGUAL  reduce 65
+	'>'  reduce 65
+	'<'  reduce 65
 	'+'  reduce 65
 	'-'  reduce 65
 	'*'  reduce 65
 	'/'  reduce 65
-	'>'  reduce 65
-	'<'  reduce 65
 	'['  reduce 65
 	'.'  reduce 65
 	'='  reduce 65
@@ -2243,12 +2243,12 @@ state 142
 	IGUALDAD  shift 89
 	MAYORIGUAL  shift 90
 	MENORIGUAL  shift 91
-	'+'  shift 92
-	'-'  shift 93
-	'*'  shift 94
-	'/'  shift 95
-	'>'  shift 96
-	'<'  shift 97
+	'>'  shift 92
+	'<'  shift 93
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
 	')'  reduce 42
@@ -2291,18 +2291,18 @@ state 145
 	expr : expr . '[' expr ']'  (63)
 	expr : expr . '.' "IDENTIFICADOR"  (64)
 
-	Y  shift 86
-	O  shift 87
+	'+'  shift 94
+	'-'  shift 95
+	'*'  shift 96
+	'/'  shift 97
 	'['  shift 98
 	'.'  shift 99
+	Y  reduce 62
+	O  reduce 62
 	DISTINTO  reduce 62
 	IGUALDAD  reduce 62
 	MAYORIGUAL  reduce 62
 	MENORIGUAL  reduce 62
-	'+'  reduce 62
-	'-'  reduce 62
-	'*'  reduce 62
-	'/'  reduce 62
 	'>'  reduce 62
 	'<'  reduce 62
 	']'  reduce 62

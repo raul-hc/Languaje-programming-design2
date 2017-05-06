@@ -39,7 +39,7 @@ public class GestionDeMemoria extends DefaultVisitor {
 			break;
 		}
 		
-	System.out.println("\t"+node.toString());
+//	System.out.println("\t"+node.toString());
 	
 		return null;
 	}
@@ -79,7 +79,7 @@ public class GestionDeMemoria extends DefaultVisitor {
 
 		// R(p) - Reglas semanticas
 		node.setDireccion(offsetCampos);	
-	System.out.println("\t"+node.toString());
+//	System.out.println("\t"+node.toString());
 		offsetCampos += node.getTipo().getSize(); // = offsetLocal + node.getTipo().getSize();
 		
 		return null;

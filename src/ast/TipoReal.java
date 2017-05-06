@@ -30,5 +30,10 @@ public class TipoReal extends AbstractTipo {
 		return "f";
 	}
 
+	@Override
+	public String getTipoMAPL() {
+		return "float";
+	}
+
 }
 

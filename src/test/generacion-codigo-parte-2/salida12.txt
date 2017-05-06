@@ -1,0 +1,284 @@
+#source "test-codigo-lab11-2.txt" 
+
+call main
+halt
+
+#type Persona : {
+inicial : byte
+sueldo : float
+}
+
+#global empresa:4*Persona
+
+#func inicia
+inicia:
+
+#local i:int
+
+#line 40
+ENTER 2
+
+#line 36
+pusha bp
+push 2
+subi
+pushi 0
+storei
+
+
+#line 40
+inicioWhile0:
+pusha bp
+push 2
+subi
+loadi
+pushi 4
+lti
+JZ finalWhile0
+
+#line 38
+pusha 0
+pusha bp
+push 2
+subi
+loadi
+push 5
+mul
+add
+push 0
+add
+pusha bp
+push 2
+subi
+loadi
+pushb 65
+b2i
+addi
+i2b
+storeb
+
+#line 39
+pusha 0
+pusha bp
+push 2
+subi
+loadi
+push 5
+mul
+add
+push 1
+add
+pushi 1000
+pusha bp
+push 2
+subi
+loadi
+pushi 100
+muli
+addi
+i2f
+storef
+
+#line 40
+pusha bp
+push 2
+subi
+pusha bp
+push 2
+subi
+loadi
+pushi 1
+addi
+storei
+JMP inicioWhile0
+finalWhile0:
+#ret void
+ret 0,2,0
+
+#func busca
+busca:
+
+#param i:int
+
+#line 49
+ENTER 0
+
+#line 45
+pusha bp
+push 4
+add
+loadi
+pushi 0
+lti
+pusha bp
+push 4
+add
+loadi
+pushi 4
+gei
+or
+JZ else1
+JMP finIfElse1
+else1:
+finIfElse1:
+
+#line 48
+pusha 0
+pusha bp
+push 4
+add
+loadi
+push 5
+mul
+add
+push 0
+add
+loadb
+OUTb
+
+#line 49
+pusha 0
+pusha bp
+push 4
+add
+loadi
+push 5
+mul
+add
+push 1
+add
+loadf
+OUTf
+#ret void
+ret 0,0,2
+
+#func imprime
+imprime:
+
+#local i:int
+
+#local aux:Persona
+
+#line 66
+ENTER 7
+
+#line 56
+pusha bp
+push 2
+subi
+pushi 0
+storei
+
+
+#line 64
+inicioWhile2:
+pusha bp
+push 2
+subi
+loadi
+pushi 4
+gei
+not
+JZ finalWhile2
+
+#line 58
+pusha bp
+push 7
+sub
+push 0
+add
+pusha 0
+pusha bp
+push 2
+subi
+loadi
+push 5
+mul
+add
+push 0
+add
+loadb
+storeb
+
+#line 59
+pusha bp
+push 7
+sub
+push 1
+add
+pusha 0
+pusha bp
+push 2
+subi
+loadi
+push 5
+mul
+add
+push 1
+add
+loadf
+storef
+
+#line 61
+pusha bp
+push 7
+sub
+push 0
+add
+loadb
+OUTb
+
+#line 62
+pusha bp
+push 7
+sub
+push 1
+add
+loadf
+OUTf
+
+#line 64
+pusha bp
+push 2
+subi
+pusha bp
+push 2
+subi
+loadi
+pushi 1
+addi
+storei
+JMP inicioWhile2
+finalWhile2:
+
+ #line 66
+pusha bp
+push 2
+subi
+loadi
+RET 2, 7, 0
+#ret int
+
+#func main
+main:
+
+#local posicion:int
+
+#line 77
+ENTER 2
+CALL inicia
+
+#line 74
+pusha bp
+push 2
+subi
+INi
+storei
+pusha bp
+push 2
+subi
+loadi
+CALL busca
+CALL imprime
+#ret void
+ret 0,2,0

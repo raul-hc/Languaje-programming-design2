@@ -1,0 +1,229 @@
+#source "test-codigo-lab11-4.txt" 
+
+call main
+halt
+
+
+#func potencia
+potencia:
+
+#line 33
+ENTER 4
+
+#param base:float
+
+#param exponente:int
+
+#local total:float
+
+#line 20
+pusha bp
+push 4
+addi
+loadi
+pushi 0
+eqi
+JZ else0
+
+#line 21
+pusha bp
+push 4
+subf
+pushf 1.0
+storef
+JMP finIfElse0
+else0:
+
+#line 23
+pusha bp
+push 4
+addi
+loadi
+pushi 0
+lti
+JZ else0
+
+#line 24
+pusha bp
+push 4
+subf
+pushf 1.0
+pusha bp
+push 6
+addf
+loadf
+pushi 0
+pusha bp
+push 4
+addi
+loadi
+subi
+CALL potencia
+divf
+storef
+JMP finIfElse0
+else0:
+
+#line 26
+pusha bp
+push 4
+subf
+pusha bp
+push 6
+addf
+loadf
+storef
+
+
+#line 29
+inicioWhile0:
+pusha bp
+push 4
+addi
+loadi
+pushi 1
+gti
+JZ finalWhile0
+
+#line 28
+pusha bp
+push 4
+subf
+pusha bp
+push 4
+subf
+loadf
+pusha bp
+push 6
+addf
+loadf
+mulf
+storef
+
+#line 29
+pusha bp
+push 4
+addi
+pusha bp
+push 4
+addi
+loadi
+pushi 1
+subi
+storei
+JMP inicioWhile0
+finalWhile0:
+finIfElse1:
+finIfElse2:
+#ret float
+RET 4,4,6
+
+#func letraHipoteca
+letraHipoteca:
+
+#line 40
+ENTER 4
+
+#param capital:float
+
+#param años:int
+
+#param interes:float
+
+#local mensual:float
+
+#line 39
+pusha bp
+push 4
+subf
+pusha bp
+push 4
+addf
+loadf
+pushf 12.0
+divf
+storef
+pusha bp
+push 10
+addf
+loadf
+pusha bp
+push 4
+subf
+loadf
+mulf
+pushf 100.0
+pushf 1.0
+pushf 1.0
+pusha bp
+push 4
+subf
+loadf
+pushf 100.0
+divf
+addf
+pushi 0
+pusha bp
+push 8
+addi
+loadi
+pushi 12
+muli
+subi
+CALL potencia
+subf
+mulf
+divf
+#ret float
+RET 4,4,10
+
+#func main
+main:
+
+#line 57
+ENTER 10
+
+#local precioVivienda:float
+
+#local añosHipoteca:int
+
+#local interes:float
+
+#line 48
+pusha bp
+push 4
+subf
+pushf 200000.0
+storef
+
+#line 49
+pusha bp
+push 6
+subi
+pushi 30
+storei
+
+#line 50
+pusha bp
+push 10
+subf
+pushf 2.04
+storef
+
+#line 57
+pusha bp
+push 4
+subf
+loadf
+pusha bp
+push 6
+subi
+loadi
+pusha bp
+push 10
+subf
+loadf
+CALL letraHipoteca
+OUTf
+#ret void
+RET 0,10,0

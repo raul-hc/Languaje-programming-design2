@@ -30,5 +30,10 @@ public class TipoCaracter extends AbstractTipo {
 		return "b";
 	}
 
+	@Override
+	public String getTipoMAPL() {
+		return "byte";
+	}
+
 }
 

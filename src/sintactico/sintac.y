@@ -21,16 +21,17 @@ import main.*;
 																	Visitor que reconstruya el txt de entrada original. */
 
 /* Precedencias aqui --------------------------------------- */
+%left Y O '!'
+%left DISTINTO IGUALDAD
+%left '>' MAYORIGUAL '<' MENORIGUAL 
 %left '+' '-'
 %left '*' '/'
-%left '>' MAYORIGUAL '<' MENORIGUAL DISTINTO IGUALDAD
-%left Y O '!'
 %left '[' ']' '.'
 %nonassoc '(' ')'
 
 %%
 
-/* Añadir las reglas en esta seccion ----------------------- */
+/* Anadir las reglas en esta seccion ----------------------- */
 
 programa: definiciones		{ raiz = new Programa($1); }
 		|					{ $$ = new ArrayList(); }

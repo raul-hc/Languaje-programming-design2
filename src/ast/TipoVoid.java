@@ -25,5 +25,10 @@ public class TipoVoid extends AbstractTipo {
 		return 0;
 	}
 
+	@Override
+	public String getTipoMAPL() {
+		return "void";
+	}
+
 }
 

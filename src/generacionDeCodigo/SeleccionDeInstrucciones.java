@@ -2,10 +2,40 @@ package generacionDeCodigo;
 
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.List;
 
-import ast.*;
-
+import ast.AccesoArray;
+import ast.AccesoStruct;
+import ast.Asignacion;
+import ast.Cast;
+import ast.ContextoVariable;
+import ast.DefCampo;
+import ast.DefFuncion;
+import ast.DefStruct;
+import ast.DefVariable;
+import ast.Definicion;
+import ast.Escritura;
+import ast.Expresion;
+import ast.ExpresionBinaria;
+import ast.ExpresionLogica;
+import ast.ExpresionUnariaNegacion;
+import ast.Ifelse;
+import ast.InvFuncExpr;
+import ast.InvFuncSent;
+import ast.Lectura;
+import ast.LiteralCaracter;
+import ast.LiteralInt;
+import ast.LiteralReal;
+import ast.Programa;
+import ast.Return;
+import ast.Sentencia;
+import ast.TipoArray;
+import ast.TipoCaracter;
+import ast.TipoEntero;
+import ast.TipoReal;
+import ast.TipoStruct;
+import ast.TipoVoid;
+import ast.Variable;
+import ast.While;
 import visitor.DefaultVisitor;
 
 public class SeleccionDeInstrucciones extends DefaultVisitor {
@@ -13,395 +43,520 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 	private PrintWriter writer;
 	private String sourceFile;
 	
+	int contador = 0;
+
 	enum Funcion {
 		DIRECCION, VALOR
 	}
-	
+
 	public SeleccionDeInstrucciones(Writer writer, String sourceFile) {
 		this.writer = new PrintWriter(writer);
 		this.sourceFile = sourceFile;
 	}
-	
-	
-	//	class Programa { List<Definicion> definicion; }
+
+	// class Programa { List<Definicion> definicion; }
 	public Object visit(Programa node, Object param) {
 
-		genera("#source \"" + sourceFile + "\"");
+		genera("#source \"" + sourceFile + "\" \n");
 		genera("call main");
-		genera("halt");
-		
-		super.visit(node, param);	// Recorrer los hijos
+		genera("halt\n");
+
+		// Recorrer los hijos
+		if (node.getDefinicion() != null){
+			for (Definicion child : node.getDefinicion()){
+				child.accept(this, param);
+			}
+		}
 
 		return null;
 	}
 
-	//	class DefFuncion { String nombre;  List<DefVariable> parametros;  Tipo tipoRetorno;  List<DefVariable> variableLocales;  List<Sentencia> sentencias; }
+	// class DefFuncion { String nombre; List<DefVariable> parametros; Tipo
+	// tipoRetorno; List<DefVariable> variableLocales; List<Sentencia> sentencias; }
 	public Object visit(DefFuncion node, Object param) {
 
-		// define[[parametrosi]]
-		if (node.getParametros() != null)
-			for (DefVariable child : node.getParametros())
-				child.accept(this, param);
-				
-		if (node.getTipoRetorno() != null)
-			node.getTipoRetorno().accept(this, param);
+		genera("\n#func " + node.getNombre());
+		genera(node.getNombre() + ":"); // Etiqueta
 
-		//define[[variablesLocalesi]]
-		if (node.getVariableLocales() != null)
-			for (DefVariable child : node.getVariableLocales())
-				child.accept(this, param);
+		int tamLocales = 0;
+		int tamParametros = 0;
 		
-		//ejecuta[[sentenciasi]]
+		// define[[parametrosi]]
+		if (node.getParametros() != null){
+			for (DefVariable dv : node.getParametros()){
+				dv.accept(this, param);
+				tamParametros += dv.getTipo().getSize();
+			}
+		}
+
+		if (node.getTipoRetorno() != null){
+			node.getTipoRetorno().accept(this, param);
+		}
+		
+		// define[[variablesLocalesi]]
+		if (node.getVariableLocales() != null){
+			for (DefVariable dv : node.getVariableLocales()){
+				dv.accept(this, param);
+				tamLocales += dv.getTipo().getSize();
+			}
+		}
+		
+		genera("\n#line " + node.getEnd().getLine());
+		genera("ENTER " + tamLocales);
+
+		// ejecuta[[sentenciasi]]
 		if (node.getSentencias() != null)
 			for (Sentencia child : node.getSentencias())
 				child.accept(this, param);
 		
-		int tamReturn = 0;
-		int tamLocales = 0;
-		int tamParametros = 0;
-		
-		genera("RET " + tamReturn + "," + tamLocales + "," + tamParametros);
-		
+		genera("#ret " + node.getTipoRetorno().getTipoMAPL());
+
+		if (node.getTipoRetorno() instanceof TipoVoid ){
+			genera("ret 0," + tamLocales + "," + tamParametros);
+		}
+
 		return null;
 	}
 
-	//	class DefVariable { Tipo tipo;  String nombre; }
+	// class DefVariable { Tipo tipo; String nombre; }
 	public Object visit(DefVariable node, Object param) {
 
-		if ( node.getContextoVariable() == ContextoVariable.GLOBAL) {
-			genera("#VAR " + node.getNombre()); // + node.getTipoMAPL(node.getTipo);
+		if (node.getContextoVariable() == ContextoVariable.GLOBAL) {
+			genera("\n#global " + node.getNombre() + ":" + node.getTipo().getTipoMAPL());
 		}
 		
+		if (node.getContextoVariable() == ContextoVariable.LOCAL) {
+			genera("\n#local " + node.getNombre() + ":" + node.getTipo().getTipoMAPL());
+		}
+		
+		if (node.getContextoVariable() == ContextoVariable.PARAMETRO) {
+			genera("\n#param " + node.getNombre() + ":" + node.getTipo().getTipoMAPL());
+		}
+		
+		if (node.getTipo() != null){
+			node.getTipo().accept(this, param);
+		}
+
 		return null;
 	}
 
-//	//	class DefStruct { String nombre;  List<DefCampo> campos; }
-//	public Object visit(DefStruct node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getCampos() != null)
-//			for (DefCampo child : node.getCampos())
-//				child.accept(this, param);
-//
-//		return null;
-//	}
+	// class DefStruct { String nombre; List<DefCampo> campos; }
+	public Object visit(DefStruct node, Object param) {
 
-//	//	class DefCampo { String nombre;  Tipo tipo; }
-//	public Object visit(DefCampo node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getTipo() != null)
-//			node.getTipo().accept(this, param);
-//
-//		return null;
-//	}
+		genera("#type " + node.getNombre() + " : {");
 
-	//	class Asignacion { Expresion left;  Expresion right; }
+			if (node.getCampos() != null){
+				for (DefCampo dc : node.getCampos()){
+					dc.accept(this, param);
+				}
+			}
+
+		genera("}");
+
+		return null;
+	}
+
+	// class DefCampo { String nombre; Tipo tipo; }
+	public Object visit(DefCampo node, Object param) {
+
+		if (node.getTipo() != null){
+			node.getTipo().accept(this, param);
+		}
+
+		genera(node.getNombre() + " : " + node.getTipo().getTipoMAPL());
+
+		return null;
+	}
+
+	// class Asignacion { Expresion left; Expresion right; }
 	public Object visit(Asignacion node, Object param) {
-		genera("#LINE " + node.getLeft().getEnd());
-		node.getLeft().accept(this, Funcion.DIRECCION); 	//visit(node.getLeft(), Funcion.DIRECCION);
-		node.getRight().accept(this, Funcion.VALOR); 		//visit(node.getRight(), Funcion.VALOR);
+		genera("\n#line " + node.getEnd().getLine());
+		
+		if (node.getLeft() != null){
+			node.getLeft().accept(this, Funcion.DIRECCION);
+		}
+		
+		if (node.getRight() != null){
+			node.getRight().accept(this, Funcion.VALOR); 
+		}
+		
 		genera("store" + node.getLeft().getTipo().getSufijo());
 
 		return null;
 	}
 
-	//	class Escritura { Expresion exprEscritura;  String tipoEscritura; }
+	// class Escritura { Expresion exprEscritura; String tipoEscritura; }
 	public Object visit(Escritura node, Object param) {
 
-		genera("#LINE " + node.getEnd());
-		node.getExprEscritura().accept(this, Funcion.VALOR); //visit(node.getExprEscritura(), Funcion.VALOR);
+		genera("\n#line " + node.getEnd().getLine());
+		
+		node.getExprEscritura().accept(this, Funcion.VALOR); // visit(node.getExprEscritura(),
+																// Funcion.VALOR);
 		genera("OUT" + node.getExprEscritura().getTipo().getSufijo());
 		
-		// TODO : Tipo de escritura; println, print, print con tabulacion
+		if (node.getTipoEscritura().equals("printsp")){
+			genera("pushb 32"); // Espacio 
+			genera("OUTb");
+		}
 		
+		if (node.getTipoEscritura().equals("println")){
+			genera("pushb 10"); // Salto de linea \n
+			genera("OUTb");
+		}
+
 		return null;
 	}
 
-//	//	class Lectura { Expresion exprLectura; }
-//	public Object visit(Lectura node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getExprLectura() != null)
-//			node.getExprLectura().accept(this, param);
-//
-//		return null;
-//	}
-//
-//	//	class Return { Expresion exprRetorno; }
-//	public Object visit(Return node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getExprRetorno() != null)
-//			node.getExprRetorno().accept(this, param);
-//
-//		return null;
-//	}
-//
-//	//	class Ifelse { Expresion condicion;  List<Sentencia> sentenciasIf;  List<Sentencia> sentenciasElse; }
-//	public Object visit(Ifelse node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getCondicion() != null)
-//			node.getCondicion().accept(this, param);
-//
-//		if (node.getSentenciasIf() != null)
-//			for (Sentencia child : node.getSentenciasIf())
-//				child.accept(this, param);
-//
-//		if (node.getSentenciasElse() != null)
-//			for (Sentencia child : node.getSentenciasElse())
-//				child.accept(this, param);
-//
-//		return null;
-//	}
-//
-//	//	class While { Expresion condicion;  List<Sentencia> sentenciasWhile; }
-//	public Object visit(While node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getCondicion() != null)
-//			node.getCondicion().accept(this, param);
-//
-//		if (node.getSentenciasWhile() != null)
-//			for (Sentencia child : node.getSentenciasWhile())
-//				child.accept(this, param);
-//
-//		return null;
-//	}
-//
-//	//	class InvFuncSent { String nombreFuncion;  List<Expresion> parametros; }
-//	public Object visit(InvFuncSent node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getParametros() != null)
-//			for (Expresion child : node.getParametros())
-//				child.accept(this, param);
-//
-//		return null;
-//	}
+	 // class Lectura { Expresion exprLectura; }
+	 public Object visit(Lectura node, Object param) {
+	
+		 genera("\n#line " + node.getEnd().getLine());
+		
+		if (node.getExprLectura() != null){
+			node.getExprLectura().accept(this, Funcion.DIRECCION);
+		}
+		 
+		 genera("IN" + node.getExprLectura().getTipo().getSufijo());
+		 genera("store" + node.getExprLectura().getTipo().getSufijo()); //node.getExprLectura().accept(this, Funcion.VALOR);
+		 
+		 return null;
+	 }
+	
+	// class Return { Expresion exprRetorno; }
+	public Object visit(Return node, Object param) {
 
-	//	class ExpresionBinaria { Expresion left;  String operador;  Expresion right; }
-	public Object visit(ExpresionBinaria node, Object param) {
-				
-		node.getLeft().accept(this, Funcion.DIRECCION); //visit(node.getLeft(), Funcion.DIRECCION);
-		node.getRight().accept(this, Funcion.VALOR); 	//visit(node.getRight(), Funcion.VALOR);
-				                                           	
-		if (node.getOperador().equals("+")) {						// aritmeticos
-			genera("add" + node.getLeft().getTipo().getSufijo()); 
-		} else if (node.getOperador().equals("-")) {
-			genera("sub" + node.getLeft().getTipo().getSufijo()); 
-		} else if (node.getOperador().equals("*")) {
-			genera("mul" + node.getLeft().getTipo().getSufijo()); 
-		} else if (node.getOperador().equals("/")) {
-			genera("div" + node.getLeft().getTipo().getSufijo()); 
-		} else if (node.getOperador().equals(">")) {  				// relacionales
-			genera("gt" + node.getLeft().getTipo().getSufijo()); 
-		} else if (node.getOperador().equals(">=")) {
-			genera("ge" + node.getLeft().getTipo().getSufijo()); 
-		} else if (node.getOperador().equals("<")) {
-			genera("lt" + node.getLeft().getTipo().getSufijo()); 
-		} else if (node.getOperador().equals("<=")) {
-			genera("le" + node.getLeft().getTipo().getSufijo()); 
-		} else if (node.getOperador().equals("!=")) {
-			genera("ne" + node.getLeft().getTipo().getSufijo()); 
-		} else {
-			if (node.getOperador().equals("==")) {
-				genera("eq" + node.getLeft().getTipo().getSufijo()); 
+		if (node.getEnd() != null) {
+			genera("\n #line " + node.getEnd().getLine());
+		}
+
+		int tamLocales = 0;
+		int tamParametros = 0;
+
+		if (node.getDefFuncion() != null){
+			
+			for (DefVariable dv : node.getDefFuncion().getVariableLocales()){	// locales
+				tamLocales += dv.getTipo().getSize();
+			}
+			
+			for (DefVariable dv : node.getDefFuncion().getParametros()) {			// parametros
+				tamParametros += dv.getTipo().getSize();
+			}
+
+			if (node.getExprRetorno() != null) { // TipoVoid
+				node.getExprRetorno().accept(this, Funcion.VALOR);
+				genera("RET " + node.getExprRetorno().getTipo().getSize() + ", " + tamLocales + ", " + tamParametros);
+			} else
+				genera("RET 0, " + tamLocales + ", " + tamParametros);
+		}
+
+		return null;
+	}
+	
+	 // class Ifelse { Expresion condicion; List<Sentencia> sentenciasIf; List<Sentencia> sentenciasElse; }
+	 public Object visit(Ifelse node, Object param) {
+
+		genera("\n#line " + node.getStart().getLine());
+		
+		node.getCondicion().accept(this, Funcion.VALOR); // valor[[condicion]]
+		
+		genera("JZ " + "else" + contador);//JZ else
+		
+		if (node.getSentenciasIf() != null){
+			for (Sentencia s : node.getSentenciasIf()){
+				s.accept(this, Funcion.VALOR);
 			}
 		}
 		
+		genera("JMP finIfElse" + contador);
+		genera("else" + contador + ":");
+		
+		if (node.getSentenciasElse() != null){
+			for (Sentencia s : node.getSentenciasElse()){
+				s.accept(this, Funcion.VALOR);
+			}
+		}
+		
+		genera("finIfElse" + contador + ":");
+
+		contador++;
+			 
+		return null;
+	 }
+	
+	 // class While { Expresion condicion; List<Sentencia> sentenciasWhile; }
+	 public Object visit(While node, Object param) {
+	
+		genera("\n\n#line " + node.getEnd().getLine());
+		
+		genera("inicioWhile" + contador + ":");
+			node.getCondicion().accept(this, Funcion.VALOR); 
+		genera("JZ " + "finalWhile" + contador);
+		
+		for (Sentencia s : node.getSentenciasWhile()){
+			s.accept(this, Funcion.VALOR);
+		}
+		
+		genera("JMP inicioWhile" + contador);
+		genera("finalWhile" + contador + ":");
+		
+		contador++;
+		 
+		return null;
+	 }
+	
+	 // class InvFuncSent { String nombreFuncion; List<Expresion> parametros; }
+	 public Object visit(InvFuncSent node, Object param) {
+			 
+		 if (node.getParametros() != null){
+			 for (Expresion parametro : node.getParametros()){
+				 parametro.accept(this, Funcion.VALOR);
+			 }
+		 }
+		 
+		 genera("CALL " + node.getNombreFuncion());
+		 
+		 return null;
+	 }
+
+	// class ExpresionBinaria { Expresion left; String operador; Expresion right; }
+	public Object visit(ExpresionBinaria node, Object param) {
+
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, Funcion.VALOR); 
+		
+		if (node.getRight() != null)
+			node.getRight().accept(this, Funcion.VALOR); 
+
+
+		if (node.getOperador().equals("+")) { // aritmeticos
+			genera("add" + node.getLeft().getTipo().getSufijo());
+		} else if (node.getOperador().equals("-")) {
+			genera("sub" + node.getLeft().getTipo().getSufijo());
+		} else if (node.getOperador().equals("*")) {
+			genera("mul" + node.getLeft().getTipo().getSufijo());
+		} else if (node.getOperador().equals("/")) {
+			genera("div" + node.getLeft().getTipo().getSufijo());
+		} else if (node.getOperador().equals(">")) { // relacionales
+			genera("gt" + node.getLeft().getTipo().getSufijo());
+		} else if (node.getOperador().equals(">=")) {
+			genera("ge" + node.getLeft().getTipo().getSufijo());
+		} else if (node.getOperador().equals("<")) {
+			genera("lt" + node.getLeft().getTipo().getSufijo());
+		} else if (node.getOperador().equals("<=")) {
+			genera("le" + node.getLeft().getTipo().getSufijo());
+		} else if (node.getOperador().equals("!=")) {
+			genera("ne" + node.getLeft().getTipo().getSufijo());
+		} else {
+			if (node.getOperador().equals("==")) {
+				genera("eq" + node.getLeft().getTipo().getSufijo());
+			}
+		}
+
 		return null;
 	}
 
-	//	class ExpresionLogica { Expresion left;  String operador;  Expresion right; }
+	// class ExpresionLogica { Expresion left; String operador; Expresion right; }
 	public Object visit(ExpresionLogica node, Object param) {
 
-		node.getLeft().accept(this, Funcion.DIRECCION); //visit(node.getLeft(), Funcion.DIRECCION);
-		node.getRight().accept(this, Funcion.VALOR);	//visit(node.getRight(), Funcion.VALOR);
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, Funcion.VALOR); 
 		
-		if (node.getOperador().equals("&&")){
+		if (node.getRight() != null)
+			node.getRight().accept(this, Funcion.VALOR); 
+
+
+		if (node.getOperador().equals("&&")) {
 			genera("and");
 		}
-		
-		if (node.getOperador().equals("||")){
+
+		if (node.getOperador().equals("||")) {
 			genera("or");
 		}
 
 		return null;
 	}
 
-	//	class ExpresionUnariaNegacion { Expresion expresion; }
+	// class ExpresionUnariaNegacion { Expresion expresion; }
 	public Object visit(ExpresionUnariaNegacion node, Object param) {
 
-		node.getExpresion().accept(this, Funcion.VALOR); // visit(node.getExpresion(), Funcion.VALOR);
+		if (node.getExpresion() != null)
+			node.getExpresion().accept(this, Funcion.VALOR); 
+
 		genera("not");
-		
+
 		return null;
 	}
 
-	//	class Cast { Tipo tipoDestino;  Expresion expresionAConvertir; }
+	// class Cast { Tipo tipoDestino; Expresion expresionAConvertir; }
 	public Object visit(Cast node, Object param) {
 
-		String s = "";
+		if (node.getTipoDestino() != null)
+			node.getTipoDestino().accept(this, param);
 		
-		s += node.getExpresionAConvertir().getTipo().getSufijo();
-		s += "2"; 
-		s += node.getTipoDestino().getSufijo();
+		if (node.getExpresionAConvertir() != null)
+			node.getExpresionAConvertir().accept(this, param);
 
-		genera(s); //   i2b || b2i || f2i || i2f
+		// i2b || b2i || f2i || i2f
+		genera(node.getExpresionAConvertir().getTipo().getSufijo() + "2" + node.getTipoDestino().getSufijo());
 
 		return null;
 	}
 
-	//	class AccesoArray { Expresion array;  Expresion posicion; }
+	// class AccesoArray { Expresion array; Expresion posicion; }
 	public Object visit(AccesoArray node, Object param) {
 
 		if ((Funcion) param == Funcion.DIRECCION) {
 			
 			// dir base del array
-			node.getArray().accept(this, Funcion.DIRECCION); 	//visit(node.getArray(), Funcion.DIRECCION);
-			node.getPosicion().accept(this, Funcion.VALOR); //visit(node.getPosicion(), Funcion.VALOR);
-			genera("push " + node.getArray().getTipo().getSize());
-			genera("mul");
+			if (node.getArray() != null)
+				node.getArray().accept(this, Funcion.DIRECCION); 
+			
+			// desplazamiento
+			if (node.getPosicion() != null)
+				node.getPosicion().accept(this, Funcion.VALOR); 
+			
+			genera("push " + node.getTipo().getSize());
+			genera("mul" + node.getTipo().getSufijo()); // node.getTipo().getSufijo()
 			genera("add");
-			
-			return null;
 		}
-		
+
 		if ((Funcion) param == Funcion.VALOR) {
-			
-			node.accept(this, Funcion.DIRECCION); 
+			node.accept(this, Funcion.DIRECCION); // visit(node, Funcion.DIRECCION);
 			genera("LOAD" + node.getArray().getTipo().getSufijo());
-			
-			return null;
 		}
 
 		return null;
 	}
 
-	//	class AccesoStruct { Expresion struct;  String nombreCampo; }
+	// class AccesoStruct { Expresion struct; String nombreCampo; }
 	public Object visit(AccesoStruct node, Object param) {
 
+			//	TipoStruct struct = (TipoStruct) node.getStruct().getTipo();
+			//	List<DefCampo> campos = struct.getDefinicionEstructura().getCampos();
+
 		if ((Funcion) param == Funcion.DIRECCION) {
 			
-			List<DefCampo> campos = ((DefStruct) node.getStruct()).getCampos();
-			for (DefCampo dc : campos){
-				if(dc.getNombre().equals(node.getNombreCampo())){
-					// visit(node.getStruct(), Funcion.DIRECCION)
-					// dir base -> No necesaria porque un Struct solo puede ser una variable global por lo que la direccion que necesitamos es la del campo directamente					
-					genera("push" + dc.getDireccion());
-					genera("add");
-					return null;				
-				}
+			if (node.getStruct() != null){
+				node.getStruct().accept(this, Funcion.DIRECCION);
+				genera("push " + node.getDefinicion().getDireccion());
+				genera("add");
 			}
-		
-		}
-		
-		if ((Funcion) param == Funcion.VALOR){
 			
+				//	super.visit(node, Funcion.DIRECCION); // direccion base del array
+				//	for (DefCampo dc : campos) {
+				//		if (dc.getNombre().equals(node.getNombreCampo())) {
+				//			// visit(node.getStruct(), Funcion.DIRECCION)
+				//			// dir base -> No necesaria porque un Struct solo puede ser
+				//			// una variable global por lo que la direccion que
+				//			// necesitamos es la del campo directamente
+				//			genera("push " + dc.getDireccion());
+				//			genera("add");
+				//		}
+				//	}
+		}
+
+		if ((Funcion) param == Funcion.VALOR) {
 			visit(node, Funcion.DIRECCION);
-			
-			List<DefCampo> campos = ((DefStruct) node.getStruct()).getCampos();
-			for (DefCampo dc : campos){
-				if(dc.getNombre().equals(node.getNombreCampo())){
-					genera("load" + dc.getTipo().getSufijo());
-					return null;				
-				}
-			}
-			
+			genera("load" + node.getDefinicion().getTipo().getSufijo() );
+				//	for (DefCampo dc : campos) {
+				//		if (dc.getNombre().equals(node.getNombreCampo())) {
+				//			genera("load" + dc.getTipo().getSufijo());
+				//			return null;
+				//		}
+				//	}
 		}
-		
+
 		return null;
 	}
 
-//	//	class InvFuncExpr { String nombreFuncion;  List<Expresion> parametros; }
-//	public Object visit(InvFuncExpr node, Object param) {
-//
-//		// super.visit(node, param);
-//
-//		if (node.getParametros() != null)
-//			for (Expresion child : node.getParametros())
-//				child.accept(this, param);
-//
-//		return null;
-//	}
+	// class InvFuncExpr { String nombreFuncion; List<Expresion> parametros; }
+	public Object visit(InvFuncExpr node, Object param) {
 
-	//	class Variable { String nombre; }
-	public Object visit(Variable node, Object param) {
-		
-		if ((Funcion) param == Funcion.DIRECCION) {
-			
-			if (node.getDefinicion().getContextoVariable() == ContextoVariable.GLOBAL) {
-				
-				genera("pusha " + node.getDefinicion().getDireccion());
-		
-			} else { // variable local o parametro -> tenemos que usar BP
-				
-				genera("pusha bp");
-				genera("pusha " + node.getDefinicion().getDireccion()); 
-				// Si es un parametro la direccion sera positiva
-				// Si es una variable local la direccion sera negativa
-				
+		genera("\n#line " + node.getEnd().getLine());
+
+		if (node.getParametros() != null) {
+			for (Expresion e : node.getParametros()) {
+				e.accept(this, Funcion.VALOR);
 			}
 		}
-		
-		if ((Funcion) param == Funcion.VALOR){
+
+		genera("CALL " + node.getNombreFuncion());
+
+		if (node.getDefinicion().getTipoRetorno() != null) {
+			genera("POP" + node.getDefinicion().getTipoRetorno().getSufijo());
+		}
+
+		return null;
+	}
+
+	// class Variable { String nombre; }
+	public Object visit(Variable node, Object param) {
+
+		if ((Funcion) param == Funcion.DIRECCION) {
+
+			if (node.getDefinicion().getContextoVariable() == ContextoVariable.GLOBAL) {
+				genera("pusha " + node.getDefinicion().getDireccion());
+			} else { // variable local o parametro -> tenemos que usar BP
+				genera("pusha bp");
+				genera("push " + node.getDefinicion().getDireccion()); // Si es un parametro la direccion sera positiva. Si es una variable local la direccion sera negativa
+				
+				if (node.getDefinicion().getContextoVariable() == ContextoVariable.LOCAL){
+					genera("sub" + node.getTipo().getSufijo());
+				} else { //ContextoVariable.PARAMETRO					
+					genera("add");
+				}
+			}
+		}
+
+		if ((Funcion) param == Funcion.VALOR) {
 			// NO TIENE SENTIDO COMPROBAR EL CONTEXTO (YA SE HACE EN DIRECCION)
 			visit(node, Funcion.DIRECCION); // node.accept(node, Funcion.DIRECCION)
-			genera("load"+ node.getDefinicion().getTipo().getSufijo());
+			genera("load" + node.getDefinicion().getTipo().getSufijo());
 		}
-		
+
 		return null;
 	}
 
-	//	class LiteralInt { int valor; }
+	// class LiteralInt { int valor; }
 	public Object visit(LiteralInt node, Object param) {
-		
+
 		genera("pushi " + node.getValor());
-		
+
 		return null;
 	}
 
-	//	class LiteralReal { String valor; }
+	// class LiteralReal { String valor; }
 	public Object visit(LiteralReal node, Object param) {
-		
+
 		genera("pushf " + node.getValor());
-		
+
 		return null;
 	}
 
-	//	class LiteralCaracter { String valor; }
+	// class LiteralCaracter { String valor; }
 	public Object visit(LiteralCaracter node, Object param) {
-		
-		genera("pushb " + node.getValor());
-		
+
+		genera("pushb " + (int) node.getValor().charAt(1));
+
 		return null;
 	}
 
-	//	class TipoEntero {  }
+	// class TipoEntero { }
 	public Object visit(TipoEntero node, Object param) {
 		return null;
 	}
 
-	//	class TipoReal {  }
+	// class TipoReal { }
 	public Object visit(TipoReal node, Object param) {
 		return null;
 	}
 
-	//	class TipoCaracter {  }
+	// class TipoCaracter { }
 	public Object visit(TipoCaracter node, Object param) {
 		return null;
 	}
 
-	//	class TipoArray { int tamano;  Tipo tipo; }
+	// class TipoArray { int tamano; Tipo tipo; }
 	public Object visit(TipoArray node, Object param) {
 
 		// super.visit(node, param);
@@ -412,17 +567,14 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 		return null;
 	}
 
-	//	class TipoIdent { String tipo; }
+	// class TipoIdent { String tipo; }
 	public Object visit(TipoStruct node, Object param) {
 		return null;
 	}
 
-
-	
 	// Metodo auxiliar recomendado -------------
 	private void genera(String instruccion) {
 		writer.println(instruccion);
 	}
 
-	
 }

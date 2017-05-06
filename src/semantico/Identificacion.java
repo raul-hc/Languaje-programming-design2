@@ -23,6 +23,7 @@ public class Identificacion extends DefaultVisitor {
 			
 		variables.set();
 			visitChildren(node.getParametros(), param);
+			node.getTipoRetorno().accept(this, param);
 			visitChildren(node.getVariableLocales(), param);
 			visitChildren(node.getSentencias(), param);
 		variables.reset();
@@ -34,8 +35,15 @@ public class Identificacion extends DefaultVisitor {
 	public Object visit(InvFuncExpr node, Object param) {
 
 		DefFuncion defFunc = functions.get(node.getNombreFuncion());
-		predicado(defFunc != null, "Función no definida", node.getStart());
+		predicado(defFunc != null, "Función no definida: " + node.getNombreFuncion() , node.getStart());
 		node.setDefinicion(defFunc);
+		
+		// Tenemos que visitar los parametros
+		if (node.getParametros() != null){
+			for (Expresion parametro : node.getParametros()){
+				parametro.accept(this, node);
+			}
+		}
 		
 		return null;
 	}
@@ -44,9 +52,16 @@ public class Identificacion extends DefaultVisitor {
 	public Object visit(InvFuncSent node, Object param) {
 
 		DefFuncion defFunc = functions.get(node.getNombreFuncion());
-		predicado(defFunc != null, "Función (PROCEDIMIENTO) no definida", node.getStart());
+		predicado(defFunc != null, "Función (PROCEDIMIENTO) no definida: " + node.getNombreFuncion(), node.getStart());
 		node.setDefinicion(defFunc);
 
+		// Tenemos que visitar los parametros
+		if (node.getParametros() != null){
+			for (Expresion parametro : node.getParametros()){
+				parametro.accept(this, node);
+			}
+		}
+		
 		return null;
 	}
 

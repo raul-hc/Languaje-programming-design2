@@ -1,23 +1,84 @@
-#source "Test-generacion-codigo-basico-lab10-short.txt"
+#source "Test-generacion-codigo-basico-lab10.txt"
 call main
 halt
-#VAR a
-#VAR b
-#LINE 16:5
+#global a : int
+#global b : float
+#TYPE Punto : {
+x : float
+y : float
+}
+#global v : 5*int
+#global p : Punto
+#LINE 34
+#FUNC main
+main:
+ENTER 0
+#LINE 24
 pusha 0
 pushi 1111
 storei
-#LINE 17:5
+#LINE 25
 pusha 2
 pushf 2222.2
 storef
-#LINE 19:32
+#LINE 26
+pusha 6
+pushi 3
+push 2
+mul
+add
+pushi 3333
+storei
+#LINE 27
+pusha 16
+push 4
+add
+pushf 4444.4
+storef
+#LINE 29
 pusha 0
+loadi
+OUTi
+#LINE 30
+pusha 2
+loadf
+pusha 16
+push 4
+add
+loadf
+addf
+OUTf
+pushb 32
+OUTb
+#LINE 31
+pusha 6
+pushi 3
+push 2
+mul
+add
+LOAD
+OUTi
+pushb 10
+OUTb
+#LINE 33
+pusha 0
+loadi
 pushi 0
 gti
 pusha 2
+loadf
 pushf 3333.3
 ltf
 and
 OUTi
+pushb 32
+OUTb
+#LINE 34
+pusha 2
+loadf
+f2i
+OUTi
+pushb 10
+OUTb
+#RET void
 RET 0,0,0

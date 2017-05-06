@@ -1,0 +1,76 @@
+#source "test-codigo-lab11-1.txt" 
+
+call main
+halt
+
+
+#global global:float
+
+#func doble
+doble:
+
+#param valor:int
+
+#line 23
+ENTER 0
+
+ #line 23
+pusha bp
+push 4
+add
+loadi
+pushi 2
+muli
+RET 2, 0, 2
+#ret int
+
+#func main
+main:
+
+#local local:int
+
+#line 38
+ENTER 2
+
+#line 29
+pusha 0
+pushf 1.0
+storef
+
+#line 30
+pusha bp
+push 2
+subi
+pushi 2
+storei
+
+#line 32
+pusha 0
+loadf
+pushf 2.0
+ltf
+JZ else0
+
+#line 33
+pushi 1
+OUTi
+JMP finIfElse0
+else0:
+
+#line 35
+pusha bp
+push 2
+subi
+loadi
+OUTi
+finIfElse0:
+
+#line 38
+
+#line 38
+pushi 2
+CALL doble
+POPi
+OUTi
+#ret void
+ret 0,2,0

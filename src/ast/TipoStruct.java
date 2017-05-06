@@ -58,5 +58,9 @@ public class TipoStruct extends AbstractTipo {
 
 	private String tipo;
 	private DefStruct definicionEstructura;
+	@Override
+	public String getTipoMAPL() {
+		return getTipo();
+	}
 }
 

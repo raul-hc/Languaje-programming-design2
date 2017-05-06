@@ -1,0 +1,239 @@
+#source "test-codigo-lab11-2.txt"
+call main
+halt
+#TYPE Persona: {
+inicial:char
+sueldo:float
+}
+#VAR empresa:4*Persona
+inicia:
+#line 33
+enter 2
+#line 36
+push bp
+push -2
+add
+push 0
+storei
+#line 37
+while0:
+push bp
+push -2
+add
+loadi
+push 4
+lti
+jz finWhile0
+#line 38
+pusha 0
+push bp
+push -2
+add
+loadi
+push 5
+mul
+add
+push 0
+add
+push bp
+push -2
+add
+loadi
+pushb 65
+b2i
+addi
+i2b
+storeb
+#line 39
+pusha 0
+push bp
+push -2
+add
+loadi
+push 5
+mul
+add
+push 1
+add
+push 1000
+push bp
+push -2
+add
+loadi
+push 100
+muli
+addi
+i2f
+storef
+#line 40
+push bp
+push -2
+add
+push bp
+push -2
+add
+loadi
+push 1
+addi
+storei
+jmp while0
+finWhile0:
+ret 0,2,0
+busca:
+#line 44
+enter 0
+#line 45
+push bp
+push 4
+add
+loadi
+push 0
+lti
+push bp
+push 4
+add
+loadi
+push 4
+gei
+or
+jz finIf1
+RET 0, 0, 2
+finIf1:
+#line 48
+pusha 0
+push bp
+push 4
+add
+loadi
+push 5
+mul
+add
+push 0
+add
+loadb
+outb
+#line 49
+pusha 0
+push bp
+push 4
+add
+loadi
+push 5
+mul
+add
+push 1
+add
+loadf
+outf
+ret 0,0,2
+imprime:
+#line 52
+enter 7
+#line 56
+push bp
+push -2
+add
+push 0
+storei
+#line 57
+while2:
+push bp
+push -2
+add
+loadi
+push 4
+gei
+not
+jz finWhile2
+#line 58
+push bp
+push -7
+add
+push 0
+add
+pusha 0
+push bp
+push -2
+add
+loadi
+push 5
+mul
+add
+push 0
+add
+loadb
+storeb
+#line 59
+push bp
+push -7
+add
+push 1
+add
+pusha 0
+push bp
+push -2
+add
+loadi
+push 5
+mul
+add
+push 1
+add
+loadf
+storef
+#line 61
+push bp
+push -7
+add
+push 0
+add
+loadb
+outb
+#line 62
+push bp
+push -7
+add
+push 1
+add
+loadf
+outf
+#line 64
+push bp
+push -2
+add
+push bp
+push -2
+add
+loadi
+push 1
+addi
+storei
+jmp while2
+finWhile2:
+#line 66
+push bp
+push -2
+add
+loadi
+RET 2, 7, 0
+main:
+#line 69
+enter 2
+#line 72
+call inicia
+#line 74
+push bp
+push -2
+add
+ini
+storei
+#line 75
+push bp
+push -2
+add
+loadi
+call busca
+#line 77
+call imprime
+popi
+ret 0,2,0
