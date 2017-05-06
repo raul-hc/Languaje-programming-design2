@@ -80,7 +80,7 @@ public class Identificacion extends DefaultVisitor {
 		return null;
 	}
 	
-	//	class TipoIdent { String tipo; }
+	//	class TipoStruct { String tipo; }
 	public Object visit(TipoStruct node, Object param) {
 		
 		DefStruct defStruct = structs.get(node.getTipo());

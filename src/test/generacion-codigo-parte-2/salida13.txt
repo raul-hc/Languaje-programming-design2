@@ -1,0 +1,314 @@
+#source "test-codigo-lab11-3.txt" 
+
+call main
+halt
+
+#type Piloto : {
+inicial : byte
+crono : 3*float
+}
+
+#global F1:3*Piloto
+
+#func inicia
+inicia:
+
+#param i:int
+
+#param inicial:byte
+
+#param q1:float
+
+#param q2:float
+
+#param q3:float
+
+#line 31
+ENTER 0
+
+#line 28
+pusha 0
+pusha bp
+push 17
+add
+loadi
+push 13
+mul
+add
+push 0
+add
+pusha bp
+push 16
+add
+loadb
+storeb
+
+#line 29
+pusha 0
+pusha bp
+push 17
+add
+loadi
+push 13
+mul
+add
+push 1
+add
+pushi 0
+push 4
+mulf
+add
+pusha bp
+push 12
+add
+loadf
+storef
+
+#line 30
+pusha 0
+pusha bp
+push 17
+add
+loadi
+push 13
+mul
+add
+push 1
+add
+pushi 1
+push 4
+mulf
+add
+pusha bp
+push 8
+add
+loadf
+storef
+
+#line 31
+pusha 0
+pusha bp
+push 17
+add
+loadi
+push 13
+mul
+add
+push 1
+add
+pushi 2
+push 4
+mulf
+add
+pusha bp
+push 4
+add
+loadf
+storef
+#ret void
+ret 0,0,15
+
+#func imprimeElMejor
+imprimeElMejor:
+
+#local mejorPiloto:int
+
+#local menorCrono:float
+
+#local ultimaCrono:float
+
+#local i:int
+
+#line 55
+ENTER 12
+
+#line 40
+pusha bp
+push 6
+subf
+pushf 1000.0
+storef
+
+#line 41
+pusha bp
+push 12
+subi
+pushi 0
+storei
+
+
+#line 48
+inicioWhile0:
+pusha bp
+push 12
+subi
+loadi
+pushi 3
+lti
+JZ finalWhile0
+
+#line 43
+pusha bp
+push 10
+subf
+pusha 0
+pusha bp
+push 12
+subi
+loadi
+push 13
+mul
+add
+push 1
+add
+pushi 2
+push 4
+mulf
+add
+LOAD
+storef
+
+#line 44
+pusha bp
+push 10
+subf
+loadf
+pusha bp
+push 6
+subf
+loadf
+ltf
+JZ else0
+
+#line 45
+pusha bp
+push 6
+subf
+pusha bp
+push 10
+subf
+loadf
+storef
+
+#line 46
+pusha bp
+push 2
+subi
+pusha bp
+push 12
+subi
+loadi
+storei
+JMP finIfElse0
+else0:
+finIfElse0:
+
+#line 48
+pusha bp
+push 12
+subi
+pusha bp
+push 12
+subi
+loadi
+pushi 1
+addi
+storei
+JMP inicioWhile1
+finalWhile1:
+
+#line 51
+pusha 0
+pusha bp
+push 2
+subi
+loadi
+push 13
+mul
+add
+push 0
+add
+loadb
+OUTb
+
+#line 52
+pusha bp
+push 12
+subi
+pushi 0
+storei
+
+
+#line 55
+inicioWhile2:
+pusha bp
+push 12
+subi
+loadi
+pushi 3
+lti
+JZ finalWhile2
+
+#line 54
+pusha 0
+pusha bp
+push 2
+subi
+loadi
+push 13
+mul
+add
+push 1
+add
+pusha bp
+push 12
+subi
+loadi
+push 4
+mulf
+add
+LOAD
+OUTf
+
+#line 55
+pusha bp
+push 12
+subi
+pusha bp
+push 12
+subi
+loadi
+pushi 1
+addi
+storei
+JMP inicioWhile2
+finalWhile2:
+#ret void
+ret 0,12,0
+
+#func main
+main:
+
+#line 64
+ENTER 0
+pushi 0
+pushb 65
+pushf 1.50
+pushf 1.49
+pushf 1.48
+CALL inicia
+pushi 1
+pushb 72
+pushf 1.52
+pushf 1.51
+pushf 1.50
+CALL inicia
+pushi 2
+pushb 86
+pushf 1.54
+pushf 1.52
+pushf 1.51
+CALL inicia
+CALL imprimeElMejor
+#ret void
+ret 0,0,0

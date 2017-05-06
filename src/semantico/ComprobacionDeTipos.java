@@ -47,7 +47,11 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 	//	class Asignacion { Expresion left;  Expresion right; }
 	public Object visit(Asignacion node, Object param) {
 
-		super.visit(node, param);
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, param);
+		
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
 
 		// predicados B(p)
 		predicado(esTipoSimple(node.getLeft().getTipo()), "La expresion de la izda debe ser un tipo simple", node.getLeft().getStart());
@@ -118,7 +122,7 @@ public class ComprobacionDeTipos extends DefaultVisitor {
 		}
 		
 		// reglas semanticas R(p)
-		if (node.getSentenciasElse() != null){
+		if (node.getSentenciasIf() != null){
 			for (Sentencia sIf : node.getSentenciasIf()){
 				sIf.setDefFuncion(node.getDefFuncion());
 				sIf.accept(this, param);

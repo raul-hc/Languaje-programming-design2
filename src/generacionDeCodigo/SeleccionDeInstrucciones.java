@@ -501,7 +501,7 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 				genera("push " + node.getDefinicion().getDireccion()); // Si es un parametro la direccion sera positiva. Si es una variable local la direccion sera negativa
 				
 				if (node.getDefinicion().getContextoVariable() == ContextoVariable.LOCAL){
-					genera("sub" + node.getTipo().getSufijo());
+					genera("sub" + node.getDefinicion().getTipo().getSufijo());
 				} else { //ContextoVariable.PARAMETRO					
 					genera("add");
 				}
