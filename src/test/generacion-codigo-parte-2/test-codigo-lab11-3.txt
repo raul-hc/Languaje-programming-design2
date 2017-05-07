@@ -48,10 +48,10 @@ imprimeElMejor() {
 		i = i + 1;
 	}  
 
-	print F1[mejorPiloto].inicial;
+	println F1[mejorPiloto].inicial;
 	i = 0;
 	while (i < 3) {
-		print F1[mejorPiloto].crono[i];
+		println F1[mejorPiloto].crono[i];
 		i = i + 1;
 	}  
 }

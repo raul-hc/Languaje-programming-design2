@@ -30,10 +30,10 @@ main() {
 	local = 2;
 
 	if (global < 2.0) {
-		print 1;	
+		println 1;	
 	} else {
-		print local;
+		println local;
 	}
 
-	print doble(2);
+	println doble(2);
 }

@@ -9,9 +9,9 @@ halt
 #func doble
 doble:
 
-#param valor:int
+#line 22
 
-#line 23
+#param valor:int
 ENTER 0
 
  #line 23
@@ -27,9 +27,9 @@ RET 2, 0, 2
 #func main
 main:
 
-#local local:int
+#line 26
 
-#line 38
+#local local:int
 ENTER 2
 
 #line 29
@@ -39,8 +39,8 @@ storef
 
 #line 30
 pusha bp
-push 2
-subi
+push -2
+add
 pushi 2
 storei
 
@@ -54,15 +54,19 @@ JZ else0
 #line 33
 pushi 1
 OUTi
+pushb 10
+OUTb
 JMP finIfElse0
 else0:
 
 #line 35
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 OUTi
+pushb 10
+OUTb
 finIfElse0:
 
 #line 38
@@ -70,7 +74,8 @@ finIfElse0:
 #line 38
 pushi 2
 CALL doble
-POPi
 OUTi
+pushb 10
+OUTb
 #ret void
 ret 0,2,0

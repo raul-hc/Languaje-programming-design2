@@ -13,24 +13,24 @@ sueldo : float
 #func inicia
 inicia:
 
-#local i:int
+#line 33
 
-#line 40
+#local i:int
 ENTER 2
 
 #line 36
 pusha bp
-push 2
-subi
+push -2
+add
 pushi 0
 storei
 
 
-#line 40
+#line 37
 inicioWhile0:
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 pushi 4
 lti
@@ -39,8 +39,8 @@ JZ finalWhile0
 #line 38
 pusha 0
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 push 5
 mul
@@ -48,8 +48,8 @@ add
 push 0
 add
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 pushb 65
 b2i
@@ -60,8 +60,8 @@ storeb
 #line 39
 pusha 0
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 push 5
 mul
@@ -70,8 +70,8 @@ push 1
 add
 pushi 1000
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 pushi 100
 muli
@@ -81,11 +81,11 @@ storef
 
 #line 40
 pusha bp
-push 2
-subi
+push -2
+add
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 pushi 1
 addi
@@ -98,9 +98,9 @@ ret 0,2,0
 #func busca
 busca:
 
-#param i:int
+#line 44
 
-#line 49
+#param i:int
 ENTER 0
 
 #line 45
@@ -118,6 +118,7 @@ pushi 4
 gei
 or
 JZ else1
+RET 0, 0, 2
 JMP finIfElse1
 else1:
 finIfElse1:
@@ -135,6 +136,8 @@ push 0
 add
 loadb
 OUTb
+pushb 10
+OUTb
 
 #line 49
 pusha 0
@@ -149,32 +152,34 @@ push 1
 add
 loadf
 OUTf
+pushb 10
+OUTb
 #ret void
 ret 0,0,2
 
 #func imprime
 imprime:
 
+#line 52
+
 #local i:int
 
 #local aux:Persona
-
-#line 66
 ENTER 7
 
 #line 56
 pusha bp
-push 2
-subi
+push -2
+add
 pushi 0
 storei
 
 
-#line 64
+#line 57
 inicioWhile2:
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 pushi 4
 gei
@@ -183,14 +188,14 @@ JZ finalWhile2
 
 #line 58
 pusha bp
-push 7
-sub
+push -7
+add
 push 0
 add
 pusha 0
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 push 5
 mul
@@ -202,14 +207,14 @@ storeb
 
 #line 59
 pusha bp
-push 7
-sub
+push -7
+add
 push 1
 add
 pusha 0
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 push 5
 mul
@@ -221,29 +226,33 @@ storef
 
 #line 61
 pusha bp
-push 7
-sub
+push -7
+add
 push 0
 add
 loadb
 OUTb
+pushb 10
+OUTb
 
 #line 62
 pusha bp
-push 7
-sub
+push -7
+add
 push 1
 add
 loadf
 OUTf
+pushb 10
+OUTb
 
 #line 64
 pusha bp
-push 2
-subi
+push -2
+add
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 pushi 1
 addi
@@ -253,8 +262,8 @@ finalWhile2:
 
  #line 66
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 RET 2, 7, 0
 #ret int
@@ -262,23 +271,33 @@ RET 2, 7, 0
 #func main
 main:
 
-#local posicion:int
+#line 69
 
-#line 77
+#local posicion:int
 ENTER 2
+
+
+#line 72
 CALL inicia
 
 #line 74
 pusha bp
-push 2
-subi
+push -2
+add
 INi
 storei
+
+
+#line 75
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 CALL busca
+
+
+#line 77
 CALL imprime
+POPi
 #ret void
 ret 0,2,0

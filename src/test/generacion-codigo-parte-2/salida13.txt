@@ -13,6 +13,8 @@ crono : 3*float
 #func inicia
 inicia:
 
+#line 27
+
 #param i:int
 
 #param inicial:byte
@@ -22,8 +24,6 @@ inicia:
 #param q2:float
 
 #param q3:float
-
-#line 31
 ENTER 0
 
 #line 28
@@ -56,7 +56,7 @@ push 1
 add
 pushi 0
 push 4
-mulf
+mul
 add
 pusha bp
 push 12
@@ -77,7 +77,7 @@ push 1
 add
 pushi 1
 push 4
-mulf
+mul
 add
 pusha bp
 push 8
@@ -98,7 +98,7 @@ push 1
 add
 pushi 2
 push 4
-mulf
+mul
 add
 pusha bp
 push 4
@@ -111,6 +111,8 @@ ret 0,0,15
 #func imprimeElMejor
 imprimeElMejor:
 
+#line 34
+
 #local mejorPiloto:int
 
 #local menorCrono:float
@@ -118,30 +120,28 @@ imprimeElMejor:
 #local ultimaCrono:float
 
 #local i:int
-
-#line 55
 ENTER 12
 
 #line 40
 pusha bp
-push 6
-subf
+push -6
+add
 pushf 1000.0
 storef
 
 #line 41
 pusha bp
-push 12
-subi
+push -12
+add
 pushi 0
 storei
 
 
-#line 48
+#line 42
 inicioWhile0:
 pusha bp
-push 12
-subi
+push -12
+add
 loadi
 pushi 3
 lti
@@ -149,12 +149,12 @@ JZ finalWhile0
 
 #line 43
 pusha bp
-push 10
-subf
+push -10
+add
 pusha 0
 pusha bp
-push 12
-subi
+push -12
+add
 loadi
 push 13
 mul
@@ -163,65 +163,65 @@ push 1
 add
 pushi 2
 push 4
-mulf
+mul
 add
-LOAD
+LOADf
 storef
 
 #line 44
 pusha bp
-push 10
-subf
+push -10
+add
 loadf
 pusha bp
-push 6
-subf
+push -6
+add
 loadf
 ltf
-JZ else0
+JZ else1
 
 #line 45
 pusha bp
-push 6
-subf
+push -6
+add
 pusha bp
-push 10
-subf
+push -10
+add
 loadf
 storef
 
 #line 46
 pusha bp
-push 2
-subi
+push -2
+add
 pusha bp
-push 12
-subi
+push -12
+add
 loadi
 storei
-JMP finIfElse0
-else0:
-finIfElse0:
+JMP finIfElse1
+else1:
+finIfElse1:
 
 #line 48
 pusha bp
-push 12
-subi
+push -12
+add
 pusha bp
-push 12
-subi
+push -12
+add
 loadi
 pushi 1
 addi
 storei
-JMP inicioWhile1
-finalWhile1:
+JMP inicioWhile0
+finalWhile0:
 
 #line 51
 pusha 0
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 push 13
 mul
@@ -230,20 +230,22 @@ push 0
 add
 loadb
 OUTb
+pushb 10
+OUTb
 
 #line 52
 pusha bp
-push 12
-subi
+push -12
+add
 pushi 0
 storei
 
 
-#line 55
+#line 53
 inicioWhile2:
 pusha bp
-push 12
-subi
+push -12
+add
 loadi
 pushi 3
 lti
@@ -252,8 +254,8 @@ JZ finalWhile2
 #line 54
 pusha 0
 pusha bp
-push 2
-subi
+push -2
+add
 loadi
 push 13
 mul
@@ -261,22 +263,24 @@ add
 push 1
 add
 pusha bp
-push 12
-subi
+push -12
+add
 loadi
 push 4
-mulf
+mul
 add
-LOAD
+LOADf
 OUTf
+pushb 10
+OUTb
 
 #line 55
 pusha bp
-push 12
-subi
+push -12
+add
 pusha bp
-push 12
-subi
+push -12
+add
 loadi
 pushi 1
 addi
@@ -289,26 +293,38 @@ ret 0,12,0
 #func main
 main:
 
-#line 64
+#line 59
 ENTER 0
+
+
+#line 60
 pushi 0
 pushb 65
 pushf 1.50
 pushf 1.49
 pushf 1.48
 CALL inicia
+
+
+#line 61
 pushi 1
 pushb 72
 pushf 1.52
 pushf 1.51
 pushf 1.50
 CALL inicia
+
+
+#line 62
 pushi 2
 pushb 86
 pushf 1.54
 pushf 1.52
 pushf 1.51
 CALL inicia
+
+
+#line 64
 CALL imprimeElMejor
 #ret void
 ret 0,0,0

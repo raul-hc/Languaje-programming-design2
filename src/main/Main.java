@@ -49,10 +49,10 @@ public class Main {
 /*# Test para generacion de codigo parte3 */
 //	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-1.txt";
 //	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-2.txt";
-	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-3.txt";
+//	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-3.txt";
 //	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-4.txt";
 
-//	public static final String programa = "src/test/test-final/prueba.txt";
+	public static final String programa = "src/test/test-final/prueba.txt";
 	
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();
@@ -89,7 +89,7 @@ public class Main {
 
 		// 3. Fase de Generacion de Codigo
 		File sourceFile = new File(sourceName);
-		Writer out = new FileWriter(new File(sourceFile.getParent(), "salida13.txt"));
+		Writer out = new FileWriter(new File(sourceFile.getParent(), "salida-final.txt"));
 
 		GeneracionDeCodigo generador = new GeneracionDeCodigo();
 		generador.genera(sourceFile.getName(), raiz, out);

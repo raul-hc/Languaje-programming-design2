@@ -7,19 +7,19 @@ halt
 #func potencia
 potencia:
 
-#line 33
-ENTER 4
+#line 17
 
 #param base:float
 
 #param exponente:int
 
 #local total:float
+ENTER 4
 
 #line 20
 pusha bp
 push 4
-addi
+add
 loadi
 pushi 0
 eqi
@@ -27,8 +27,8 @@ JZ else0
 
 #line 21
 pusha bp
-push 4
-subf
+push -4
+add
 pushf 1.0
 storef
 JMP finIfElse0
@@ -37,65 +37,67 @@ else0:
 #line 23
 pusha bp
 push 4
-addi
+add
 loadi
 pushi 0
 lti
-JZ else0
+JZ else1
 
 #line 24
 pusha bp
-push 4
-subf
+push -4
+add
 pushf 1.0
+
+#line 24
 pusha bp
 push 6
-addf
+add
 loadf
 pushi 0
 pusha bp
 push 4
-addi
+add
 loadi
 subi
 CALL potencia
 divf
 storef
-JMP finIfElse0
-else0:
+JMP finIfElse1
+else1:
 
 #line 26
 pusha bp
-push 4
-subf
+push -4
+add
 pusha bp
 push 6
-addf
+add
 loadf
 storef
 
 
-#line 29
-inicioWhile0:
+#line 27
+inicioWhile2:
 pusha bp
 push 4
-addi
+add
 loadi
 pushi 1
 gti
-JZ finalWhile0
+JZ finalWhile2
 
 #line 28
 pusha bp
-push 4
-subf
+push -4
+add
 pusha bp
-push 4
-subf
+push -4
+add
 loadf
 pusha bp
 push 6
-addf
+add
 loadf
 mulf
 storef
@@ -103,26 +105,31 @@ storef
 #line 29
 pusha bp
 push 4
-addi
+add
 pusha bp
 push 4
-addi
+add
 loadi
 pushi 1
 subi
 storei
-JMP inicioWhile0
-finalWhile0:
+JMP inicioWhile2
+finalWhile2:
 finIfElse1:
-finIfElse2:
+finIfElse0:
+
+ #line 33
+pusha bp
+push -4
+add
+loadf
+RET 4, 4, 6
 #ret float
-RET 4,4,6
 
 #func letraHipoteca
 letraHipoteca:
 
-#line 40
-ENTER 4
+#line 36
 
 #param capital:float
 
@@ -131,33 +138,38 @@ ENTER 4
 #param interes:float
 
 #local mensual:float
+ENTER 4
 
 #line 39
 pusha bp
-push 4
-subf
+push -4
+add
 pusha bp
 push 4
-addf
+add
 loadf
 pushf 12.0
 divf
 storef
+
+ #line 40
 pusha bp
 push 10
-addf
+add
 loadf
 pusha bp
-push 4
-subf
+push -4
+add
 loadf
 mulf
 pushf 100.0
 pushf 1.0
+
+#line 40
 pushf 1.0
 pusha bp
-push 4
-subf
+push -4
+add
 loadf
 pushf 100.0
 divf
@@ -165,7 +177,7 @@ addf
 pushi 0
 pusha bp
 push 8
-addi
+add
 loadi
 pushi 12
 muli
@@ -174,56 +186,58 @@ CALL potencia
 subf
 mulf
 divf
+RET 4, 4, 10
 #ret float
-RET 4,4,10
 
 #func main
 main:
 
-#line 57
-ENTER 10
+#line 43
 
 #local precioVivienda:float
 
 #local añosHipoteca:int
 
 #local interes:float
+ENTER 10
 
 #line 48
 pusha bp
-push 4
-subf
+push -4
+add
 pushf 200000.0
 storef
 
 #line 49
 pusha bp
-push 6
-subi
+push -6
+add
 pushi 30
 storei
 
 #line 50
 pusha bp
-push 10
-subf
+push -10
+add
 pushf 2.04
 storef
 
 #line 57
+
+#line 57
 pusha bp
-push 4
-subf
+push -4
+add
 loadf
 pusha bp
-push 6
-subi
+push -6
+add
 loadi
 pusha bp
-push 10
-subf
+push -10
+add
 loadf
 CALL letraHipoteca
 OUTf
 #ret void
-RET 0,10,0
+ret 0,10,0

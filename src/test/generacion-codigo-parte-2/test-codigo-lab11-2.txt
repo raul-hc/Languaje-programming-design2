@@ -45,8 +45,8 @@ busca(i:int) {
 	if (i < 0 || i >= 4) {
 		return;
 	}
-	print empresa[i].inicial;
-	print empresa[i].sueldo;
+	println empresa[i].inicial;
+	println empresa[i].sueldo;
 }
 
 imprime():int {
@@ -58,8 +58,8 @@ imprime():int {
 		aux.inicial = empresa[i].inicial;
 		aux.sueldo = empresa[i].sueldo;
 		
-		print aux.inicial;
-		print aux.sueldo;
+		println aux.inicial;
+		println aux.sueldo;
 		
 		i = i + 1;
 	}  

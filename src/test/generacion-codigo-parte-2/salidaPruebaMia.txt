@@ -1,76 +1,171 @@
-#source "test-codigo-lab11-2.txt"
+#source "test-codigo-lab11-3.txt"
 call main
 halt
-#TYPE Persona: {
+#TYPE Piloto: {
 inicial:char
-sueldo:float
+crono:3*float
 }
-#VAR empresa:4*Persona
+#VAR F1:3*Piloto
 inicia:
-#line 33
-enter 2
-#line 36
-push bp
-push -2
-add
-push 0
-storei
-#line 37
-while0:
-push bp
-push -2
-add
-loadi
-push 4
-lti
-jz finWhile0
-#line 38
+#line 27
+enter 0
+#line 28
 pusha 0
 push bp
-push -2
+push 17
 add
 loadi
-push 5
+push 13
 mul
 add
 push 0
 add
 push bp
-push -2
+push 16
 add
-loadi
-pushb 65
-b2i
-addi
-i2b
+loadb
 storeb
-#line 39
+#line 29
 pusha 0
 push bp
-push -2
+push 17
 add
 loadi
-push 5
+push 13
 mul
 add
 push 1
 add
-push 1000
+push 0
+push 4
+mul
+add
 push bp
-push -2
+push 12
+add
+loadf
+storef
+#line 30
+pusha 0
+push bp
+push 17
 add
 loadi
-push 100
-muli
-addi
-i2f
+push 13
+mul
+add
+push 1
+add
+push 1
+push 4
+mul
+add
+push bp
+push 8
+add
+loadf
 storef
+#line 31
+pusha 0
+push bp
+push 17
+add
+loadi
+push 13
+mul
+add
+push 1
+add
+push 2
+push 4
+mul
+add
+push bp
+push 4
+add
+loadf
+storef
+ret 0,0,15
+imprimeElMejor:
+#line 34
+enter 12
 #line 40
+push bp
+push -6
+add
+pushf 1000.0
+storef
+#line 41
+push bp
+push -12
+add
+push 0
+storei
+#line 42
+while0:
+push bp
+push -12
+add
+loadi
+push 3
+lti
+jz finWhile0
+#line 43
+push bp
+push -10
+add
+pusha 0
+push bp
+push -12
+add
+loadi
+push 13
+mul
+add
+push 1
+add
+push 2
+push 4
+mul
+add
+loadf
+storef
+#line 44
+push bp
+push -10
+add
+loadf
+push bp
+push -6
+add
+loadf
+ltf
+jz finIf1
+#line 45
+push bp
+push -6
+add
+push bp
+push -10
+add
+loadf
+storef
+#line 46
 push bp
 push -2
 add
 push bp
-push -2
+push -12
+add
+loadi
+storei
+finIf1:
+#line 48
+push bp
+push -12
+add
+push bp
+push -12
 add
 loadi
 push 1
@@ -78,131 +173,60 @@ addi
 storei
 jmp while0
 finWhile0:
-ret 0,2,0
-busca:
-#line 44
-enter 0
-#line 45
-push bp
-push 4
-add
-loadi
-push 0
-lti
-push bp
-push 4
-add
-loadi
-push 4
-gei
-or
-jz finIf1
-RET 0, 0, 2
-finIf1:
-#line 48
+#line 51
 pusha 0
 push bp
-push 4
+push -2
 add
 loadi
-push 5
+push 13
 mul
 add
 push 0
 add
 loadb
 outb
-#line 49
-pusha 0
-push bp
-push 4
-add
-loadi
-push 5
-mul
-add
-push 1
-add
-loadf
-outf
-ret 0,0,2
-imprime:
 #line 52
-enter 7
-#line 56
 push bp
-push -2
+push -12
 add
 push 0
 storei
-#line 57
+#line 53
 while2:
 push bp
+push -12
+add
+loadi
+push 3
+lti
+jz finWhile2
+#line 54
+pusha 0
+push bp
 push -2
+add
+loadi
+push 13
+mul
+add
+push 1
+add
+push bp
+push -12
 add
 loadi
 push 4
-gei
-not
-jz finWhile2
-#line 58
-push bp
-push -7
-add
-push 0
-add
-pusha 0
-push bp
-push -2
-add
-loadi
-push 5
 mul
-add
-push 0
-add
-loadb
-storeb
-#line 59
-push bp
-push -7
-add
-push 1
-add
-pusha 0
-push bp
-push -2
-add
-loadi
-push 5
-mul
-add
-push 1
-add
-loadf
-storef
-#line 61
-push bp
-push -7
-add
-push 0
-add
-loadb
-outb
-#line 62
-push bp
-push -7
-add
-push 1
 add
 loadf
 outf
-#line 64
+#line 55
 push bp
-push -2
+push -12
 add
 push bp
-push -2
+push -12
 add
 loadi
 push 1
@@ -210,30 +234,31 @@ addi
 storei
 jmp while2
 finWhile2:
-#line 66
-push bp
-push -2
-add
-loadi
-RET 2, 7, 0
+ret 0,12,0
 main:
-#line 69
-enter 2
-#line 72
+#line 59
+enter 0
+#line 60
+push 0
+pushb 65
+pushf 1.50
+pushf 1.49
+pushf 1.48
 call inicia
-#line 74
-push bp
-push -2
-add
-ini
-storei
-#line 75
-push bp
-push -2
-add
-loadi
-call busca
-#line 77
-call imprime
-popi
-ret 0,2,0
+#line 61
+push 1
+pushb 72
+pushf 1.52
+pushf 1.51
+pushf 1.50
+call inicia
+#line 62
+push 2
+pushb 86
+pushf 1.54
+pushf 1.52
+pushf 1.51
+call inicia
+#line 64
+call imprimeElMejor
+ret 0,0,0

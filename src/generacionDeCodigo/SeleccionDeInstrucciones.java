@@ -78,6 +78,8 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 		genera("\n#func " + node.getNombre());
 		genera(node.getNombre() + ":"); // Etiqueta
 
+		genera("\n#line " + node.getStart().getLine());
+
 		int tamLocales = 0;
 		int tamParametros = 0;
 		
@@ -101,7 +103,6 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 			}
 		}
 		
-		genera("\n#line " + node.getEnd().getLine());
 		genera("ENTER " + tamLocales);
 
 		// ejecuta[[sentenciasi]]
@@ -252,61 +253,63 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 		return null;
 	}
 	
-	 // class Ifelse { Expresion condicion; List<Sentencia> sentenciasIf; List<Sentencia> sentenciasElse; }
-	 public Object visit(Ifelse node, Object param) {
+	// class Ifelse { Expresion condicion; List<Sentencia> sentenciasIf; List<Sentencia> sentenciasElse; }
+	public Object visit(Ifelse node, Object param) {
+
+		int idx = contador++;
 
 		genera("\n#line " + node.getStart().getLine());
-		
-		node.getCondicion().accept(this, Funcion.VALOR); // valor[[condicion]]
-		
-		genera("JZ " + "else" + contador);//JZ else
-		
-		if (node.getSentenciasIf() != null){
-			for (Sentencia s : node.getSentenciasIf()){
-				s.accept(this, Funcion.VALOR);
-			}
-		}
-		
-		genera("JMP finIfElse" + contador);
-		genera("else" + contador + ":");
-		
-		if (node.getSentenciasElse() != null){
-			for (Sentencia s : node.getSentenciasElse()){
-				s.accept(this, Funcion.VALOR);
-			}
-		}
-		
-		genera("finIfElse" + contador + ":");
 
-		contador++;
-			 
+		node.getCondicion().accept(this, Funcion.VALOR); // valor[[condicion]]
+
+		genera("JZ " + "else" + idx);// JZ else
+
+		if (node.getSentenciasIf() != null) {
+			for (Sentencia s : node.getSentenciasIf()) {
+				s.accept(this, Funcion.VALOR);
+			}
+		}
+
+		genera("JMP finIfElse" + idx);
+		genera("else" + idx + ":");
+
+		if (node.getSentenciasElse() != null) {
+			for (Sentencia s : node.getSentenciasElse()) {
+				s.accept(this, Funcion.VALOR);
+			}
+		}
+
+		genera("finIfElse" + idx + ":");
+
 		return null;
-	 }
+	}
 	
-	 // class While { Expresion condicion; List<Sentencia> sentenciasWhile; }
-	 public Object visit(While node, Object param) {
-	
-		genera("\n\n#line " + node.getEnd().getLine());
-		
-		genera("inicioWhile" + contador + ":");
-			node.getCondicion().accept(this, Funcion.VALOR); 
-		genera("JZ " + "finalWhile" + contador);
-		
-		for (Sentencia s : node.getSentenciasWhile()){
+	// class While { Expresion condicion; List<Sentencia> sentenciasWhile; }
+	public Object visit(While node, Object param) {
+
+		int idx = contador++;
+
+		genera("\n\n#line " + node.getStart().getLine());
+
+		genera("inicioWhile" + idx + ":");
+		node.getCondicion().accept(this, Funcion.VALOR);
+		genera("JZ " + "finalWhile" + idx);
+
+		for (Sentencia s : node.getSentenciasWhile()) {
 			s.accept(this, Funcion.VALOR);
 		}
-		
-		genera("JMP inicioWhile" + contador);
-		genera("finalWhile" + contador + ":");
-		
-		contador++;
-		 
+
+		genera("JMP inicioWhile" + idx);
+		genera("finalWhile" + idx + ":");
+
 		return null;
-	 }
+	}
 	
 	 // class InvFuncSent { String nombreFuncion; List<Expresion> parametros; }
 	 public Object visit(InvFuncSent node, Object param) {
 			 
+		 genera("\n\n#line " + node.getStart().getLine());
+		
 		 if (node.getParametros() != null){
 			 for (Expresion parametro : node.getParametros()){
 				 parametro.accept(this, Funcion.VALOR);
@@ -314,6 +317,10 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 		 }
 		 
 		 genera("CALL " + node.getNombreFuncion());
+		 
+		 if (!(node.getDefinicion().getTipoRetorno() instanceof TipoVoid)) {
+				genera("POP" + node.getDefinicion().getTipoRetorno().getSufijo());
+			}
 		 
 		 return null;
 	 }
@@ -416,13 +423,13 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 				node.getPosicion().accept(this, Funcion.VALOR); 
 			
 			genera("push " + node.getTipo().getSize());
-			genera("mul" + node.getTipo().getSufijo()); // node.getTipo().getSufijo()
+			genera("mul"); // node.getTipo().getSufijo()
 			genera("add");
 		}
 
 		if ((Funcion) param == Funcion.VALOR) {
 			node.accept(this, Funcion.DIRECCION); // visit(node, Funcion.DIRECCION);
-			genera("LOAD" + node.getArray().getTipo().getSufijo());
+			genera("LOAD" + node.getTipo().getSufijo());//node.getArray().getTipo().getSufijo());
 		}
 
 		return null;
@@ -482,10 +489,6 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 
 		genera("CALL " + node.getNombreFuncion());
 
-		if (node.getDefinicion().getTipoRetorno() != null) {
-			genera("POP" + node.getDefinicion().getTipoRetorno().getSufijo());
-		}
-
 		return null;
 	}
 
@@ -498,13 +501,13 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 				genera("pusha " + node.getDefinicion().getDireccion());
 			} else { // variable local o parametro -> tenemos que usar BP
 				genera("pusha bp");
-				genera("push " + node.getDefinicion().getDireccion()); // Si es un parametro la direccion sera positiva. Si es una variable local la direccion sera negativa
 				
 				if (node.getDefinicion().getContextoVariable() == ContextoVariable.LOCAL){
-					genera("sub" + node.getDefinicion().getTipo().getSufijo());
+					genera("push " + (-1)*node.getDefinicion().getDireccion()); // Si es un parametro la direccion sera positiva. Si es una variable local la direccion sera negativa				
 				} else { //ContextoVariable.PARAMETRO					
-					genera("add");
+					genera("push " + node.getDefinicion().getDireccion()); // Si es un parametro la direccion sera positiva. Si es una variable local la direccion sera negativa
 				}
+				genera("add"); // genera("add" + node.getDefinicion().getTipo().getSufijo());
 			}
 		}
 
