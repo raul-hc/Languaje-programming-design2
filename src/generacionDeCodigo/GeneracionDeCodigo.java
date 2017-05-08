@@ -22,12 +22,12 @@ public class GeneracionDeCodigo {
 		System.out.println("- Gestión de memoria... ");
 			GestionDeMemoria gestion = new GestionDeMemoria();
 			raiz.accept(gestion, null);
-		System.out.println("            ...OKK gestión de memoria");
+		System.out.println(" ...Okk");
 		
 		System.out.println("- Selección de instrucciones... ");
 			SeleccionDeInstrucciones selecciona = new SeleccionDeInstrucciones(out, sourceFile);
 			raiz.accept(selecciona, null);
-		System.out.println("            ...OKK selección instrucciones");
+			System.out.println(" ...Okk");
 	}
 
 }

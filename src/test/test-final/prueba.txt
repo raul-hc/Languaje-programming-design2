@@ -106,8 +106,8 @@ main(){
   while (i < 2) {
     j = 0;
     while (j < 2) {	      // Sale: 0 1 1 2
-      println acme[i].empleados[j].edad;
-      println ' ';
+      print acme[i].empleados[j].edad;
+      print ' ';
       j = j + 1;
     }
     i = i + 1;

@@ -1,0 +1,144 @@
+#source "prueba2.txt" 
+
+call main
+halt
+
+
+#global matrix:3*3*int
+
+#func main
+main:
+
+#line 3
+ENTER 0
+
+#line 5
+pusha 0
+pushi 0
+push 6
+mul
+add
+pushi 0
+push 2
+mul
+add
+pushi 1
+storei
+
+#line 6
+pusha 0
+pushi 0
+push 6
+mul
+add
+pushi 1
+push 2
+mul
+add
+pushi 2
+storei
+
+#line 7
+pusha 0
+pushi 0
+push 6
+mul
+add
+pushi 2
+push 2
+mul
+add
+pushi 3
+storei
+
+#line 9
+pushi 1111
+OUTi
+
+#line 10
+pushb 10
+OUTb
+
+#line 11
+pushi 2222
+OUTi
+
+#line 13
+pusha 0
+pushi 1
+push 6
+mul
+add
+pushi 0
+push 2
+mul
+add
+pushi 4
+storei
+
+#line 14
+pusha 0
+pushi 1
+push 6
+mul
+add
+pushi 1
+push 2
+mul
+add
+pushi 5
+storei
+
+#line 15
+pusha 0
+pushi 1
+push 6
+mul
+add
+pushi 2
+push 2
+mul
+add
+pushi 6
+storei
+
+#line 17
+pusha 0
+pushi 2
+push 6
+mul
+add
+pushi 0
+push 2
+mul
+add
+pushi 7
+storei
+
+#line 18
+pusha 0
+pushi 2
+push 6
+mul
+add
+pushi 1
+push 2
+mul
+add
+pushi 8
+storei
+
+#line 19
+pusha 0
+pushi 3
+push 6
+mul
+add
+pushi 2
+push 2
+mul
+add
+pushi 9
+storei
+#ret void
+ret 0,0,0

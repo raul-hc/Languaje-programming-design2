@@ -31,7 +31,7 @@ public class AnalisisSemantico {
 		ComprobacionDeTipos comprobacion = new ComprobacionDeTipos(gestorErrores);
 		raiz.accept(comprobacion, null);
 		
-		System.out.println("            ...OKK identificacion y comprobacion tipos");
+		System.out.println(" ...Okk");
 	}
 
 	private GestorErrores gestorErrores;

@@ -243,11 +243,11 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 				tamParametros += dv.getTipo().getSize();
 			}
 
-			if (node.getExprRetorno() != null) { // TipoVoid
+			if (node.getExprRetorno() != null) { // if (!(node.getExprRetorno().getTipo() instanceof TipoVoid))
 				node.getExprRetorno().accept(this, Funcion.VALOR);
 				genera("RET " + node.getExprRetorno().getTipo().getSize() + ", " + tamLocales + ", " + tamParametros);
 			} else
-				genera("RET 0, " + tamLocales + ", " + tamParametros);
+				genera("RET 0, " + tamLocales + ", " + tamParametros);  // return vacio [ return ; ]
 		}
 
 		return null;
@@ -507,6 +507,7 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 				} else { //ContextoVariable.PARAMETRO					
 					genera("push " + node.getDefinicion().getDireccion()); // Si es un parametro la direccion sera positiva. Si es una variable local la direccion sera negativa
 				}
+				
 				genera("add"); // genera("add" + node.getDefinicion().getTipo().getSufijo());
 			}
 		}
@@ -539,7 +540,11 @@ public class SeleccionDeInstrucciones extends DefaultVisitor {
 	// class LiteralCaracter { String valor; }
 	public Object visit(LiteralCaracter node, Object param) {
 
-		genera("pushb " + (int) node.getValor().charAt(1));
+		if (node.getValor().equals("'\\n'")){   // '\n'  (id=65)	
+			genera("pushb 10"); // Salto de linea \n
+		} else {
+			genera("pushb " + (int) node.getValor().charAt(1));
+		}
 
 		return null;
 	}

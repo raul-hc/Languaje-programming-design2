@@ -53,6 +53,8 @@ public class Main {
 //	public static final String programa = "src/test/generacion-codigo-parte-2/test-codigo-lab11-4.txt";
 
 	public static final String programa = "src/test/test-final/prueba.txt";
+//	public static final String programa = "src/test/test-final/prueba2.txt";
+
 	
 	public static void main(String[] args) throws Exception {
 		GestorErrores gestor = new GestorErrores();
@@ -89,7 +91,9 @@ public class Main {
 
 		// 3. Fase de Generacion de Codigo
 		File sourceFile = new File(sourceName);
-		Writer out = new FileWriter(new File(sourceFile.getParent(), "salida-final.txt"));
+		
+		String[] name = programa.split("/");		
+		Writer out = new FileWriter(new File(sourceFile.getParent(), "salida-" + name[name.length-1]));
 
 		GeneracionDeCodigo generador = new GeneracionDeCodigo();
 		generador.genera(sourceFile.getName(), raiz, out);

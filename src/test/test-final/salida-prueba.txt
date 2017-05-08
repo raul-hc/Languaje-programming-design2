@@ -352,7 +352,7 @@ CALL f
 OUTi
 
 #line 71
-pushb 92
+pushb 10
 OUTb
 
 
@@ -462,7 +462,7 @@ LOADi
 OUTi
 
 #line 86
-pushb 92
+pushb 10
 OUTb
 
 #line 87
@@ -516,7 +516,7 @@ pushb 10
 OUTb
 
 #line 92
-pushb 92
+pushb 10
 OUTb
 pushb 10
 OUTb
